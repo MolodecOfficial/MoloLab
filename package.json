@@ -10,10 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/supabase": "^1.4.1",
     "@prisma/nuxt": "^0.0.35",
     "mongoose": "^8.7.1",
     "nuxt": "^3.13.0",
     "sass": "^1.79.4",
+    "vercel": "^37.8.0",
     "vue": "latest",
     "vue-router": "latest"
   },

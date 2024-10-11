@@ -19,6 +19,7 @@ input {
   border: none;
   height: 30px;
   border-radius: 5px;
+  padding: 2px 10px;
   &:focus {
     outline: 3px solid #bac9e7;
     padding: 2px 10px;

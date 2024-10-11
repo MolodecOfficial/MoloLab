@@ -16,7 +16,7 @@ useHead({
         <section class="input-container_inside">
           <p class="header">Вход в систему</p>
           <p class="not_login">Ещё не зарегистрированы?
-            <NuxtLink class="register" to="/register">Регистрация</NuxtLink>
+            <NuxtLink class="redirect" to="/register">Регистрация</NuxtLink>
           </p>
           <div class="inputs">
             <p class="input_helper">E-mail</p>
@@ -86,7 +86,7 @@ useHead({
     font-size: 11px;
   }
 
-  & .register {
+  & .redirect {
     text-decoration: none;
     transition: 0.2s all ease-in-out;
     color: #3c00ef;

@@ -47,7 +47,7 @@ const registerUser = async () => {
     console.error('Ошибка:', error);
     alert('Произошла ошибка при регистрации');
   }
-}
+};
 </script>
 
 <template>
@@ -123,7 +123,16 @@ const registerUser = async () => {
   height: 80%;
   background-color: #ffffff;
 }
+.redirect {
+  text-decoration: none;
+  transition: 0.2s all ease-in-out;
+  color: #3c00ef;
 
+  &:hover {
+    text-decoration: underline 1px;
+    text-underline-offset: 2px;
+  }
+}
 .input-container_inside {
   width: 80%;
   height: 100%;
@@ -165,8 +174,6 @@ const registerUser = async () => {
   justify-content: center;
   margin-top: 10px;
   gap: 6px;
-
-
   & .register_btn {
     background-color: #4e45e3;
     border: none;
@@ -179,26 +186,11 @@ const registerUser = async () => {
     align-items: center;
     text-decoration: none;
     transition: 0.2s all ease-in-out;
-
     &:hover {
       background-color: #4038bb;
     }
   }
-
-  & .forget {
-    text-align: center;
-    font-size: 10px;
-    color: #4e45e3;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline 1px;
-      text-underline-offset: 2px;
-    }
-  }
-
 }
-
 
 img {
   width: 100%;
