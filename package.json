@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/supabase": "^1.4.1",
     "@prisma/nuxt": "^0.0.35",
+    "bcrypt": "^5.1.1",
     "mongoose": "^8.7.1",
     "nuxt": "^3.13.0",
     "sass": "^1.79.4",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^5.20.0",
+    "@types/bcrypt": "^5.0.2",
     "prisma": "^5.20.0"
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import {ro} from "cronstrue/dist/i18n/locales/ro";
 
 useHead({
   title: 'УГНТУ | Регистрация аккаунта'
@@ -12,22 +13,25 @@ const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 
-const router = useRouter();
+const loading = ref(false)
+const statusMessage = ref('');
 
-const registerUser = async () => {
+const router = useRouter()
+
+async function registerUser() {
   if (password.value !== confirmPassword.value) {
-    alert("Пароли не совпадают, будьте внимательнее");
+    statusMessage.value = "Пароли не совпадают, будьте внимательнее";
     return;
   }
-
   const userData = {
     firstName: firstName.value,
     lastName: lastName.value,
     email: email.value,
     password: password.value,
   };
-
   try {
+    loading.value = true
+    statusMessage.value = 'Идёт создание пользователя...';
     const response = await fetch('/api/register', {
       method: 'POST',
       headers: {
@@ -35,17 +39,17 @@ const registerUser = async () => {
       },
       body: JSON.stringify(userData),
     });
-
     if (response.ok) {
-      alert('Регистрация успешна!');
-      await router.push('/login'); // Перенаправление на страницу входа
+      statusMessage.value = ['Пользователь успешно создан!', 'Переадресация...'].join(' ');
+      setTimeout(() => router.push('/login'), 2000)
     } else {
       const errorData = await response.json();
-      alert(`Ошибка регистрации: ${errorData.message}`);
+      statusMessage.value = 'Произошла ошибка при регистрации'
     }
   } catch (error) {
     console.error('Ошибка:', error);
-    alert('Произошла ошибка при регистрации');
+  } finally {
+    loading.value = false
   }
 };
 </script>
@@ -64,22 +68,28 @@ const registerUser = async () => {
           </p>
           <div class="inputs">
             <p class="input_helper">Имя</p>
-            <MoloInput v-model="firstName" />
+            <AccountFormInput v-model="firstName" />
             <p class="input_helper">Фамилия</p>
-            <MoloInput v-model="lastName" />
+            <AccountFormInput v-model="lastName" />
             <p class="input_helper">E-mail</p>
-            <MoloInput v-model="email" />
+            <AccountFormInput v-model="email" type="email"/>
             <p class="input_helper">Пароль</p>
-            <MoloInput type="password" v-model="password" />
+            <AccountFormInput v-model="password" type="password"/>
             <p class="input_helper">Подтвердите пароль</p>
-            <MoloInput type="password" v-model="confirmPassword" />
+            <AccountFormInput v-model="confirmPassword" type="password"/>
           </div>
           <div class="remember">
-            <input type="checkbox" id="consent">
+            <input type="checkbox" id="consent" required>
             <label for="consent">Даю согласие на обработку персональных данных</label>
           </div>
           <div class="register">
-            <button class="register_btn" @click="registerUser">Зарегистрироваться</button>
+            <AccountFormSubmit
+                label="Зарегистрироваться"
+                :loading="loading"
+                :message="statusMessage"
+                @click="registerUser"
+            />
+            <ClickedCreating :message="statusMessage" />
           </div>
         </section>
       </section>

@@ -1,9 +1,53 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-useHead({
-  title: 'УГНТУ | Войти в Аккаунт'
-})
+const firstName = ref('');
+const email = ref('');
+const password = ref('');
+const loading = ref(false);
+const statusMessage = ref('');
+const router = useRouter();
 
+async function loginUser() {
+  const userData = {
+    firstName: firstName.value,
+    email: email.value,
+    password: password.value,
+  };
+
+  try {
+    loading.value = true;
+    statusMessage.value = 'Идёт вход...';
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      statusMessage.value = ['Успешный вход!', 'Добро пожаловать!'].join(' ');
+
+      // Сохраняем токен в localStorage только на клиенте
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', data.token);
+      }
+
+      setTimeout(() => router.push('/in-progress'), 2000);
+    } else {
+      const errorData = await response.json();
+      statusMessage.value = errorData.message || 'Ошибка при входе';
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
+    statusMessage.value = 'Произошла ошибка при входе';
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
 
 <template>
@@ -20,23 +64,30 @@ useHead({
           </p>
           <div class="inputs">
             <p class="input_helper">E-mail</p>
-            <MoloInput />
+            <AccountFormInput v-model="email" />
             <p class="input_helper">Пароль</p>
-            <MoloInput />
+            <AccountFormInput v-model="password" type="password"/>
           </div>
           <div class="remember">
-            <input type="checkbox" name="" id="">
-            <label for="">Запомнить меня</label>
+            <input type="checkbox" id="remember-me" />
+            <label for="remember-me">Запомнить меня</label>
           </div>
           <div class="log-forget">
-            <NuxtLink class="login" to="/in-progress">Войти</NuxtLink>
+            <AccountFormSubmit
+                label="Войти"
+                :loading="loading"
+                :message="statusMessage"
+                @click="loginUser"
+            />
             <NuxtLink class="forget" to="/in-progress">Восстановление пароля</NuxtLink>
+            <ClickedCreating :message="statusMessage"/>
           </div>
         </section>
       </section>
     </section>
   </section>
 </template>
+
 
 <style scoped>
 

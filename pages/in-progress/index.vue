@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import catkiss from 'public/in-progress/kiss.gif'
+import catKiss from 'public/in-progress/kiss.gif'
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import catkiss from 'public/in-progress/kiss.gif'
       Сайт по прежнему в разработке, оставайтесь на связи!
     </h2>
     
-    <img :src="catkiss" alt="">
+    <img :src="catKiss" alt="">
   </section>
 </template>
 
@@ -21,5 +21,8 @@ section {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  & h2 {
+    text-align: center;
+  }
 }
 </style>

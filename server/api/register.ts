@@ -1,4 +1,5 @@
-import {User} from "~/server/api/users.get";
+import bcrypt from 'bcrypt';
+import { User } from "~/server/models/user.model";
 
 export default defineEventHandler(async (event) => {
  const body = await readBody(event);
@@ -10,7 +11,10 @@ export default defineEventHandler(async (event) => {
   throw createError({ statusCode: 400, message: "Данный пользователь уже зарегистрирован" });
  }
 
- const newUser = new User({ firstName, lastName, email, password });
+ // Хешируем пароль перед сохранением
+ const hashedPassword = await bcrypt.hash(password, 10);
+
+ const newUser = new User({ firstName, lastName, email, password: hashedPassword });
 
  await newUser.save();
 
