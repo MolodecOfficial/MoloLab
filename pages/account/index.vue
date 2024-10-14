@@ -3,14 +3,13 @@ import catKiss from 'public/in-progress/kiss.gif'
 </script>
 
 <template>
-  <AccountAuthGuard>
+  <AccountMoloGuard>
     <section>
       Привет)
       Ты нашёл пасхалку этого сайта)
       <img :src="catKiss" alt="">
     </section>
-
-  </AccountAuthGuard>
+  </AccountMoloGuard>
 </template>
 
 
