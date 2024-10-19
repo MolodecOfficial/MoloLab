@@ -1,17 +1,29 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from "~/stores/userStore";
 
-const firstName = ref('');
 const email = ref('');
+const firstName = ref('')
+const lastName = ref('')
 const password = ref('');
 const loading = ref(false);
 const statusMessage = ref('');
 const router = useRouter();
+const userStore = useUserStore()
+
+useHead({
+  title: 'УГНТУ | Вход в аккаунт'
+});
+
+onMounted(() => {
+  firstName.value = userStore.userFirstName
+  lastName.value = userStore.userLastName
+  email.value = userStore.userEmail
+})
 
 async function loginUser() {
   const userData = {
-    firstName: firstName.value,
     email: email.value,
     password: password.value,
   };
@@ -19,6 +31,7 @@ async function loginUser() {
   try {
     loading.value = true;
     statusMessage.value = 'Идёт вход...';
+
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -29,14 +42,11 @@ async function loginUser() {
 
     if (response.ok) {
       const data = await response.json();
-      statusMessage.value = ['Успешный вход!', 'Добро пожаловать!'].join(' ');
-
-      // Сохраняем токен в localStorage только на клиенте
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', data.token);
-      }
-
-      setTimeout(() => router.push('/in-progress'), 2000);
+      // Изменяем статус сообщения на основе данных, полученных от сервера
+      statusMessage.value = `Успешный вход! ${data.message}`; // Используем сообщение от сервера
+      // Вы можете сохранить данные пользователя в store, если это необходимо
+      userStore.setUser(data.user); // Предполагается, что у вас есть метод для сохранения пользователя в store
+      setTimeout(() => router.push('/in-progress'), 2500);
     } else {
       const errorData = await response.json();
       statusMessage.value = errorData.message || 'Ошибка при входе';
@@ -54,7 +64,7 @@ async function loginUser() {
   <section class="body">
     <section class="container">
       <section class="container-image">
-        <img src="public/auth/logo.png" alt="">
+        <img src="/auth/logo.png" alt="Логотип">
       </section>
       <section class="input-container">
         <section class="input-container_inside">
@@ -64,12 +74,12 @@ async function loginUser() {
           </p>
           <div class="inputs">
             <p class="input_helper">E-mail</p>
-            <AccountFormInput v-model="email" />
+            <AccountFormInput v-model="email"/>
             <p class="input_helper">Пароль</p>
             <AccountFormInput v-model="password" type="password"/>
           </div>
           <div class="remember">
-            <input type="checkbox" id="remember-me" />
+            <input type="checkbox" id="remember-me"/>
             <label for="remember-me">Запомнить меня</label>
           </div>
           <div class="log-forget">
@@ -87,7 +97,6 @@ async function loginUser() {
     </section>
   </section>
 </template>
-
 
 <style scoped>
 
@@ -128,6 +137,7 @@ async function loginUser() {
 .input-container_inside {
   width: 80%;
   height: 80%;
+
   & .header {
     color: #082459;
     font-size: 21px;

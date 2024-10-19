@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import {ro} from "cronstrue/dist/i18n/locales/ro";
+import { useUserStore } from '~/stores/userStore'
 
 useHead({
   title: 'УГНТУ | Регистрация аккаунта'
@@ -13,25 +13,30 @@ const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 
-const loading = ref(false)
+const loading = ref(false);
 const statusMessage = ref('');
 
-const router = useRouter()
+const router = useRouter();
+
+const userStore = useUserStore()
 
 async function registerUser() {
   if (password.value !== confirmPassword.value) {
     statusMessage.value = "Пароли не совпадают, будьте внимательнее";
     return;
   }
+
   const userData = {
     firstName: firstName.value,
     lastName: lastName.value,
     email: email.value,
     password: password.value,
   };
+
   try {
-    loading.value = true
+    loading.value = true;
     statusMessage.value = 'Идёт создание пользователя...';
+
     const response = await fetch('/api/register', {
       method: 'POST',
       headers: {
@@ -39,20 +44,27 @@ async function registerUser() {
       },
       body: JSON.stringify(userData),
     });
+
     if (response.ok) {
-      statusMessage.value = ['Пользователь успешно создан!', 'Переадресация...'].join(' ');
-      setTimeout(() => router.push('/login'), 2000)
+      const data = await response.json();
+      statusMessage.value = `Пользователь успешно создан! Переадресация...`;
+      setTimeout(() => router.push('/login'), 2000);
+      userStore.setEmail(email.value)
+      userStore.setFirstName(firstName.value)
+      userStore.setLastName(lastName.value)
     } else {
       const errorData = await response.json();
-      statusMessage.value = 'Произошла ошибка при регистрации'
+      statusMessage.value = errorData.message || 'Произошла ошибка при регистрации';
     }
   } catch (error) {
     console.error('Ошибка:', error);
+    statusMessage.value = 'Произошла ошибка при регистрации';
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-};
+}
 </script>
+
 
 <template>
   <section class="body">
@@ -68,9 +80,9 @@ async function registerUser() {
           </p>
           <div class="inputs">
             <p class="input_helper">Имя</p>
-            <AccountFormInput v-model="firstName" />
+            <AccountFormInput v-model="firstName"/>
             <p class="input_helper">Фамилия</p>
-            <AccountFormInput v-model="lastName" />
+            <AccountFormInput v-model="lastName"/>
             <p class="input_helper">E-mail</p>
             <AccountFormInput v-model="email" type="email"/>
             <p class="input_helper">Пароль</p>
@@ -89,7 +101,7 @@ async function registerUser() {
                 :message="statusMessage"
                 @click="registerUser"
             />
-            <ClickedCreating :message="statusMessage" />
+            <ClickedCreating :message="statusMessage"/>
           </div>
         </section>
       </section>
@@ -133,6 +145,7 @@ async function registerUser() {
   height: 80%;
   background-color: #ffffff;
 }
+
 .redirect {
   text-decoration: none;
   transition: 0.2s all ease-in-out;
@@ -143,9 +156,11 @@ async function registerUser() {
     text-underline-offset: 2px;
   }
 }
+
 .input-container_inside {
   width: 80%;
   height: 100%;
+
   & .header {
     color: #082459;
     font-size: 21px;
@@ -162,6 +177,7 @@ async function registerUser() {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+
   & .input_helper {
     font-size: 12px;
   }
@@ -175,7 +191,7 @@ async function registerUser() {
 }
 
 .remember input {
-  margin-right: 5px; /* Отступ между чекбоксом и текстом */
+  margin-right: 5px;
 }
 
 .register {
@@ -184,22 +200,6 @@ async function registerUser() {
   justify-content: center;
   margin-top: 10px;
   gap: 6px;
-  & .register_btn {
-    background-color: #4e45e3;
-    border: none;
-    height: 40px;
-    color: #eee;
-    border-radius: 5px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    transition: 0.2s all ease-in-out;
-    &:hover {
-      background-color: #4038bb;
-    }
-  }
 }
 
 img {

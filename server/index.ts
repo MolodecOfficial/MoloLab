@@ -1,5 +1,6 @@
-import * as mongoose from "mongoose";
 import { Nitro } from 'nitropack'
+import mongoose from "mongoose";
+
 
 export default async (_nitroApp: Nitro)=> {
  const config = useRuntimeConfig();
@@ -10,3 +11,4 @@ export default async (_nitroApp: Nitro)=> {
   console.error(e)
  }
 }
+

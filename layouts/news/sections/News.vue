@@ -2,8 +2,6 @@
 
 import MoloNews from "~/layouts/news/UI/MoloNews.vue";
 
-
-
 interface MoloNew {
   image: string,
   description: string,

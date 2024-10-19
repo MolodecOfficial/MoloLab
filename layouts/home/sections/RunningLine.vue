@@ -36,7 +36,7 @@ section {
   align-items: center;
   justify-content: center;
   gap: clamp(20px, 5vw, 100px);
-  height: clamp(40px, 13vw, 260px);
+  height: clamp(40px, 13vw, 250px);
 }
 
 .overlay {

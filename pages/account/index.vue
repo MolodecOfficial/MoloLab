@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import catKiss from 'public/in-progress/kiss.gif'
+import { useUserStore } from '~/stores/userStore'
+import { ref, onMounted } from "vue";
+
+const firstName = ref('');
+const lastName = ref('');
+const userStore = useUserStore();
+
+onMounted(() => {
+  firstName.value = userStore.userFirstName;
+  lastName.value = userStore.userLastName;
+});
+
+const greetings = `Привет, ${firstName.value} ${lastName.value}`;
 </script>
 
 <template>
   <AccountMoloGuard>
     <section>
-      Привет)
-      Ты нашёл пасхалку этого сайта)
-      <img :src="catKiss" alt="">
+      {{ greetings }}
     </section>
   </AccountMoloGuard>
 </template>
-
-
 
 <style scoped>
 section {

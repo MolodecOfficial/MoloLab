@@ -157,7 +157,7 @@ function hideLinks() {
 .easy-list {
   position: absolute;
   filter: blur(10);
-  height: 100%;
+  height: 120%;
   width: 75vh;
   top: 0;
   left: 0;
@@ -166,8 +166,8 @@ function hideLinks() {
 
 .easy-list_overlay {
   position: absolute;
-  height: clamp(15%, 56vw, 100vh);
-  width: clamp(20%, 65vw, 31vw);
+  height: clamp(15%, 56vw, 100%);
+  width: clamp(10%, 65vw, 31vw);
   background-color: rgba(47, 53, 89, 0.84); /* Левый фильтр */
   opacity: 1;
 
@@ -175,10 +175,10 @@ function hideLinks() {
 
 .easy-list_overlay_test {
   position: absolute;
-  filter: blur(10px);
-  height: clamp(15%, 56vw, 100vh);
+  filter: blur(2px);
+  height: clamp(15%, 56vw, 100%);
   width: clamp(20%, 65vw, 31vw);
-  background-color: rgba(6, 13, 51, 0.68); /* Левый фильтр */
+  background-color: rgba(9, 24, 70, 0.82); /* Левый фильтр */
 }
 
 .easy-list_container {

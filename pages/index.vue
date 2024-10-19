@@ -18,6 +18,8 @@ import Education from "~/layouts/education/sections/Education.vue";
     </div>
     <HomeHeader />
     <HomeBody />
+  </div>
+  <div>
     <RunningLine/>
   </div>
   <div>
@@ -32,8 +34,9 @@ import Education from "~/layouts/education/sections/Education.vue";
 .main-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow: hidden; /* Чтобы избежать прокрутки */
+
 }
 @media (max-width: 768px) {
   .main-container {
@@ -51,7 +54,7 @@ import Education from "~/layouts/education/sections/Education.vue";
 
 video {
   height: auto; /* Позволяет видео адаптироваться */
-  max-height: 100%; /* Ограничение по высоте */
+  max-height: 150%; /* Ограничение по высоте */
   min-width: 100%; /* Убирает сжатие по ширине */
   object-fit: cover; /* Сохраняет пропорции */
   width: 100%;

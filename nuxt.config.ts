@@ -7,10 +7,14 @@ export default defineNuxtConfig({
   '~/assets/css/styles.scss',
   '~/assets/css/font/stylesheet.css'
  ],
+
  nitro: {
   plugins: ['~/server/index.ts']
  },
+
  runtimeConfig: {
   mongodb: process.env.MONGODB_URI
- }
+ },
+
+ modules: ['@pinia/nuxt']
 })

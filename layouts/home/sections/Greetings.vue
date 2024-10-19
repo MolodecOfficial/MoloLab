@@ -22,7 +22,18 @@
 </template>
 
 <style scoped>
-
+@media (max-width: 765px) {
+  .header-name {
+    gap: 10px;
+    font-size: 6px;
+  }
+  .main_header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(37%, 75%);
+  }
+}
 .main_header {
   position: absolute;
   top: 0;
@@ -72,7 +83,7 @@ h2:nth-child(3){
   font-size: clamp(6px, 1vw, 16px);
   border-top: 1px solid rgba(180, 180, 180, 0.27);
   border-left: 1px solid rgba(155, 155, 155, 0.27);
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 10px;
   color: #c2c2c2;
   text-decoration: none;
   padding: 5px 10px;
@@ -83,6 +94,13 @@ h2:nth-child(3){
     color: #eee;
     border-top: 1px solid #eee;
     border-left: 1px solid #eee;
+
+  }
+  &:nth-child(5) {
+    border-bottom: 1px solid rgba(180, 180, 180, 0.27);
+    &:hover {
+      border-bottom: 1px solid #eee;
+    }
   }
 }
 </style>
