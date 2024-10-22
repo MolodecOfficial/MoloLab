@@ -24,5 +24,11 @@ export const useUserStore = defineStore('user', () => {
   userLastName.value = user.lastName;
  }
 
- return { userEmail, userFirstName, userLastName, setEmail, setFirstName, setLastName, setUser };
+function clearUser() {
+  userFirstName.value = ''
+  userLastName.value = ''
+  userEmail.value = ''
+}
+
+ return { userEmail, userFirstName, userLastName, setEmail, setFirstName, setLastName, setUser, clearUser };
 });

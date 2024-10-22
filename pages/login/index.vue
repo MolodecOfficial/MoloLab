@@ -17,10 +17,14 @@ useHead({
 });
 
 onMounted(() => {
-  firstName.value = userStore.userFirstName
-  lastName.value = userStore.userLastName
-  email.value = userStore.userEmail
-})
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    firstName.value = user.firstName;
+    lastName.value = user.lastName;
+    email.value = user.email;
+  }
+});
 
 async function loginUser() {
   const userData = {
@@ -42,11 +46,23 @@ async function loginUser() {
 
     if (response.ok) {
       const data = await response.json();
-      // Изменяем статус сообщения на основе данных, полученных от сервера
-      statusMessage.value = `Успешный вход! ${data.message}`; // Используем сообщение от сервера
-      // Вы можете сохранить данные пользователя в store, если это необходимо
-      userStore.setUser(data.user); // Предполагается, что у вас есть метод для сохранения пользователя в store
-      setTimeout(() => router.push('/in-progress'), 2500);
+      statusMessage.value = `Успешный вход! ${data.message}`  ;
+
+      // Сохранение данных пользователя в store
+      userStore.setUser(data.user);
+
+      // Сохранение данных пользователя в localStorage
+      localStorage.setItem('user', JSON.stringify({
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email
+      }));
+      console.log('Данные пользователя сохранены в localStorage:', {
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email
+      });
+      setTimeout(() => router.push('/account'), 2500);
     } else {
       const errorData = await response.json();
       statusMessage.value = errorData.message || 'Ошибка при входе';
