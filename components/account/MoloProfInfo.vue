@@ -35,9 +35,13 @@ const props = defineProps({
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0;
   grid-row-gap: 5px;
+  & span {
+    font-size: 14px;
+    color: #052542;
+  }
+  & code {
+    color: #5a87e7;
+  }
 }
-& span {
-  font-size: 14px;
-  color: #052542;
-}
+
 </style>
