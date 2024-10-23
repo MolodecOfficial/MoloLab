@@ -105,4 +105,9 @@ import info from "public/account/Info.png";
   flex-direction: column;
   padding-top: 20px;
 }
+span {
+  padding-top: 20px;
+  color: #053969;
+  font-size: 20px;
+}
 </style>
