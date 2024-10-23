@@ -2,10 +2,14 @@
 import {computed, onMounted, ref} from 'vue';
 import {useUserStore} from '~/stores/userStore';
 import logo from '~/public/favicon.ico';
-import MoloProfInfo from "~/components/account/MoloProfInfo.vue";
+import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
+import RouteList from "~/layouts/account/section/RouteList.vue";
 
 
-import OtherLinks from "~/layouts/account/section/otherLinks.vue";
+
+useHead({
+  title: 'УГНТУ | Личный кабинет'
+})
 
 const userStore = useUserStore();
 const firstName = ref('');
@@ -32,7 +36,7 @@ async function logoutUser() {
   try {
     localStorage.removeItem('user')
     userStore.clearUser()
-    router.push('/login')
+    await router.push('/login')
   } catch (error) {
     console.error('Ошибка при выходе из аккаунта:', error)
   }
@@ -98,11 +102,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
       </section>
     </header>
     <div class="container">
-      <section class="routeList">
-        <section class="routeList_container">
-          Список....в разработке
-        </section>
-      </section>
+      <RouteList />
       <section class="userInfo">
         <section class="userInfo_container">
           <span>
@@ -114,7 +114,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
           </section>
           <section class="userInfo_profession-information">
             <span>Сведения о специальности</span>
-            <MoloProfInfo v-for="(info, idx) in professionInfos"
+            <AccountMoloProfInfo v-for="(info, idx) in professionInfos"
                           :info="info"
                           :key="idx"
             />
@@ -144,7 +144,7 @@ header {
     text-align: center;
     justify-content: center;
     align-items: center;
-    transition: 0.1s all ease-in-out;
+    transition: 1ms all ease-in-out;
     &:hover {
       color: #0028ef;
     }
@@ -218,20 +218,6 @@ header {
     font-size: 20px;
     color: #052542;
   }
-}
-
-.routeList {
-  display: flex;
-  flex-direction: column;
-  height: 92.9%;
-  width: 20%;
-
-}
-
-.routeList_container {
-  height: 100%;
-  width: 100%;
-  background-color: #ffffff;
 }
 
 .userInfo_profession-information {

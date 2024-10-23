@@ -1,24 +1,22 @@
 <script setup lang="ts">
 
-import android from "public/account/Android.png";
-import dormitory from "public/account/Dormitory.png";
-import payments from "public/account/Payments.png";
-import receipts from "public/account/Receipts.png";
-import rating from "public/account/Rating.png";
+import android from "public/account/main/Android.png";
+import dormitory from "public/account/main/Dormitory.png";
+import payments from "public/account/main/Payments.png";
+import receipts from "public/account/main/Receipts.png";
+import rating from "public/account/main/Rating.png";
 
-import library from "public/account/Library.png";
-import sdo from "public/account/SDO.png";
-import timetable from "public/account/Timetable.png";
-import testResult from "public/account/TestResult.png";
-import info from "public/account/Info.png";
+import library from "public/account/main/Library.png";
+import sdo from "public/account/main/SDO.png";
+import timetable from "public/account/main/Timetable.png";
+import testResult from "public/account/main/TestResult.png";
+import info from "public/account/main/Info.png";
 
 </script>
 
 <template>
   <section class="other">
-            <span>
-              Прочее
-            </span>
+    <span>Прочее</span>
     <section class="otherLinks_container">
       <NuxtLink class="other_link" to="/in-progress">
         <img :src="android" alt="">
@@ -85,12 +83,14 @@ import info from "public/account/Info.png";
   text-align: start;
   gap: 10px;
   text-decoration: none;
-  color: #022469;
+  color: #5a87e7;
+
   &:hover {
     text-decoration: underline 1px;
     text-underline-offset: 3px;
   }
 }
+
 .otherLinks_container {
   padding-left: 20px;
   padding-top: 20px;
@@ -99,12 +99,14 @@ import info from "public/account/Info.png";
   text-align: center;
   grid-template-columns: repeat(5, 1fr);
 }
+
 .other_2 {
   display: flex;
   align-items: center;
   flex-direction: column;
   padding-top: 20px;
 }
+
 span {
   padding-top: 20px;
   color: #053969;
