@@ -20,7 +20,7 @@ const props = defineProps({
     <span>Действие: <code>{{ info.action }}</code></span>
     <span>Основание: <code>{{ info.basis }}</code></span>
     <span>№: <code>{{ info.number2 }}</code></span>
-    <span>Дата: <code>{{ info.date }}</code></span>
+    <span>Дата приказа: <code>{{ info.date }}</code></span>
     <span>Дата начала: <code>{{ info.startDate }}</code></span>
     <span>Дата окончания: <code>{{ info.endDate }}</code></span>
   </section>
