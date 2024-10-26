@@ -80,22 +80,22 @@ async function registerUser() {
           </p>
           <div class="inputs">
             <p class="input_helper">Имя</p>
-            <AccountFormInput v-model="firstName"/>
+            <AccountMoloFormInput v-model="firstName"/>
             <p class="input_helper">Фамилия</p>
-            <AccountFormInput v-model="lastName"/>
+            <AccountMoloFormInput v-model="lastName"/>
             <p class="input_helper">E-mail</p>
-            <AccountFormInput v-model="email" type="email"/>
+            <AccountMoloFormInput v-model="email" type="email"/>
             <p class="input_helper">Пароль</p>
-            <AccountFormInput v-model="password" type="password"/>
+            <AccountMoloFormInput v-model="password" type="password"/>
             <p class="input_helper">Подтвердите пароль</p>
-            <AccountFormInput v-model="confirmPassword" type="password"/>
+            <AccountMoloFormInput v-model="confirmPassword" type="password"/>
           </div>
           <div class="remember">
             <input type="checkbox" id="consent" required>
             <label for="consent">Даю согласие на обработку персональных данных</label>
           </div>
           <div class="register">
-            <AccountFormSubmit
+            <AccountMoloFormSubmit
                 label="Зарегистрироваться"
                 :loading="loading"
                 :message="statusMessage"

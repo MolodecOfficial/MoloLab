@@ -6,7 +6,6 @@ import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
 import RouteList from "~/layouts/account/section/RouteList.vue";
 
 
-
 useHead({
   title: 'УГНТУ | Личный кабинет'
 })
@@ -29,6 +28,7 @@ onMounted(() => {
   } else {
     firstName.value = userStore.userFirstName;
     lastName.value = userStore.userLastName
+    email.value = userStore.userEmail
   }
 });
 
@@ -86,6 +86,7 @@ const professionInfos: Array<ProfessionInfoType> = [
 ];
 
 const greetings = computed(() => `Привет, ${firstName.value} ${lastName.value}`);
+
 </script>
 <template>
   <AccountMoloGuard>

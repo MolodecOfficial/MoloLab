@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from "~/stores/userStore";
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {useUserStore} from "~/stores/userStore";
 
 const email = ref('');
 const firstName = ref('')
@@ -46,7 +46,7 @@ async function loginUser() {
 
     if (response.ok) {
       const data = await response.json();
-      statusMessage.value = `Успешный вход! ${data.message}`  ;
+      statusMessage.value = `Успешный вход! ${data.message}`;
 
       // Сохранение данных пользователя в store
       userStore.setUser(data.user);
@@ -90,16 +90,16 @@ async function loginUser() {
           </p>
           <div class="inputs">
             <p class="input_helper">E-mail</p>
-            <AccountFormInput v-model="email"/>
+            <AccountMoloFormInput v-model="email"/>
             <p class="input_helper">Пароль</p>
-            <AccountFormInput v-model="password" type="password"/>
+            <AccountMoloFormInput v-model="password" type="password"/>
           </div>
           <div class="remember">
             <input type="checkbox" id="remember-me"/>
             <label for="remember-me">Запомнить меня</label>
           </div>
           <div class="log-forget">
-            <AccountFormSubmit
+            <AccountMoloFormSubmit
                 label="Войти"
                 :loading="loading"
                 :message="statusMessage"
@@ -236,10 +236,8 @@ async function loginUser() {
   }
 
 }
-
-
-img {
-  width: 100%;
-}
+  img {
+    width: 100%;
+  }
 
 </style>
