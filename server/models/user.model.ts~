@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema<UserSchema>({
   trim: true,
   validate: {
    validator: function (value: string) {
-    return /^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value); // Исправлено на \s для пробела
+    return /^[a-zA-Zа-яА-ЯёЁs-]+$/.test(value); // Добавлена поддержка кириллицы
    },
    message: 'Неправильно набрано имя',
   },
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema<UserSchema>({
   trim: true,
   validate: {
    validator: function (value: string) {
-    return /^[a-zA-Zа-яА-ЯёЁ\s-]+$/.test(value); // Исправлено на \s для пробела
+    return /^[a-zA-Zа-яА-ЯёЁs-]+$/.test(value); // Добавлена поддержка кириллицы
    },
    message: 'Неправильно набрана фамилия',
   },
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema<UserSchema>({
   unique: true, // Добавлено уникальное значение
   validate: {
    validator: function (value: string) {
-    return /^\S+@\S+\.\S+$/.test(value); // Исправлено регулярное выражение
+    return /^S+@S+.S+$/.test(value); // Можно улучшить регулярное выражение
    },
    message: 'Неправильный формат электронной почты.',
   },

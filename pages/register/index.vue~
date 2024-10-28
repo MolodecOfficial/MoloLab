@@ -84,7 +84,7 @@ async function registerUser() {
             <p class="input_helper">Фамилия</p>
             <AccountMoloFormInput v-model="lastName" placeholder="Используйте настоящую фамилию"/>
             <p class="input_helper">E-mail</p>
-            <AccountMoloFormInput v-model="email" type="email" placeholder="Например example@gmail.com"/>
+            <AccountMoloFormInput v-model="email" type="email" placeholder="Используйте стандарт например example@gmail.com"/>
             <p class="input_helper">Пароль</p>
             <AccountMoloFormInput v-model="password" type="password" placeholder="Пароль должен содержать 8 символов"/>
             <p class="input_helper">Подтвердите пароль</p>
