@@ -1,19 +1,26 @@
 <script setup lang="ts">
-const isAuthenticated = ref(false);
+import { onMounted } from 'vue';
+import { useAuthStore } from '~/stores/authStore';
+
+const authStore = useAuthStore();
 
 onMounted(() => {
-  isAuthenticated.value = !!localStorage.getItem('token');
-});
+  const user = localStorage.getItem('user');
+  const admin = JSON.parse(localStorage.getItem('admin') || '{}');
 
+  authStore.isAuthenticated = !!user;
+  authStore.isAdmin = admin && admin.email === 'MolodecOfficial';
+});
 </script>
 
 <template>
-  <div v-if="isAuthenticated">
+  <div v-if="authStore.isAuthenticated && authStore.isAdmin">
     <slot></slot>
   </div>
   <div v-else>
-    <p>Если вы видите эту страницу, значит в данный момент выполняется инициализация входа в систему</p>
-    <p>Если по истечении минуты вас не перенаправило в систему, просьба заново выполнить вход</p>
+    <p>В данный момент идёт инициализация входа</p>
+    <p>Система ещё в разработке, поэтому вас может выбросить сюда просто так</p>
+    <p>Прошу прощения за неудобства</p>
     <router-link to="/login">Войти</router-link>
   </div>
 </template>

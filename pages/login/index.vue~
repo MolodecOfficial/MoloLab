@@ -2,7 +2,6 @@
 import {onBeforeMount, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useUserStore} from "~/stores/userStore";
-import Cookies from 'js-cookie';
 
 const email = ref('');
 const firstName = ref('')

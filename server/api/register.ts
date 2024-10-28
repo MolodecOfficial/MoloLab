@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
  try {
   await newUser.save();
-  return { message: "Пользователь успешно зарегистрирован" };
+  return { message: "Пользователь успешно зарегистрирован"};
  } catch (error) {
   if (error === 11000) {
    throw createError({ statusCode: 400, message: "Данный пользователь уже существует" });

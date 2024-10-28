@@ -89,6 +89,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 
 </script>
 <template>
+  <AccountMoloGuard>
     <header>
       <section class="logoSection">
         <img :src="logo" alt="">
@@ -123,6 +124,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
         </section>
       </section>
     </div>
+  </AccountMoloGuard>
 </template>
 
 <style scoped>
