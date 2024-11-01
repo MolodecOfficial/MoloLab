@@ -17,11 +17,11 @@ import rating from 'public/account/routeList/star-list.png'
 <template>
   <section class="routeList">
     <section class="routeList_container">
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/news">
         <img :src="news" alt="">
         Новости
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account">
         <img :src="home" alt="">
         Главная
       </NuxtLink>

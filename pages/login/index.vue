@@ -63,11 +63,6 @@ async function loginUser() {
         lastName: data.user.lastName,
         email: data.user.email
       }));
-      console.log('Данные пользователя сохранены в localStorage:', {
-        firstName: data.user.firstName,
-        lastName: data.user.lastName,
-        email: data.user.email
-      });
       if (data.user.email === 'MolodecOfficial') {
         statusMessage.value = 'Добро пожаловать, Администратор Moloдец';
         setTimeout(() => router.push('/adminPanel'), 2000);

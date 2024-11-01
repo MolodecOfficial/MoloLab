@@ -19,6 +19,7 @@ async function getAllUsers() {
     loading.value = false;
   }
 }
+
 async function logoutUser() {
   try {
     localStorage.removeItem('admin');
@@ -29,9 +30,24 @@ async function logoutUser() {
   }
 }
 
+async function deleteUser(userId: string) {
+  if (!userId) {
+    console.error('Идентификатор пользователя не определен');
+    return; // Прекращаем выполнение функции, если идентификатор отсутствует
+  }
+
+  try {
+    await userStore.deleteUser(userId);
+    await getAllUsers(); // Обновляем список пользователей после удаления
+  } catch (error) {
+    console.error('Ошибка при удалении пользователя:', error);
+  }
+}
+
 onMounted(() => {
   getAllUsers();
-});
+})
+
 </script>
 
 <template>
@@ -48,6 +64,7 @@ onMounted(() => {
             <th>Имя пользователя</th>
             <th>Фамилия</th>
             <th>Почта</th>
+            <th>Действия</th>
           </tr>
           </thead>
           <tbody>
@@ -55,6 +72,9 @@ onMounted(() => {
             <td>{{ user.firstName }}</td>
             <td>{{ user.lastName }}</td>
             <td>{{ user.email }}</td>
+            <td>
+              <button class="delete-button" @click="() => deleteUser(user._id)">Удалить</button>
+            </td>
           </tr>
           </tbody>
         </table>
@@ -63,29 +83,28 @@ onMounted(() => {
   </AccountMoloGuard>
 </template>
 
-
 <style scoped>
 .styled-table {
   width: 100%;
-  border-collapse: collapse; /* Убираем двойные границы */
-  border-radius: 10px; /* Закругляем углы */
-  overflow: hidden; /* Убираем переполнение */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Тень для таблицы */
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .styled-table thead {
-  background-color: #4c86af; /* Цвет фона заголовков */
-  color: white; /* Цвет текста заголовков */
+  background-color: #4c86af;
+  color: white;
 }
 
 .styled-table th,
 .styled-table td {
-  padding: 12px 15px; /* Отступы внутри ячеек */
-  text-align: left; /* Выравнивание текста */
+  padding: 12px 15px;
+  text-align: left;
 }
 
 .styled-table tbody tr {
-  border-bottom: 1px solid #dddddd; /* Граница между строками */
+  border-bottom: 1px solid #dddddd;
 }
 
 h3 {
@@ -93,18 +112,35 @@ h3 {
 }
 
 .styled-table tbody tr:hover {
-  background-color: #f1f1f1; /* Цвет фона при наведении на строку */
+  background-color: #f1f1f1;
 }
 
 .styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #4c86af; /* Увеличенная граница для последней строки */
+  border-bottom: 2px solid #4c86af;
 }
+
 .back {
   color: #5a87e7;
   text-decoration: none;
-  &:hover {
-    text-decoration: underline 1px;
-    text-underline-offset: 3px;
-  }
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.delete-button {
+  background-color: #e74c3c; /* Красный цвет для кнопки удаления */
+  color: white; /* Белый текст */
+  border: none; /* Убираем границу */
+  border-radius: 5px; /* Закругляем углы */
+  padding: 8px 12px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя */
+  transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Темнее при наведении */
 }
 </style>

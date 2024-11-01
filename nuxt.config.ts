@@ -13,7 +13,7 @@ export default defineNuxtConfig({
  },
 
  runtimeConfig: {
-  mongodb: process.env.MONGODB_URI
+  mongodb: process.env.MONGODB_URI,
  },
 
  modules: ['@pinia/nuxt']

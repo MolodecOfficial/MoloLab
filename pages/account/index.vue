@@ -21,7 +21,6 @@ onMounted(() => {
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     const user = JSON.parse(storedUser);
-    console.log('Данные пользователя загружены из localStorage:', user);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;

@@ -1,0 +1,44 @@
+<script setup lang="ts">
+const myProps = defineProps({
+  title: String,
+  link: String
+})
+</script>
+
+<template>
+  <section class="news-leftBlock">
+    <NuxtLink :to="myProps.link" class="link">
+      <span>{{ myProps.title }}</span>
+    </NuxtLink>
+  </section>
+</template>
+
+<style scoped>
+.news-leftBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Отступы для внутреннего содержимого */
+  background-color: #ffffff;
+  border-radius: 15px; /* Округлые углы */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для глубины */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Плавный переход для эффектов */
+}
+
+.news-leftBlock:hover {
+  transform: translateY(-5px); /* Подъем блока при наведении */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Увеличенная тень при наведении */
+}
+
+.link {
+  text-decoration: none;
+  color: #4e45e3; /* Основной цвет текста */
+  font-size: 18px; /* Размер шрифта */
+  font-weight: bold; /* Жирный шрифт */
+  transition: color 0.2s ease; /* Плавный переход цвета */
+}
+
+.link:hover {
+  color: #3b3b7f; /* Цвет текста при наведении */
+}
+</style>
