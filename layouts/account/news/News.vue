@@ -13,7 +13,7 @@ interface RightNews {
 
 const MyNews: Array<LeftNews> = [
   {
-    title: 'Обновление 0.06',
+    title: 'Обновление 0.06 (Установлено)',
     link: ''
   },{
     title: 'Обновление 0.05',
