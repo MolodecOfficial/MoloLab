@@ -36,9 +36,13 @@ const myProps = defineProps({
   font-size: 18px; /* Размер шрифта */
   font-weight: bold; /* Жирный шрифт */
   transition: color 0.2s ease; /* Плавный переход цвета */
+  text-align: center;
 }
 
 .link:hover {
   color: #3b3b7f; /* Цвет текста при наведении */
+}
+span {
+  text-align: center;
 }
 </style>
