@@ -70,6 +70,14 @@ const schedules: any = {
         { time: '12:30 - 14:00', subject: 'История', teacher: 'Алексеев А.А.', typeOfLesson: 'Лабораторная работа' },
         { time: '12:30 - 14:00', subject: 'Инженерная графика', teacher: 'Попов К.А.', typeOfLesson: 'Самостоятельная работа' },
       ],
+    },{
+      date: '2023-10-03',
+      subjects: [
+        { time: '9:00 - 10:30', subject: 'Программирование', teacher: 'Кузнецов К.К.', typeOfLesson: 'Лекция' },
+        { time: '10:45 - 12:15', subject: 'Алгебра', teacher: 'Смирнов С.С.', typeOfLesson: 'Практика' },
+        { time: '12:30 - 14:00', subject: 'История', teacher: 'Алексеев А.А.', typeOfLesson: 'Лабораторная работа' },
+        { time: '12:30 - 14:00', subject: 'Инженерная графика', teacher: 'Попов К.А.', typeOfLesson: 'Самостоятельная работа' },
+      ],
     },
   ],
 };
