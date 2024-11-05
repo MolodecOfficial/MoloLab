@@ -111,27 +111,17 @@ button {
     cursor: pointer;
   }
 }
-.showMore {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 15px 10px;
-   & .showMore_btn {
-     height: 40px;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     width: 140px;
-     background-color: #123e98;
-     color: #e3e3e3;
-     border-radius: 15px;
-     text-decoration: none;
-     transition: 0.15s all ease-in-out;
-     &:hover {
-       text-decoration: underline 1px;
-       text-underline-offset: 4px;
-       background-color: #102f73;
-     }
-   }
+.show-more-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.show-more-btn:hover {
+  background-color: #0056b3;
 }
 </style>

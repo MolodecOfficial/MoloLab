@@ -25,7 +25,7 @@ import rating from 'public/account/routeList/star-list.png'
         <img :src="home" alt="">
         Главная
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/schedule">
         <img :src="schedule" alt="">
         Расписание
       </NuxtLink>
