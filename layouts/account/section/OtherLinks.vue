@@ -123,6 +123,6 @@ span {
 }
 
 .dark-theme .other_link {
-  color: #838383;
+  color: white;
 }
 </style>

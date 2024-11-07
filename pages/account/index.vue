@@ -265,6 +265,11 @@ header {
 .dark-theme .userInfo_user-information p {
   color: #838383;
 }
+
+.dark-theme .userInfo_user-information code {
+  color: white;
+}
+
 .dark-theme .userInfo_profession-information span,
 .dark-theme .userInfo_container span {
   color: #c2c2c2;
