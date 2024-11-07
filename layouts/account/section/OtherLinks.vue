@@ -58,7 +58,7 @@ const props = defineProps({
         <img :src="sdo" alt="">
         СДО Дистанционное образование
       </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
+      <NuxtLink class="other_link" to="/account/schedule">
         <img :src="timetable" alt="">
         Расписание занятий
       </NuxtLink>

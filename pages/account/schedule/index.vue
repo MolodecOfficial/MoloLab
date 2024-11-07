@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+useHead({
+  title: 'УГНТУ | Расписание'
+})
+
 const schedules: any = {
   'БПИ, БПИ09з': [
     {

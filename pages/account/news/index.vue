@@ -6,6 +6,10 @@ import {useRouter} from "vue-router";
 import RouteList from "~/layouts/account/section/RouteList.vue";
 import MyNews from "~/layouts/account/news/News.vue";
 
+useHead({
+  title: 'УГНТУ | Новости'
+})
+
 const firstName = ref('');
 const lastName = ref('');
 const userStore = useUserStore()
