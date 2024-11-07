@@ -12,10 +12,15 @@ import timetable from "public/account/main/Timetable.png";
 import testResult from "public/account/main/TestResult.png";
 import info from "public/account/main/Info.png";
 
+const props = defineProps({
+  darkTheme: Boolean,
+  toggleTheme: Function,
+});
+
 </script>
 
 <template>
-  <section class="other">
+  <section class="other" :class="{'dark-theme': darkTheme}">
     <span>Прочее</span>
     <section class="otherLinks_container">
       <NuxtLink class="other_link" to="/in-progress">
@@ -111,5 +116,13 @@ span {
   padding-top: 20px;
   color: #053969;
   font-size: 20px;
+}
+
+.dark-theme span {
+  color: #c2c2c2;
+}
+
+.dark-theme .other_link {
+  color: #838383;
 }
 </style>

@@ -12,10 +12,16 @@ import flipList from 'public/account/routeList/flip-list.png'
 import onlineNote from 'public/account/routeList/online-note.png'
 import resources from 'public/account/routeList/resources.png'
 import rating from 'public/account/routeList/star-list.png'
+
+const props = defineProps({
+  darkTheme: Boolean,
+  toggleTheme: Function,
+});
+
 </script>
 
 <template>
-  <section class="routeList">
+  <section class="routeList" :class="{ 'dark-theme': darkTheme }">
     <section class="routeList_container">
       <NuxtLink class="route" to="/account/news">
         <img :src="news" alt="">
@@ -77,14 +83,16 @@ import rating from 'public/account/routeList/star-list.png'
 .routeList {
   display: flex;
   flex-direction: column;
-  height: 92.9%;
+  height: auto;
   width: 13vw;
+
 }
 
 .routeList_container {
   height: 100%;
   width: 100%;
   background-color: #ffffff;
+  border-radius: 20px;
 }
 img {
   width: 30px;
@@ -102,5 +110,19 @@ img {
     text-underline-offset: 3px;
     color: black;
   }
+}
+.dark-theme {
+  background-color: #333; /* Пример темной темы */
+  color: white; /* Цвет текста в темной теме */
+}
+
+.dark-theme section {
+  background-color: #1e1e1e;
+}
+
+
+
+.dark-theme .route {
+  color: white;
 }
 </style>

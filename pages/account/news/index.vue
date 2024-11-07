@@ -2,7 +2,6 @@
 
 import logo from '~/public/favicon.ico';
 import {computed, onMounted, ref} from "vue";
-import {useUserStore} from "~/stores/userStore";
 import {useRouter} from "vue-router";
 import RouteList from "~/layouts/account/section/RouteList.vue";
 import MyNews from "~/layouts/account/news/News.vue";
@@ -10,6 +9,7 @@ import MyNews from "~/layouts/account/news/News.vue";
 const firstName = ref('');
 const lastName = ref('');
 const userStore = useUserStore()
+const themeStore = useThemeStore()
 const router = useRouter()
 
 
@@ -39,6 +39,8 @@ async function logoutUser() {
 
 }
 
+
+
 </script>
 
 <template>
@@ -51,6 +53,7 @@ async function logoutUser() {
         <span class="greetings">
           {{ greetings }}
         </span>
+      <button @click="themeStore.toggleTheme()">Сменить тему</button>
       <button @click="logoutUser">Выйти</button>
     </section>
   </header>
@@ -61,6 +64,22 @@ async function logoutUser() {
 </template>
 
 <style scoped>
+
+.dark-theme header {
+  background-color: #1e1e1e;
+}
+
+.dark-theme .greetings {
+  color: white;
+}
+
+.dark-theme .hello button {
+  color: #ffffff;
+}
+
+.dark-theme .hello button:hover {
+  color: #bb86fc;
+}
 
 header {
   display: flex;

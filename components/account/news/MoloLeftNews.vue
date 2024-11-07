@@ -3,6 +3,9 @@ const myProps = defineProps({
   title: String,
   link: String
 })
+
+useThemeStore()
+
 </script>
 
 <template>
@@ -14,6 +17,11 @@ const myProps = defineProps({
 </template>
 
 <style scoped>
+
+.dark-theme .news-leftBlock {
+  background-color: #1e1e1e;
+}
+
 .news-leftBlock {
   display: flex;
   justify-content: center;

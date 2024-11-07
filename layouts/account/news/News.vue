@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+useThemeStore()
+
 interface LeftNews {
   title: string,
   link: string
@@ -106,6 +108,20 @@ const UniversityNews: Array<RightNews> = [
 </template>
 
 <style scoped>
+
+.dark-theme .newsContainer {
+  background-color: #1a1a1a;
+}
+
+.dark-theme .newsHeader {
+  background-color: #1e1e1e;
+  & span {
+    color: white;
+  }
+}
+
+
+
 .newsContainer {
   width: 100%;
   height: 100%;

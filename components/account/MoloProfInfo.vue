@@ -1,11 +1,13 @@
 <script setup lang="ts">
 const props = defineProps({
-  info: Object
+  info: Object,
+  darkTheme: Boolean,
+  toggleTheme: Function,
 });
 </script>
 
 <template>
-  <section class="professionInfo">
+  <section class="professionInfo" :class="{'dark-theme': darkTheme}">
     <span>№м.уч.: <code>{{ info.number }}</code></span>
     <span>Форма: <code>{{ info.form }}</code></span>
     <span>Факультет: <code>{{ info.faculty }}</code></span>
@@ -42,6 +44,14 @@ const props = defineProps({
   & code {
     color: #5a87e7;
   }
+}
+
+.dark-theme span {
+  color: #838383;
+}
+
+.dark-theme code {
+  color: white;
 }
 
 </style>

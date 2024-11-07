@@ -4,6 +4,7 @@ import {useUserStore} from '~/stores/userStore';
 import logo from '~/public/favicon.ico';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
 import RouteList from "~/layouts/account/section/RouteList.vue";
+import {useThemeStore} from "~/stores/themeStore";
 
 
 useHead({
@@ -11,6 +12,7 @@ useHead({
 })
 
 const userStore = useUserStore();
+const themeStore = useThemeStore()
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('')
@@ -28,6 +30,8 @@ onMounted(() => {
     firstName.value = userStore.userFirstName;
     lastName.value = userStore.userLastName
     email.value = userStore.userEmail
+
+    professionInfos.length = 0
   }
 });
 
@@ -86,42 +90,47 @@ const professionInfos: Array<ProfessionInfoType> = [
 
 const greetings = computed(() => `Привет, ${firstName.value} ${lastName.value}`);
 
+
 </script>
+
 <template>
-    <header>
-      <section class="logoSection">
-        <img :src="logo" alt="">
-        <span>УГНТУ</span>
-      </section>
-      <section class="hello">
+  <header>
+    <section class="logoSection">
+      <img :src="logo" alt="">
+      <span>УГНТУ</span>
+    </section>
+    <section class="hello">
         <span class="greetings">
           {{ greetings }}
         </span>
-        <button @click="logoutUser">Выйти</button>
-      </section>
-    </header>
-    <div class="container">
-      <RouteList />
-      <section class="userInfo">
-        <section class="userInfo_container">
+      <button @click="themeStore.toggleTheme()">Сменить тему</button>
+      <button @click="logoutUser">Выйти</button>
+    </section>
+  </header>
+  <div class="container">
+    <RouteList/>
+    <section class="userInfo">
+      <section class="userInfo_container">
           <span>
             Личные данные студента
           </span>
-          <section class="userInfo_user-information">
-            <p>ФИО: <code>{{ firstName }}</code> <code>{{ lastName }}</code></p>
-            <p>Email: <code> {{ email }} </code></p>
-          </section>
-          <section class="userInfo_profession-information">
-            <span>Сведения о специальности</span>
-            <AccountMoloProfInfo v-for="(info, idx) in professionInfos"
-                          :info="info"
-                          :key="idx"
-            />
-          </section>
-          <OtherLinks/>
+        <section class="userInfo_user-information">
+          <p>ФИО: <code>{{ firstName }}</code> <code>{{ lastName }}</code></p>
+          <p>Email: <code> {{ email }} </code></p>
         </section>
       </section>
-    </div>
+      <section class="userInfo_information">
+        <section class="userInfo_profession-information">
+          <span>Сведения о специальности</span>
+          <AccountMoloProfInfo v-for="(info, idx) in professionInfos"
+                               :info="info"
+                               :key="idx"
+          />
+        </section>
+        <OtherLinks/>
+      </section>
+    </section>
+  </div>
 </template>
 
 <style scoped>
@@ -130,9 +139,11 @@ header {
   flex-direction: row;
   justify-content: space-between;
 }
+
 .hello {
   display: flex;
   flex-direction: row;
+
   & button {
     background-color: transparent;
     border: none;
@@ -143,11 +154,13 @@ header {
     justify-content: center;
     align-items: center;
     transition: 1ms all ease-in-out;
+
     &:hover {
       color: #0028ef;
     }
   }
 }
+
 .container {
   overflow: hidden;
   display: flex;
@@ -184,16 +197,18 @@ header {
 
 .userInfo {
   display: flex;
-  height: 92.7vh;
+  height: 93vh;
   background-color: #f5f7fa;
   width: 100%;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 40px;
 }
 
 .userInfo_container {
   background-color: #ffffff;
-  height: 80vh;
+  height: 12vh;
   width: 90%;
   border-radius: 20px;
   display: flex;
@@ -211,22 +226,59 @@ header {
   display: flex;
   flex-direction: row;
   gap: 20px;
-
   & p {
     font-size: 20px;
     color: #052542;
   }
 }
 
+.userInfo_information {
+  width: 90%;
+  padding: 20px 0;
+  border-radius: 20px;
+  background-color: white;
+}
+
 .userInfo_profession-information {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   & span {
     padding: 10px 0 30px 0;
     color: #053969;
     font-size: 20px;
   }
+}
+
+
+.dark-theme header,
+.dark-theme .userInfo_container,
+.dark-theme .userInfo_information {
+  background-color: #1e1e1e;
+}
+
+.dark-theme .userInfo {
+  background-color: #1a1a1a;
+}
+
+
+.dark-theme .userInfo_user-information p {
+  color: #838383;
+}
+.dark-theme .userInfo_profession-information span,
+.dark-theme .userInfo_container span {
+  color: #c2c2c2;
+}
+
+.dark-theme .greetings {
+  color: white;
+}
+
+.dark-theme .hello button {
+  color: #ffffff;
+}
+
+.dark-theme .hello button:hover {
+  color: #bb86fc;
 }
 </style>

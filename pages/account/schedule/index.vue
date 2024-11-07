@@ -46,7 +46,7 @@ const schedules: any = {
         { time: '14:35 – 16:10', subject: 'Основы российской государственности', teacher: 'Шалагина Светлана Витальевна', typeOfLesson: 'Практика' },
         { time: '16:20 – 17:55', subject: 'Математика', teacher: 'Гильмутдинов Риф Забирович', typeOfLesson: 'Лекция' },
         { time: '18:05 – 19:40', subject: 'Математика', teacher: 'Гильмутдинов Риф Забирович', typeOfLesson: 'Практика' },
-        { time: '18:05 – 19:40', subject: 'Инженерная компьютерная графика', teacher: 'Набиев Рифкат Ильшатович', typeOfLesson: 'Лекция' },
+        { time: '19:50 – 21:15', subject: 'Инженерная компьютерная графика', teacher: 'Набиев Рифкат Ильшатович', typeOfLesson: 'Лекция' },
       ],
     },
     {
@@ -88,11 +88,13 @@ const schedule = ref(schedules[selectedGroup.value]);
 function updateSchedule() {
   schedule.value = schedules[selectedGroup.value];
 }
+
+useThemeStore()
 </script>
 
 <template>
-  <NuxtLink to="/account" class="back">Вернуться обратно</NuxtLink>
   <div class="schedule-container">
+    <NuxtLink to="/account" class="back">Вернуться обратно</NuxtLink>
     <header>
       <h1>Расписание занятий</h1>
       <select v-model="selectedGroup" @change="updateSchedule">
@@ -126,10 +128,37 @@ function updateSchedule() {
 
 
 <style scoped>
+
+.dark-theme .back {
+  background-color: #1e1e1e;
+}
+
+.dark-theme .schedule-container {
+  background-color: #1e1e1e;
+  & h1 {
+    color: white;
+  }
+}
+
+.dark-theme .subject-item {
+  background-color: #2c2c2c;
+}
+
+.dark-theme .schedule-list {
+  background-color: #1a1a1a;
+}
+
+.dark-theme span {
+  color: white;
+}
+
+.dark-theme .teacher {
+  color: #a9a9a9;
+}
+
 .schedule-container {
   padding: 20px;
   background-color: #ffffff; /* Белый фон */
-  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -157,7 +186,7 @@ select {
   background-color: #f3f3f3;
   justify-content: center;
   align-items: center;
-
+  border-radius: 20px;
 }
 
 .schedule-item {
@@ -225,7 +254,6 @@ span {
 .back {
   text-decoration: none;
   color: #4e45e3;
-
   &:hover {
     text-decoration: underline 1px;
     text-underline-offset: 3px;

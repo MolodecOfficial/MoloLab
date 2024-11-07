@@ -4,6 +4,8 @@ const UniversityProps = defineProps({
   title: String,
   description: String
 })
+
+useThemeStore()
 </script>
 
 <template>
@@ -15,6 +17,17 @@ const UniversityProps = defineProps({
 </template>
 
 <style scoped>
+
+.dark-theme .news-rightBlock {
+  background-color: #1e1e1e;
+  & span {
+    color: white;
+  }
+  & h2 {
+    color: #838383;
+  }
+}
+
 .news-rightBlock {
   background-color: #ffffff;
   margin-top: 45px;
