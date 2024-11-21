@@ -30,7 +30,7 @@ let MoloNewsArray: Array<MoloNew> = [
     link: '/in-progress'
   },
   {
-    image: '/news/5.png',
+    image: '/news/99.png',
     description: 'Форум «ИмпульсMedia» стартовал в Уфе',
     link: '/in-progress'
   },
@@ -111,7 +111,14 @@ button {
     cursor: pointer;
   }
 }
-.show-more-btn {
+.showMore {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 20px 0;
+}
+
+.showMore_btn {
   display: inline-block;
   padding: 10px 20px;
   background-color: #007bff;
@@ -121,7 +128,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-.show-more-btn:hover {
+.showMore_btn:hover {
   background-color: #0056b3;
 }
 </style>

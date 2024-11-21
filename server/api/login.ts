@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
         return {
             message: `Добро пожаловать, ${user.firstName} ${user.lastName}`,
             user: {
+                _id: user._id,  // Добавляем _id в ответ
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName

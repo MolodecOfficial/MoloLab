@@ -17,15 +17,16 @@ const loading = ref(false);
 const statusMessage = ref('');
 
 const router = useRouter();
-
 const userStore = useUserStore()
 
 async function registerUser() {
+  // Проверяем, что пароли совпадают
   if (password.value !== confirmPassword.value) {
     statusMessage.value = "Пароли не совпадают, будьте внимательнее";
     return;
   }
 
+  // Создаем объект данных, который отправим на сервер
   const userData = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -37,21 +38,35 @@ async function registerUser() {
     loading.value = true;
     statusMessage.value = 'Идёт создание пользователя...';
 
+    // Отправляем данные на сервер
     const response = await fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(userData), // Отправляем данные в формате JSON
     });
 
+    // Проверяем успешность ответа от сервера
     if (response.ok) {
       const data = await response.json();
-      statusMessage.value = `Пользователь успешно создан! Переадресация...`;
+      statusMessage.value = 'Пользователь успешно создан! Переадресация...';
+
+      // Логируем ID нового пользователя в консоль
+      console.log('ID нового пользователя:', data.user._id);  // Выводим ID
+
+      // Сохраняем данные в store (например, email, имя, фамилию)
+      userStore.setUser({
+        email: email.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        _id: data.user._id
+      })
+      userStore.setEmail(email.value);
+      userStore.setFirstName(firstName.value);
+      userStore.setLastName(lastName.value);
+
       setTimeout(() => router.push('/login'), 2000);
-      userStore.setEmail(email.value)
-      userStore.setFirstName(firstName.value)
-      userStore.setLastName(lastName.value)
     } else {
       const errorData = await response.json();
       statusMessage.value = errorData.message || 'Произошла ошибка при регистрации';

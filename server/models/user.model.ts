@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema<UserSchema>({
   select: false,
   minlength: [8, 'Пароль слишком короткий.'],
  },
+ achievements: {
+  type: [String],
+  default: ["1"]
+ }
 });
 
 

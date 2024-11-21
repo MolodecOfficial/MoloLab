@@ -1,9 +1,7 @@
 <script setup lang="ts">
 
-import logo from '~/public/favicon.ico';
 import {computed, onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import RouteList from "~/layouts/account/section/RouteList.vue";
 import MyNews from "~/layouts/account/news/News.vue";
 
 useHead({
@@ -48,99 +46,18 @@ async function logoutUser() {
 </script>
 
 <template>
-  <header>
-    <section class="logoSection">
-      <img :src="logo" alt="">
-      <span>УГНТУ</span>
-    </section>
-    <section class="hello">
-        <span class="greetings">
-          {{ greetings }}
-        </span>
-      <button @click="themeStore.toggleTheme()">Сменить тему</button>
-      <button @click="logoutUser">Выйти</button>
-    </section>
-  </header>
+  <AccountMoloHeader/>
   <div class="container">
-    <RouteList />
+    <AccountMoloRouteList />
     <MyNews />
   </div>
 </template>
 
 <style scoped>
 
-.dark-theme header {
-  background-color: #1e1e1e;
-}
-
-.dark-theme .greetings {
-  color: white;
-}
-
-.dark-theme .hello button {
-  color: #ffffff;
-}
-
-.dark-theme .hello button:hover {
-  color: #bb86fc;
-}
-
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.hello {
-  display: flex;
-  flex-direction: row;
-  & button {
-    background-color: transparent;
-    border: none;
-    padding-right: 26px;
-    font-size: 18px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    transition: 1ms all ease-in-out;
-    &:hover {
-      color: #0028ef;
-    }
-  }
-}
 .container {
   overflow: auto;
   display: flex;
 }
-
-.logoSection {
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-
-  & img {
-    width: 45px;
-  }
-
-  & span {
-    font-size: 40px;
-    line-height: 24px;
-    letter-spacing: -.02em;
-    color: #123e98;
-    padding-left: 6px;
-  }
-}
-
-.greetings {
-  padding: 10px 20px;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70%;
-}
-
 
 </style>

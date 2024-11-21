@@ -3,8 +3,9 @@ import {computed, onMounted, ref} from 'vue';
 import {useUserStore} from '~/stores/userStore';
 import logo from '~/public/favicon.ico';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
-import RouteList from "~/layouts/account/section/RouteList.vue";
+import RouteList from "~/components/account/MoloRouteList.vue";
 import {useThemeStore} from "~/stores/themeStore";
+import MoloHeader from "~/components/account/MoloHeader.vue";
 
 
 useHead({
@@ -34,17 +35,6 @@ onMounted(() => {
     professionInfos.length = 0
   }
 });
-
-async function logoutUser() {
-  try {
-    localStorage.removeItem('user')
-    userStore.clearUser()
-    await router.push('/login')
-  } catch (error) {
-    console.error('Ошибка при выходе из аккаунта:', error)
-  }
-
-}
 
 interface ProfessionInfoType {
   number: string,
@@ -94,21 +84,9 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 </script>
 
 <template>
-  <header>
-    <section class="logoSection">
-      <img :src="logo" alt="">
-      <span>УГНТУ</span>
-    </section>
-    <section class="hello">
-        <span class="greetings">
-          {{ greetings }}
-        </span>
-      <button @click="themeStore.toggleTheme()">Сменить тему</button>
-      <button @click="logoutUser">Выйти</button>
-    </section>
-  </header>
+  <MoloHeader/>
   <div class="container">
-    <RouteList/>
+    <AccountMoloRouteList/>
     <section class="userInfo">
       <section class="userInfo_container">
           <span>
@@ -134,65 +112,10 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 </template>
 
 <style scoped>
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.hello {
-  display: flex;
-  flex-direction: row;
-
-  & button {
-    background-color: transparent;
-    border: none;
-    padding-right: 26px;
-    font-size: 18px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    transition: 1ms all ease-in-out;
-
-    &:hover {
-      color: #0028ef;
-    }
-  }
-}
 
 .container {
   overflow: hidden;
   display: flex;
-}
-
-.logoSection {
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-
-  & img {
-    width: 45px;
-  }
-
-  & span {
-    font-size: 40px;
-    line-height: 24px;
-    letter-spacing: -.02em;
-    color: #123e98;
-    padding-left: 6px;
-  }
-}
-
-.greetings {
-  padding: 10px 20px;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70%;
 }
 
 .userInfo {
@@ -214,7 +137,7 @@ header {
   display: flex;
   align-items: center;
   flex-direction: column;
-
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   & span {
     padding-top: 20px;
     color: #053969;
@@ -237,12 +160,14 @@ header {
   padding: 20px 0;
   border-radius: 20px;
   background-color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .userInfo_profession-information {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   & span {
     padding: 10px 0 30px 0;
     color: #053969;
@@ -275,15 +200,4 @@ header {
   color: #c2c2c2;
 }
 
-.dark-theme .greetings {
-  color: white;
-}
-
-.dark-theme .hello button {
-  color: #ffffff;
-}
-
-.dark-theme .hello button:hover {
-  color: #bb86fc;
-}
 </style>

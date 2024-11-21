@@ -15,10 +15,13 @@ interface RightNews {
 
 const MyNews: Array<LeftNews> = [
   {
-    title: 'Обновление 0.08 (Установлено)',
+    title: 'Обновление 0.1 (Установлено)',
     link: 'https://t.me/molodec_official_tg/242'
   }, {
-    title: 'Обновление 0.07 ',
+    title: 'Обновление 0.08',
+    link: 'https://t.me/molodec_official_tg/242'
+  }, {
+    title: 'Обновление 0.07',
     link: 'https://t.me/molodec_official_tg/238'
   }, {
     title: 'Обновление 0.06',
@@ -123,8 +126,6 @@ const UniversityNews: Array<RightNews> = [
   }
 }
 
-
-
 .newsContainer {
   width: 100%;
   height: 100%;
@@ -132,6 +133,7 @@ const UniversityNews: Array<RightNews> = [
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .newsContainer-block {
@@ -142,12 +144,13 @@ const UniversityNews: Array<RightNews> = [
   background-color: #ffffff;
   width: 100%;
   height: 12vh;
-  margin-top: 60px;
+  margin-top: 74px;
   display: flex;
   justify-content: center;
   border-radius: 20px;
   align-items: center;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   & span {
     font-size: 30px;
     color: #053969;

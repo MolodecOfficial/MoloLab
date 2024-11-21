@@ -47,7 +47,7 @@ const props = defineProps({
         <img :src="tracking" alt="">
         Индивидуальный трек
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/achievements">
         <img :src="achievements" alt="">
         Достижения
       </NuxtLink>
@@ -89,10 +89,9 @@ const props = defineProps({
 }
 
 .routeList_container {
-  height: 100%;
+  height: 93vh;
   width: 100%;
   background-color: #ffffff;
-  border-radius: 20px;
 }
 img {
   width: 30px;

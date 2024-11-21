@@ -49,20 +49,34 @@ async function loginUser() {
       const data = await response.json();
       statusMessage.value = `Успешный вход! ${data.message}`;
 
-      // Сохранение данных пользователя в store
-      userStore.setUser(data.user);
+      // Логируем все данные пользователя
+      console.log('Данные, полученные от сервера:', data);  // Проверяем структуру данных
+
+      // Сохраняем данные пользователя в store, включая _id
+      if (data.user && data.user._id) {
+        userStore.setUser(data.user);
+        console.log('Сохранённые данные пользователя:', data.user);  // Логируем сохраненные данные
+      } else {
+        console.error('Отсутствует ID пользователя в ответе:', data);
+      }
+
       // Сохранение данных пользователя в Cookies
       Cookies.set('user', JSON.stringify({
         firstName: data.user.firstName,
         lastName: data.user.lastName,
-        email: data.user.email
+        email: data.user.email,
+        _id: data.user._id
       }), { expires: 7 });
+
       // Сохранение данных пользователя в localStorage
       localStorage.setItem('user', JSON.stringify({
         firstName: data.user.firstName,
         lastName: data.user.lastName,
-        email: data.user.email
+        email: data.user.email,
+        _id: data.user._id
       }));
+
+      // Перенаправление для администраторов
       if (data.user.email === 'MolodecOfficial') {
         statusMessage.value = 'Добро пожаловать, Администратор Moloдец';
         setTimeout(() => router.push('/adminPanel'), 2000);
@@ -81,7 +95,6 @@ async function loginUser() {
     loading.value = false;
   }
 }
-
 </script>
 
 <template>

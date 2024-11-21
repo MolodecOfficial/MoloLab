@@ -4,7 +4,7 @@ import { User } from "~/server/models/user.model";
 export default defineEventHandler(async (event) => {
  const body = await readBody(event);
  console.log('Received body:', body);
- const { firstName, lastName, email, password } = body;
+ const { _id, firstName, lastName, email, password } = body;
 
  // Проверяем, существует ли пользователь с таким же email
  const existingUser = await User.findOne({ email });
@@ -19,7 +19,15 @@ export default defineEventHandler(async (event) => {
 
  try {
   await newUser.save();
-  return { message: "Пользователь успешно зарегистрирован"};
+  return {
+   message: "Пользователь успешно зарегистрирован",
+   user: {
+    _id: newUser._id,
+    firstName: newUser.firstName,
+    lastName: newUser.lastName,
+    email: newUser.email,
+   }
+  };
  } catch (error) {
   if (error === 11000) {
    throw createError({ statusCode: 400, message: "Данный пользователь уже существует" });

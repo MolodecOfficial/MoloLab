@@ -14,6 +14,7 @@ export default defineNuxtConfig({
 
  runtimeConfig: {
   mongodb: process.env.MONGODB_URI,
+  jwt: process.env.JWT_SECRET
  },
 
  modules: ['@pinia/nuxt']
