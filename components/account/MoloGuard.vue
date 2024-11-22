@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="authStore.isAuthenticated && authStore.isAdmin">
+  <div v-if="authStore.isAdmin">
     <slot></slot>
   </div>
   <div v-else>
