@@ -30,7 +30,7 @@ let MoloNewsArray: Array<MoloNew> = [
     link: '/in-progress'
   },
   {
-    image: '/news/99.png',
+    image: '/news/5.png',
     description: 'Форум «ИмпульсMedia» стартовал в Уфе',
     link: '/in-progress'
   },
