@@ -70,18 +70,6 @@ onMounted(async () => {
   }
 }
 
-.load {
-  padding: 20px;
-  border-radius: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & p {
-    font-size: 30px;
-    animation: load 2s infinite;
-  }
-}
 
 .dark-theme .achievements-container {
   background-color: #1a1a1a;
@@ -89,6 +77,7 @@ onMounted(async () => {
 
 .dark-theme .achievements-header {
   background-color: #1e1e1e;
+  border: 1px solid #2c2c2c;
   & span {
     color: white;
   }
@@ -118,6 +107,7 @@ onMounted(async () => {
   align-items: center;
   flex-direction: column;
   gap: 30px;
+  height: 300vh;
 }
 
 .achievements-header {
@@ -146,6 +136,7 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
 }
 
 .achievement-item {
@@ -199,6 +190,13 @@ p {
 .achievement-item.obtained {
   background-color: #d4edda; /* Цвет для полученных достижений */
 }
-
+@media (max-width: 765px) {
+  .achievements-list {
+    display: grid;
+  }
+  .achievement-item {
+    width: 80%;
+  }
+}
 
 </style>

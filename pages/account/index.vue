@@ -74,12 +74,15 @@ const professionInfos: Array<ProfessionInfoType> = [
     number2: "426-4",
     date: "07.08.2024",
     startDate: "01.09.2024",
-    endDate: ""
+    endDate: "undefined"
   },
 ];
 
 const greetings = computed(() => `Привет, ${firstName.value} ${lastName.value}`);
 
+const userStatus = computed(() => {
+  return email.value === 'MolodecOfficial' ? 'Администратор' : 'Студент';
+});
 
 </script>
 
@@ -87,24 +90,30 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
   <MoloHeader/>
   <div class="container">
     <AccountMoloRouteList/>
-    <section class="userInfo">
-      <section class="userInfo_container">
+    <section class="user-info">
+      <section class="user-info__main">
+        <section class="user-card">
           <span>
             Личные данные студента
           </span>
-        <section class="userInfo_user-information">
-          <p>ФИО: <code>{{ firstName }}</code> <code>{{ lastName }}</code></p>
-          <p>Email: <code> {{ email }} </code></p>
+          <section class="user-card__details">
+            <p>ФИО: <code>{{ firstName }}</code> <code>{{ lastName }}</code></p>
+            <p>Email: <code>{{ email }}</code></p>
+            <p>Статус: <code>{{ userStatus }}</code></p>
+          </section>
+        </section>
+        <section class="specialty-info">
+          <section class="specialty-info__list">
+            <span>Сведения о специальности</span>
+            <AccountMoloProfInfo
+                v-for="(info, idx) in professionInfos"
+                :info="info"
+                :key="idx"
+            />
+          </section>
         </section>
       </section>
-      <section class="userInfo_information">
-        <section class="userInfo_profession-information">
-          <span>Сведения о специальности</span>
-          <AccountMoloProfInfo v-for="(info, idx) in professionInfos"
-                               :info="info"
-                               :key="idx"
-          />
-        </section>
+      <section class="additional-links">
         <OtherLinks/>
       </section>
     </section>
@@ -118,26 +127,36 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
   display: flex;
 }
 
-.userInfo {
+.user-info {
   display: flex;
   height: 93vh;
   background-color: #f5f7fa;
-  width: 100%;
+  width: 95%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 40px;
+  padding: 0 40px 0 40px;
 }
 
-.userInfo_container {
+.user-info__main {
+  display: flex;
+  height: 35%;
+  gap: 40px;
+
+}
+
+.user-card {
   background-color: #ffffff;
-  height: 12vh;
-  width: 90%;
+  height: 100%;
+  width: 30%;
   border-radius: 20px;
   display: flex;
+  text-align: center;
   align-items: center;
   flex-direction: column;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
   & span {
     padding-top: 20px;
     color: #053969;
@@ -145,31 +164,41 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
   }
 }
 
-.userInfo_user-information {
+.user-card__details {
   display: flex;
-  flex-direction: row;
-  gap: 20px;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  padding: 20px;
+
   & p {
-    font-size: 20px;
+    text-align: center;
+    font-size: clamp(14px, 1.3vw, 20px);
     color: #052542;
+  }
+
+  & code {
+    color: #5a87e7;
   }
 }
 
-.userInfo_information {
-  width: 90%;
-  padding: 20px 0;
+.specialty-info {
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
   background-color: white;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.userInfo_profession-information {
+.specialty-info__list {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   & span {
-    padding: 10px 0 30px 0;
+    padding: 20px 0 20px 0;
     color: #053969;
     font-size: 20px;
   }
@@ -177,27 +206,39 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 
 
 .dark-theme header,
-.dark-theme .userInfo_container,
-.dark-theme .userInfo_information {
+.dark-theme .user-card,
+.dark-theme .specialty-info {
   background-color: #1e1e1e;
 }
 
-.dark-theme .userInfo {
+.dark-theme .user-card,
+.dark-theme .specialty-info {
+  border: 1px solid #2c2c2c;
+}
+
+.dark-theme .user-info {
   background-color: #1a1a1a;
 }
 
+.additional-links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+}
 
-.dark-theme .userInfo_user-information p {
+.dark-theme .user-card__details p {
   color: #838383;
 }
 
-.dark-theme .userInfo_user-information code {
+.dark-theme .user-card__details code {
   color: white;
 }
 
-.dark-theme .userInfo_profession-information span,
-.dark-theme .userInfo_container span {
+.dark-theme .specialty-info__list span,
+.dark-theme .user-card span {
   color: #c2c2c2;
 }
+
 
 </style>

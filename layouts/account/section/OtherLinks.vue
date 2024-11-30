@@ -20,65 +20,93 @@ const props = defineProps({
 </script>
 
 <template>
-  <section class="other" :class="{'dark-theme': darkTheme}">
-    <span>Прочее</span>
-    <section class="otherLinks_container">
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="android" alt="">
-        Версия ЛК на Android версия: 2.0.1
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="dormitory" alt="">
-        Общежитие
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="payments" alt="">
-        Выплаты
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="receipts" alt="">
-        Квитанции на оплату
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="rating" alt="">
-        Рейтинг
-      </NuxtLink>
+  <section class="other-links" :class="{'dark-theme': darkTheme}">
+    <section class="other">
+      <span>Прочее</span>
+      <section class="otherLinks_container">
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="android" alt="">
+          Версия ЛК на Android версия: 2.0.1
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="dormitory" alt="">
+          Общежитие
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="payments" alt="">
+          Выплаты
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="receipts" alt="">
+          Квитанции на оплату
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="rating" alt="">
+          Рейтинг
+        </NuxtLink>
+      </section>
     </section>
-  </section>
-  <section class="other_2">
-    <span>
+    <hr>
+    <section class="other_2">
+      <span>
       Образовательные ресурсы
-    </span>
-    <section class="otherLinks_container">
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="library" alt="">
-        Библиотека
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="sdo" alt="">
-        СДО Дистанционное образование
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/account/schedule">
-        <img :src="timetable" alt="">
-        Расписание занятий
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/in-progress">
-        <img :src="testResult" alt="">
-        Система тестирования
-      </NuxtLink>
-      <NuxtLink class="other_link" to="/account/news">
-        <img :src="info" alt="">
-        Информация по образовательным программам
-      </NuxtLink>
+      </span>
+      <section class="otherLinks_container">
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="library" alt="">
+          Библиотека
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="sdo" alt="">
+          СДО Дистанционное образование
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/account/schedule">
+          <img :src="timetable" alt="">
+          Расписание занятий
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/in-progress">
+          <img :src="testResult" alt="">
+          Система тестирования
+        </NuxtLink>
+        <NuxtLink class="other_link" to="/account/news">
+          <img :src="info" alt="">
+          Информация по образовательным программам
+        </NuxtLink>
+      </section>
     </section>
   </section>
+
 </template>
 
 <style scoped>
+
+.other-links {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+}
+
+hr {
+  width: 80%;
+  height: 2px;
+  border: none;
+  background-color: #ccc; /* Нейтральный цвет */
+  opacity: 0.2;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
 .other {
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  & span {
+    padding-top: 20px;
+    color: #053969;
+    font-size: 20px;
+  }
 }
 
 .other_link {
@@ -97,9 +125,8 @@ const props = defineProps({
 }
 
 .otherLinks_container {
-  padding-left: 20px;
-  padding-top: 20px;
   display: grid;
+  padding: 20px;
   justify-items: center;
   text-align: center;
   grid-template-columns: repeat(5, 1fr);
@@ -109,20 +136,28 @@ const props = defineProps({
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 20px;
+  padding: 0 0 20px 0;
+
+  span {
+    padding-top: 10px;
+    color: #053969;
+    font-size: 20px;
+  }
+
 }
 
-span {
-  padding-top: 20px;
-  color: #053969;
-  font-size: 20px;
-}
 
 .dark-theme span {
   color: #c2c2c2;
 }
 
+.dark-theme .other-links {
+  background-color: #1e1e1e;
+  border: 1px solid #2c2c2c;
+}
+
 .dark-theme .other_link {
   color: white;
 }
+
 </style>

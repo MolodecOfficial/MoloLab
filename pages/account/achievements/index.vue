@@ -4,6 +4,10 @@ import MyAchievements from '~/layouts/account/achievements/Achievements.vue'
 
 useThemeStore()
 
+useHead({
+  title: 'УГНТУ | Достижения'
+})
+
 </script>
 
 <template>

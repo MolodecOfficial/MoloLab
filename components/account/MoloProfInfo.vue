@@ -33,10 +33,11 @@ const props = defineProps({
   display: grid;
   justify-items: center;
   text-align: center;
-  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0;
-  grid-row-gap: 5px;
+  grid-row-gap: 2px;
   & span {
     font-size: 14px;
     color: #052542;
@@ -54,4 +55,30 @@ const props = defineProps({
   color: white;
 }
 
+@media (max-width: 1024px) {
+  .professionInfo {
+    padding: 0 0;
+    grid-row-gap: 0;
+    & code {
+      font-size: 10px;
+    }
+    & span {
+      font-size: 11px;
+    }
+  }
+}
+@media (max-width: 1620px) {
+  .professionInfo {
+
+    grid-row-gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    & code {
+      font-size: 12px;
+    }
+    & span {
+      font-size: 12px;
+    }
+  }
+}
 </style>

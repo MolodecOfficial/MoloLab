@@ -117,10 +117,12 @@ const UniversityNews: Array<RightNews> = [
 
 .dark-theme .newsContainer {
   background-color: #1a1a1a;
+
 }
 
 .dark-theme .newsHeader {
   background-color: #1e1e1e;
+  border: 1px solid #2c2c2c;
   & span {
     color: white;
   }

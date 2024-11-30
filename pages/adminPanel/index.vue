@@ -83,7 +83,11 @@ onMounted(() => {
 <template>
   <AccountMoloGuard>
     <div>
-      <NuxtLink class="back" to="/login" @click="logoutUser">Вернуться на страницу входа</NuxtLink>
+      <section class="hyperlinks">
+        <NuxtLink class="back" to="/login" @click="logoutUser">Вернуться на страницу входа</NuxtLink>
+        <NuxtLink class="back" to="/account">Вернуться на страницу аккаунта</NuxtLink>
+      </section>
+
       <h3>Добро Пожаловать в панель администратора</h3>
       <h3>Текущий список пользователей</h3>
       <p v-if="loading">Загрузка пользователей...</p>
@@ -106,7 +110,7 @@ onMounted(() => {
             <td>
               {{
                 Array.isArray(user.achievements) && user.achievements.length > 0
-                    ? user.achievements.sort((a, b) => parseInt(a) - parseInt(b)).join(', ')
+                    ? user.achievements.sort((a: any, b: any) => parseInt(a) - parseInt(b)).join(', ')
                     : 'Нет достижений'
               }}
             </td>
@@ -143,6 +147,35 @@ onMounted(() => {
 
 
 <style scoped>
+
+.hyperlinks {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
+  & .back {
+    color: #5a87e7;
+    text-decoration: none;
+    display: inline-block;
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 20px;
+    transition: 0.3s all ease-in-out;
+    &:hover {
+      text-decoration: none;
+    }
+    &:nth-child(1):hover {
+      border: 1px solid red;
+      color: red;
+    }
+    &:nth-child(2):hover {
+      border: 1px solid green;
+      color: green
+    }
+  }
+}
+
+
+
 .styled-table {
   width: 100%;
   border-collapse: collapse;
@@ -178,12 +211,7 @@ h3 {
   border-bottom: 2px solid #4c86af;
 }
 
-.back {
-  color: #5a87e7;
-  text-decoration: none;
-  display: inline-block;
-  margin-bottom: 20px;
-}
+
 
 .back:hover {
   text-decoration: underline;

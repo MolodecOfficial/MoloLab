@@ -23,57 +23,64 @@ const props = defineProps({
 <template>
   <section class="routeList" :class="{ 'dark-theme': darkTheme }">
     <section class="routeList_container">
-      <NuxtLink class="route" to="/account/news">
-        <img :src="news" alt="">
-        Новости
-      </NuxtLink>
       <NuxtLink class="route" to="/account">
         <img :src="home" alt="">
-        Главная
+        <span>Главная</span>
+      </NuxtLink>
+      <NuxtLink class="route" to="/account/news">
+        <img :src="news" alt="Новости">
+        <span>Новости</span>
       </NuxtLink>
       <NuxtLink class="route" to="/account/schedule">
         <img :src="schedule" alt="">
-        Расписание
+        <span>Расписание</span>
       </NuxtLink>
       <NuxtLink class="route" to="/in-progress">
         <img :src="learning" alt="">
-        Обучение
+        <span>Обучение</span>
       </NuxtLink>
       <NuxtLink class="route" to="/in-progress">
         <img :src="chat" alt="">
-        Сообщения
+        <span>Сообщения</span>
       </NuxtLink>
       <NuxtLink class="route" to="/in-progress">
         <img :src="tracking" alt="">
-        Индивидуальный трек
+        <span>Индивидуальный трек</span>
       </NuxtLink>
       <NuxtLink class="route" to="/account/achievements">
         <img :src="achievements" alt="">
-        Достижения
+        <span>Достижения</span>
       </NuxtLink>
       <NuxtLink class="route" to="/in-progress">
         <img :src="read" alt="">
-        Читательский формуляр
+        <span>Читательский формуляр</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
-        <img :src="money" alt="">
-        Финансы
-      </NuxtLink>
+      <div class="link-container">
+        <NuxtLink class="route" to="/in-progress">
+          <img :src="money" alt="Иконка" class="icon">
+          <span>Финансы</span>
+        </NuxtLink>
+        <div class="popup-links">
+          <NuxtLink class="popup-link" to="/in-progress">Стипендия</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Оплата обучения</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Общежитие</NuxtLink>
+        </div>
+      </div>
       <NuxtLink class="route" to="/in-progress">
         <img :src="flipList" alt="">
-        Обходной
+        <span>Обходной</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/electronic-reception">
         <img :src="onlineNote" alt="">
-        Электронная приёмная
+        <span>Электронная приёмная</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/resources">
         <img :src="resources" alt="">
-        Ресурсы
+        <span>Ресурсы</span>
       </NuxtLink>
       <NuxtLink class="route" to="/in-progress">
         <img :src="rating" alt="">
-        Рейтинг
+        <span>Рейтинг</span>
       </NuxtLink>
     </section>
   </section>
@@ -89,7 +96,7 @@ const props = defineProps({
 }
 
 .routeList_container {
-  height: 93vh;
+  height: 100%;
   width: 100%;
   background-color: #ffffff;
 }
@@ -102,6 +109,7 @@ img {
   gap: 5px;
   padding: 10px 20px;
   text-decoration: none;
+
   transition: 1ms all ease-in-out;
   color: #919191;
   &:hover {
@@ -109,6 +117,55 @@ img {
     text-underline-offset: 3px;
     color: black;
   }
+}
+
+.link-container {
+  position: relative;
+  display: inline-block;
+}
+
+
+.popup-links {
+  position: absolute;
+  top: 20%;
+  left: 100%;
+  width: 100%;
+  gap: 5px;
+  padding: 10px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 10;
+}
+
+/* Всплывающая ссылка */
+.popup-link {
+  display: flex;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.popup-link:nth-child(1) {
+ border-radius: 10px 10px 0 0;
+}
+
+.popup-link:nth-child(3) {
+  border-radius: 0 0 10px 10px;
+}
+
+/* Показать всплывающие ссылки при наведении */
+.link-container:hover .popup-links {
+  display: block;
+}
+
+/* Эффект при наведении на ссылку */
+.popup-link:hover {
+  background-color: #f5f5f5;
+  color: #000;
 }
 .dark-theme {
   background-color: #333; /* Пример темной темы */
@@ -119,9 +176,35 @@ img {
   background-color: #1e1e1e;
 }
 
-
-
 .dark-theme .route {
   color: white;
+}
+
+.dark-theme .popup-links {
+  background-color: #1a1a1a;
+  border: 1px solid #343434;
+}
+
+.dark-theme .popup-link {
+  color: white;
+}
+
+.dark-theme .popup-link:hover {
+  background-color: #2c2c2c;
+}
+
+@media (max-width: 1550px) {
+  .routeList {
+    width: 8vh;
+  }
+
+  .route span {
+    display: none; /* Прячем текст */
+  }
+
+
+  .route {
+    justify-content: center;
+  }
 }
 </style>

@@ -20,6 +20,7 @@ useThemeStore()
 
 .dark-theme .news-rightBlock {
   background-color: #1e1e1e;
+  border: 1px solid #2c2c2c;
   & span {
     color: white;
   }
