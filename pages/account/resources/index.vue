@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import MyResources from '~/layouts/account/resources/Resources.vue'
+
+useHead({
+  title: 'УГНТУ | Ресурсы'
+})
 </script>
 
 <template>
