@@ -24,6 +24,9 @@ useThemeStore()
 }
 
 .news-leftBlock {
+  margin-top: 45px;
+  width: 20vw;
+  height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;

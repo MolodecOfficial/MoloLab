@@ -170,15 +170,6 @@ const UniversityNews: Array<RightNews> = [
   display: flex;
 }
 
-.news-leftBlock {
-  background-color: #ffffff;
-  margin-top: 45px;
-  width: 20vw;
-  height: 5vh;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-}
 
 
 
