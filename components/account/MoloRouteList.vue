@@ -28,7 +28,7 @@ const props = defineProps({
         <span>Главная</span>
       </NuxtLink>
       <NuxtLink class="route" to="/account/news">
-        <img :src="news" alt="Новости">
+        <img :src="news" alt="">
         <span>Новости</span>
       </NuxtLink>
       <NuxtLink class="route" to="/account/schedule">
@@ -51,13 +51,13 @@ const props = defineProps({
         <img :src="achievements" alt="">
         <span>Достижения</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/readers-form">
         <img :src="read" alt="">
         <span>Читательский формуляр</span>
       </NuxtLink>
       <div class="link-container">
         <NuxtLink class="route">
-          <img :src="money" alt="Иконка" class="icon">
+          <img :src="money" alt="" class="icon">
           <span>Финансы</span>
         </NuxtLink>
         <div class="popup-links">
@@ -90,9 +90,7 @@ const props = defineProps({
 .routeList {
   display: flex;
   flex-direction: column;
-  height: auto;
   width: 13vw;
-  position: sticky;
 }
 
 .routeList_container {
@@ -130,7 +128,7 @@ img {
   position: absolute;
   top: 20%;
   left: 100%;
-  width: 100%;
+  width: 10vw;
   gap: 5px;
   padding: 10px 10px;
   background-color: white;
@@ -138,7 +136,7 @@ img {
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: none;
-  z-index: 10;
+  z-index: 1000;
 }
 
 /* Всплывающая ссылка */

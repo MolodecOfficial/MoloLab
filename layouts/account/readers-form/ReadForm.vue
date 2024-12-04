@@ -1,0 +1,162 @@
+<script setup lang="ts">
+import {computed, onMounted} from "vue";
+
+const userStore = useUserStore()
+
+const id = ref('')
+const firstName = ref('')
+const lastName = ref('')
+const email = ref('')
+
+onMounted(() => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    firstName.value = user.firstName;
+    lastName.value = user.lastName;
+    email.value = user.email;
+    id.value = user._id
+  } else {
+    firstName.value = userStore.userFirstName;
+    lastName.value = userStore.userLastName
+    email.value = userStore.userEmail
+    id.value = userStore.userId
+  }
+});
+
+
+
+
+
+const userStatus = computed(() => {
+  return email.value === 'MolodecOfficial' ? 'Администратор' : 'Студент'
+})
+
+
+
+</script>
+
+<template>
+  <section class="read-form-container">
+    <section class="read-form-header">
+      <span>Читательский формуляр</span>
+    </section>
+    <section class="read-form-info">
+      <span class="info-span">Ваш ID:</span>
+      <span class="info">{{ id }}</span>
+      <span class="info-span">Ваша категория:</span>
+      <span class="info">{{ userStatus }}</span>
+      <span class="info-span">Ваше ФИО:</span>
+      <span class="info">{{ firstName }} {{ lastName }}</span>
+      <span class="info-span">Ваша дата рождения:</span>
+      <span class="info">undefined</span>
+      <span class="info-span">Ваш пол:</span>
+      <span class="info">undefined</span>
+      <span class="hr-container"><hr></span>
+      <span class="info-span">Ваш домашний адрес:</span>
+      <span class="info">undefined</span>
+      <span class="info-span">Ваш Email:</span>
+      <span class="info">{{ email }}</span>
+      <span class="info-span">Ваши издания:</span>
+      <span class="info">undefined</span>
+      <span class="info-span">Ваш факультет:</span>
+      <span class="info">Факультет заочного обучения</span>
+      <span class="info-span">Ваша группа:</span>
+      <span class="info">БПИ, БПИ09з 24-01</span>
+      <span class="info-span">Ваше направление:</span>
+      <span class="info">09.03.03</span>
+      <span class="hr-container"><hr></span>
+      <span class="info-span">Автор сайта:</span>
+      <span class="info">Максим или Moloдец</span>
+      <span class="info-span">Используемые технологии:</span>
+      <span class="info">Nuxt | TypeScript | MongoDB | Pinia | SCSS | Vercel</span>
+      <span class="info-span">ВКонтакте:</span>
+      <span class="info">https://vk.com/molodec_official</span>
+      <span class="info-span">Телеграм:</span>
+      <span class="info">https://t.me/molodec_official</span>
+
+
+    </section>
+  </section>
+</template>
+
+<style scoped>
+.read-form-container {
+  width: 100%;
+  background-color: #f5f7fa;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  height: 93vh;
+}
+
+.read-form-header {
+  background-color: #ffffff;
+  width: 90%;
+  height: 12vh;
+  margin-top: 74px;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  & span {
+    font-size: 30px;
+    color: #3b3b7f;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.read-form-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Две колонки одинаковой ширины */
+  grid-template-rows: repeat(5, auto); /* Пять строк для данных и линии */
+  grid-column-gap: 10px; /* Расстояние между колонками */
+  grid-row-gap: 10px; /* Расстояние между строками */
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  & .info-span {
+    font-weight: bold;
+    text-align: end;
+  }
+  & .info {
+    text-align: start;
+    align-self: center;
+    font-weight: bold;
+    color: #4e45e3;
+  }
+  & .hr-container {
+    grid-column: 1 / 3; /* Линия занимает обе колонки */
+    text-align: center;
+  }
+
+  & .hr-container hr {
+    width: 100%; /* Линия растягивается на всю ширину */
+    border: none;
+    border-top: 1px solid #ccc; /* Цвет и стиль линии */
+  }
+}
+
+.dark-theme .read-form-container {
+  background-color: #1a1a1a;
+}
+
+.dark-theme .read-form-header,
+.dark-theme .read-form-info {
+  background-color: #1e1e1e;
+  & span {
+    color: white;
+  }
+  & .info {
+    color: #4e45e3;
+  }
+}
+
+</style>

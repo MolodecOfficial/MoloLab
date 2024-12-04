@@ -18,7 +18,6 @@ onMounted(() => {
   } else {
     firstName.value = userStore.userFirstName;
     lastName.value = userStore.userLastName
-
   }
 });
 
@@ -292,6 +291,7 @@ onMounted(() => {
 
   & .phone_span {
     text-align: end;
+    font-weight: bold;
   }
 }
 
