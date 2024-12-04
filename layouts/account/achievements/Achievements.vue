@@ -107,7 +107,6 @@ onMounted(async () => {
   align-items: center;
   flex-direction: column;
   gap: 30px;
-  height: 300vh;
 }
 
 .achievements-header {

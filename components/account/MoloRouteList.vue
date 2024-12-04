@@ -56,7 +56,7 @@ const props = defineProps({
         <span>Читательский формуляр</span>
       </NuxtLink>
       <div class="link-container">
-        <NuxtLink class="route" to="/in-progress">
+        <NuxtLink class="route">
           <img :src="money" alt="Иконка" class="icon">
           <span>Финансы</span>
         </NuxtLink>
@@ -66,7 +66,7 @@ const props = defineProps({
           <NuxtLink class="popup-link" to="/in-progress">Общежитие</NuxtLink>
         </div>
       </div>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/flip-list">
         <img :src="flipList" alt="">
         <span>Обходной</span>
       </NuxtLink>
@@ -92,7 +92,7 @@ const props = defineProps({
   flex-direction: column;
   height: auto;
   width: 13vw;
-
+  position: sticky;
 }
 
 .routeList_container {
@@ -122,6 +122,7 @@ img {
 .link-container {
   position: relative;
   display: inline-block;
+  cursor: default;
 }
 
 

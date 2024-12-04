@@ -119,11 +119,10 @@ header {
 .hello {
   display: flex;
   flex-direction: row;
-
+  gap: 10px;
   & button {
     background-color: transparent;
     border: none;
-    padding-right: 26px;
     font-size: 18px;
     display: flex;
     text-align: center;
@@ -134,16 +133,18 @@ header {
     &:hover {
       color: #0028ef;
     }
+    &:last-child {
+      margin-right: 20px;
+    }
   }
 }
 
 .greetings {
-  padding: 10px 20px;
   font-size: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70%;
+  margin-right: 10px;
 }
 
 
