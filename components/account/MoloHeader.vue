@@ -44,7 +44,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 </script>
 
 <template>
-  <header>
+  <section class="header_container">
     <section class="logoSection">
       <img :src="logo" alt="">
       <span>УГНТУ</span>
@@ -56,13 +56,13 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
       <button @click="themeStore.toggleTheme()">Сменить тему</button>
       <button @click="logoutUser">Выйти</button>
     </section>
-  </header>
+  </section>
 </template>
 
 <style scoped>
 
 
-.dark-theme header {
+.dark-theme .header_container {
   background-color: #1e1e1e;
 }
 
@@ -77,11 +77,12 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 .dark-theme .hello button:hover {
   color: #bb86fc;
 }
-header {
+.header_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: #ffffff;
+
 }
 
 .logoSection {
@@ -144,8 +145,40 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
 }
 
+@media (max-width: 560px) {
+  .greetings {
+    font-size: 11px;
+  }
+
+  .hello {
+    text-align: center;
+    & button {
+      font-size: 11px;
+    }
+  }
+
+  .logoSection {
+    width: 20%;
+    & img {
+      width: 30px;
+    }
+    & span {
+      font-size: 22px ;
+    }
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
+@media (min-width: 1281px) and (max-width: 1920px) {
+
+}
 
 </style>

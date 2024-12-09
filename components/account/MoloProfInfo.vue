@@ -48,7 +48,8 @@ const props = defineProps({
 }
 
 .dark-theme span {
-  color: #838383;
+  color: #4e45e3;
+  font-weight: bold;
 }
 
 .dark-theme code {
@@ -80,5 +81,32 @@ const props = defineProps({
       font-size: 12px;
     }
   }
+}
+
+@media (max-width: 560px) {
+  .professionInfo {
+    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    padding: 20px;
+    text-align: center;
+    & span {
+      font-size: 10px;
+    }
+    & code {
+      font-size: 10px;
+
+    }
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
+@media (min-width: 1281px) and (max-width: 1920px) {
+
 }
 </style>

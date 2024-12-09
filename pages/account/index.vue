@@ -228,7 +228,7 @@ const userStatus = computed(() => {
 }
 
 .dark-theme .user-card__details p {
-  color: #838383;
+  color: #4e45e3;
 }
 
 .dark-theme .user-card__details code {
@@ -240,5 +240,68 @@ const userStatus = computed(() => {
   color: #c2c2c2;
 }
 
+@media (max-width: 560px) {
+  .container {
+    height: 100vh;
+  }
+  .user-info {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+    align-items: center;
+    padding: 0 5px 0 5px;
+
+  }
+
+  .user-info__main {
+    width: 90%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding: 40px 0 20px 0;
+    height: 38%;
+    gap: 20px;
+  }
+  .user-card {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+
+    & span {
+      font-size: clamp(16px, 5vw, 24px);
+    }
+  }
+  .user-card__details {
+    & p {
+      font-size: clamp(16px, 4vw, 20px);
+    }
+  }
+  .additional-links {
+    display: none
+  }
+  .specialty-info {
+    height: 100vh;
+    padding-bottom: 10px;
+  }
+
+  .specialty-info__list {
+    text-align: center;
+    & span {
+      font-size: clamp(16px, 5vw, 24px);
+    }
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
+@media (min-width: 1281px) and (max-width: 1920px) {
+
+}
 
 </style>

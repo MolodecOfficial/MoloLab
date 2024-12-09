@@ -129,8 +129,6 @@ const userStatus = computed(() => {
   & .info {
     text-align: start;
     align-self: center;
-    font-weight: bold;
-    color: #4e45e3;
   }
   & .hr-container {
     grid-column: 1 / 3; /* Линия занимает обе колонки */
@@ -148,14 +146,21 @@ const userStatus = computed(() => {
   background-color: #1a1a1a;
 }
 
-.dark-theme .read-form-header,
-.dark-theme .read-form-info {
+.dark-theme .read-form-header {
   background-color: #1e1e1e;
   & span {
     color: white;
   }
-  & .info {
+}
+
+.dark-theme .read-form-info {
+  background-color: #1e1e1e;
+  & .info-span {
     color: #4e45e3;
+  }
+  & .info {
+    color: white;
+    font-weight: bold;
   }
 }
 

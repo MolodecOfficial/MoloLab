@@ -35,10 +35,20 @@ const props = defineProps({
         <img :src="schedule" alt="">
         <span>Расписание</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
-        <img :src="learning" alt="">
-        <span>Обучение</span>
-      </NuxtLink>
+      <div class="link-container">
+        <NuxtLink class="route">
+          <img :src="learning" alt="" class="icon">
+          <span>Обучение</span>
+        </NuxtLink>
+        <div class="popup-links">
+          <NuxtLink class="popup-link" to="/in-progress">Успеваемость</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Онлайн дисциплины</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Мои работы</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Защита ВКР</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Учебный план</NuxtLink>
+          <NuxtLink class="popup-link" to="/in-progress">Результат освоения ООП</NuxtLink>
+        </div>
+      </div>
       <NuxtLink class="route" to="/in-progress">
         <img :src="chat" alt="">
         <span>Сообщения</span>
@@ -107,7 +117,6 @@ img {
   gap: 5px;
   padding: 10px 20px;
   text-decoration: none;
-
   transition: 1ms all ease-in-out;
   color: #919191;
   &:hover {
@@ -119,7 +128,8 @@ img {
 
 .link-container {
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   cursor: default;
 }
 
@@ -136,6 +146,7 @@ img {
   border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: none;
+  flex-direction: column;
   z-index: 1000;
 }
 
@@ -145,20 +156,20 @@ img {
   padding: 8px 12px;
   color: #333;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
 }
 
-.popup-link:nth-child(1) {
+.popup-link:first-child {
  border-radius: 10px 10px 0 0;
 }
 
-.popup-link:nth-child(3) {
+.popup-link:last-child {
   border-radius: 0 0 10px 10px;
 }
 
 /* Показать всплывающие ссылки при наведении */
 .link-container:hover .popup-links {
-  display: block;
+  display: flex;
 }
 
 /* Эффект при наведении на ссылку */
@@ -192,11 +203,8 @@ img {
   background-color: #2c2c2c;
 }
 
-@media (max-width: 1550px) {
-  .routeList {
-    width: 8vh;
-  }
 
+@media (max-width: 560px) {
   .route span {
     display: none; /* Прячем текст */
   }
@@ -204,6 +212,39 @@ img {
 
   .route {
     justify-content: center;
+    padding: 10px 10px;
   }
+
+  .routeList {
+    height: 100vh;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .route span {
+    display: none; /* Прячем текст */
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .routeList {
+    width: 8%;
+  }
+
+  .route span {
+    display: none; /* Прячем текст */
+  }
+  .route {
+    justify-content: center;
+    padding: 10px 20px;
+  }
+
+}
+@media (min-width: 1281px) and (max-width: 1920px) {
+
+  .route span {
+    font-size: 14px;
+  }
+
 }
 </style>

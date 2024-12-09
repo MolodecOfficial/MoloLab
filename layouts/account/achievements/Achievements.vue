@@ -46,8 +46,11 @@ onMounted(async () => {
             class="achievement-image"
             :class="{ obtained: achievement.obtained }"
         />
-        <h3>{{ achievement.title }}</h3>
-        <p>{{ achievement.description }}</p>
+        <div class="achievement-text">
+          <h3>{{ achievement.title }}</h3>
+          <p>{{ achievement.description }}</p>
+        </div>
+
       </div>
     </div>
   </section>
@@ -107,6 +110,7 @@ onMounted(async () => {
   align-items: center;
   flex-direction: column;
   gap: 30px;
+  height: 93vh;
 }
 
 .achievements-header {
@@ -135,14 +139,17 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
 }
 
 .achievement-item {
+  display: flex;
   background-color: #ffffff;
+  justify-content: space-evenly;
+
   margin: 10px;
-  padding: 15px;
+  padding: 15px 20px;
   border-radius: 15px;
+  gap: 14px;
   text-align: center;
   width: calc(25% - 50px); /* Четыре элемента в ряд с отступами */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -195,6 +202,85 @@ p {
   }
   .achievement-item {
     width: 80%;
+  }
+}
+
+
+@media (max-width: 560px) {
+  .achievements-container {
+    height: 100%;
+  }
+  .achievements-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .achievement-item {
+    flex-direction: column;
+    height: 90%;
+    width: 75%;
+    align-items: center;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .achievements-container {
+    height: 100%;
+  }
+  .achievements-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .achievement-item {
+    flex-direction: column;
+    height: 90%;
+    width: 35%;
+    align-items: center;
+
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .achievements-container {
+    height: 100%;
+  }
+  .achievements-list {
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .achievement-item {
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+    align-items: center;
+
+  }
+}
+@media (min-width: 1281px) and (max-width: 1920px) {
+  .achievements-list {
+    display: flex;
+  }
+  .achievement-item {
+    width: 27%;
+
+    justify-content: space-around;
+  }
+}
+
+@media (min-width: 1281px) and (max-width: 1520px) {
+  .achievement-item {
+    align-items: center;
+  }
+
+  .achievement-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 80%;
   }
 }
 
