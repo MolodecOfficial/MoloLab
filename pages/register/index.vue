@@ -60,7 +60,16 @@ async function registerUser() {
         email: email.value,
         firstName: firstName.value,
         lastName: lastName.value,
-        _id: data.user._id
+        _id: data.user._id,
+        status: data.user.status,
+        specialty: data.user.specialty,
+        group: data.user.group,
+        code: data.user.code,
+        direction: data.user.direction,
+        learning: data.user.learning,
+        form_of_learning: data.user.form_of_learning,
+        faculty: data.user.faculty,
+        course: data.user.course
       })
       userStore.setEmail(email.value);
       userStore.setFirstName(firstName.value);

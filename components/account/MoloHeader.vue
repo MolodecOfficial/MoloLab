@@ -149,13 +149,13 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 
 @media (max-width: 560px) {
   .greetings {
-    font-size: 11px;
+    font-size: clamp(11px, 3vw, 16px);
   }
 
   .hello {
     text-align: center;
     & button {
-      font-size: 11px;
+      font-size: clamp(11px, 3vw, 16px);
     }
   }
 
@@ -171,7 +171,26 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 }
 
 @media (min-width: 561px) and (max-width: 765px) {
+  .greetings {
+    font-size: clamp(11px, 3vw, 16px);
+  }
 
+  .hello {
+    text-align: center;
+    & button {
+      font-size: clamp(11px, 3vw, 16px);
+    }
+  }
+
+  .logoSection {
+    width: 20%;
+    & img {
+      width: 40px;
+    }
+    & span {
+      font-size: 30px ;
+    }
+  }
 }
 
 @media (min-width: 766px) and (max-width: 1280px) {

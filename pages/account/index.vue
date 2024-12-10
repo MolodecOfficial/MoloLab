@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 import {useUserStore} from '~/stores/userStore';
-import logo from '~/public/favicon.ico';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
-import RouteList from "~/components/account/MoloRouteList.vue";
 import {useThemeStore} from "~/stores/themeStore";
-import MoloHeader from "~/components/account/MoloHeader.vue";
 
 
 useHead({
@@ -14,9 +11,10 @@ useHead({
 
 const userStore = useUserStore();
 const themeStore = useThemeStore()
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('')
+const userFirstName = ref('');
+const userLastName = ref('');
+const userEmail = ref('')
+const userStatus = ref('')
 const router = useRouter()
 
 // Загрузка данных из localStorage
@@ -24,70 +22,29 @@ onMounted(() => {
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     const user = JSON.parse(storedUser);
-    firstName.value = user.firstName;
-    lastName.value = user.lastName;
-    email.value = user.email;
+    userFirstName.value = user.firstName;
+    userLastName.value = user.lastName;
+    userEmail.value = user.email;
+    userStatus.value = user.status
   } else {
-    firstName.value = userStore.userFirstName;
-    lastName.value = userStore.userLastName
-    email.value = userStore.userEmail
-
-    professionInfos.length = 0
+    userFirstName.value = userStore.userFirstName;
+    userLastName.value = userStore.userLastName;
+    userEmail.value = userStore.userEmail;
+    userStatus.value = userStore.userStatus
   }
 });
 
-interface ProfessionInfoType {
-  number: string,
-  form: string,
-  faculty: string,
-  code: string,
-  name: string,
-  shift: string,
-  course: string,
-  direction: string,
-  group: string,
-  averageScore: string,
-  recordBookNumber: string,
-  action: string,
-  basis: string,
-  number2: string,
-  date: string,
-  startDate: string,
-  endDate: string
-}
 
-const professionInfos: Array<ProfessionInfoType> = [
-  {
-    number: "1",
-    form: "Заочная",
-    faculty: "ФЗО",
-    code: "09.03.03",
-    name: "Искусственный интеллект и цифровая трансформация бизнеса",
-    shift: "БПИ",
-    course: "1",
-    direction: "Бюджет",
-    group: "БПИ, БПИ09з-24-01",
-    averageScore: "5",
-    recordBookNumber: "242772",
-    action: "Зачислен",
-    basis: "Общий конкурс",
-    number2: "426-4",
-    date: "07.08.2024",
-    startDate: "01.09.2024",
-    endDate: "undefined"
-  },
-];
+const greetings = computed(() => `Привет, ${userFirstName.value} ${userLastName.value}`);
 
-const greetings = computed(() => `Привет, ${firstName.value} ${lastName.value}`);
-
-const userStatus = computed(() => {
-  return email.value === 'MolodecOfficial' ? 'Администратор' : 'Студент';
+onMounted(() => {
+  console.log('Статус пользователя:', userStatus.value); // Проверьте, что это значение устанавливается
 });
 
 </script>
 
 <template>
-  <MoloHeader/>
+  <AccountMoloHeader/>
   <div class="container">
     <AccountMoloRouteList/>
     <section class="user-info">
@@ -97,19 +54,15 @@ const userStatus = computed(() => {
             Личные данные студента
           </span>
           <section class="user-card__details">
-            <p>ФИО: <code>{{ firstName }}</code> <code>{{ lastName }}</code></p>
-            <p>Email: <code>{{ email }}</code></p>
+            <p>ФИО: <code>{{ userFirstName }}</code> <code>{{ userLastName }}</code></p>
+            <p>Email: <code>{{ userEmail }}</code></p>
             <p>Статус: <code>{{ userStatus }}</code></p>
           </section>
         </section>
         <section class="specialty-info">
           <section class="specialty-info__list">
             <span>Сведения о специальности</span>
-            <AccountMoloProfInfo
-                v-for="(info, idx) in professionInfos"
-                :info="info"
-                :key="idx"
-            />
+            <AccountMoloProfInfo/>
           </section>
         </section>
       </section>
@@ -196,7 +149,7 @@ const userStatus = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  justify-content: center;
   & span {
     padding: 20px 0 20px 0;
     color: #053969;
@@ -294,14 +247,94 @@ const userStatus = computed(() => {
 }
 
 @media (min-width: 561px) and (max-width: 765px) {
+  .container {
+    height: 100vh;
+  }
+  .user-info {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+    align-items: center;
+    padding: 0 5px 0 5px;
 
+  }
+
+  .user-info__main {
+    width: 90%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    padding: 40px 0 20px 0;
+    height: 38%;
+    gap: 40px;
+  }
+  .user-card {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+
+    & span {
+      font-size: clamp(16px, 5vw, 24px);
+    }
+  }
+  .user-card__details {
+    & p {
+      font-size: clamp(16px, 4vw, 20px);
+    }
+  }
+  .additional-links {
+    display: none
+  }
+  .specialty-info {
+    height: 100vh;
+    padding-bottom: 20px;
+  }
+
+  .specialty-info__list {
+    text-align: center;
+    & span {
+      font-size: clamp(16px, 5vw, 24px);
+    }
+  }
 }
 
 @media (min-width: 766px) and (max-width: 1280px) {
 
-}
-@media (min-width: 1281px) and (max-width: 1920px) {
+  .user-info__main {
+    gap: 20px;
+  }
 
+
+  .user-card {
+    width: 25%;
+    display: flex;
+    justify-content: start;
+    & span {
+      font-size: clamp(14px, 5vw, 16px);
+    }
+  }
+
+  .user-card__details {
+    height: 60%;
+    padding: 10px;
+    & p {
+      font-size: clamp(13px, 5vw, 17px);
+    }
+    & code {
+      font-size: clamp(13px, 5vw, 17px);
+
+    }
+  }
+
+  .user-card__details p:first-child {
+    padding-top: 25px;
+  }
+
+  .additional-links {
+    width: clamp(90%, 50px, 100%);
+    font-size: 14px;
+  }
 }
 
 </style>

@@ -159,5 +159,14 @@ hr {
 .dark-theme .other_link {
   color: white;
 }
+@media (min-width: 766px) and (max-width: 1280px) {
+  .other_link img {
+    width: 30%;
+  }
+  .other_link {
+    font-size: 12px;
+    width: 80%;
+  }
+}
 
 </style>

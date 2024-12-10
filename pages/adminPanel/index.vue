@@ -12,6 +12,16 @@ const selectedUserId = ref<string | null>(null);
 const selectedUserName = ref('');
 const selectedAchievement = ref<string | null>(null);
 const achievements = ref<any[]>([]); // Список достижений
+const selectedStatus = ref<string | null>(null);
+const showSpecialtyModal = ref(false);
+const showStatusModal = ref(false);
+const selectedSpecialty = ref<string | null>(null);
+const showLearningModal = ref(false);
+const selectedLearning = ref<string | null>(null);
+const selectedForm = ref<string | null>(null);
+const selectedCourse = ref<string | null>(null);
+
+
 
 async function getAllUsers() {
   try {
@@ -73,6 +83,81 @@ const giveAchievementToUser = async () => {
   }
 };
 
+const openStatusModal = (user: any) => {
+  selectedUserId.value = user._id;
+  selectedUserName.value = `${user.firstName} ${user.lastName}`; // Имя пользователя
+  selectedStatus.value = user.status; // Текущий статус
+  showStatusModal.value = true; // Показываем модальное окно
+};
+
+const openSpecialtyModal = (user: any) => {
+  selectedUserId.value = user._id;
+  selectedUserName.value = `${user.firstName} ${user.lastName}`;
+  showSpecialtyModal.value = true;
+};
+
+// Подтверждение изменения статуса
+const changeUserStatus = async () => {
+  if (selectedUserId.value && selectedStatus.value) {
+    try {
+      await userStore.changeStatus(selectedUserId.value, selectedStatus.value); // Вызов метода для изменения статуса
+      alert('Статус пользователя успешно изменен!');
+      showStatusModal.value = false; // Закрытие модального окна
+    } catch (error) {
+      console.error('Ошибка при изменении статуса:', error);
+      alert('Не удалось изменить статус пользователя.');
+    }
+  } else {
+    alert('Выберите пользователя и новый статус.');
+  }
+};
+
+const assignSpecialty = async () => {
+  if (selectedUserId.value && selectedSpecialty.value) {
+    try {
+      // Предполагаем, что метод addSpecialtyToUser добавляет специальность пользователю
+      await userStore.addSpecialty(selectedUserId.value, selectedSpecialty.value);
+      alert(`Специальность "${selectedSpecialty.value}" успешно добавлена пользователю ${selectedUserName.value}!`);
+      showSpecialtyModal.value = false;
+    } catch (error) {
+      console.error('Ошибка при добавлении специальности:', error);
+      alert('Не удалось добавить специальность.');
+    }
+  } else {
+    alert('Выберите пользователя и специальность.');
+  }
+};
+
+const openLearningModal = (user: any) => {
+  selectedUserId.value = user._id;
+  selectedUserName.value = `${user.firstName} ${user.lastName}`;
+  selectedLearning.value = user.learning;
+  selectedForm.value = user.form_of_learning;
+  selectedCourse.value = user.course;
+  showLearningModal.value = true;
+};
+
+const updateLearningDetails = async () => {
+  if (selectedUserId.value && selectedLearning.value && selectedForm.value && selectedCourse.value) {
+    try {
+      await userStore.addLearningDetails(
+          selectedUserId.value,
+          selectedLearning.value,
+          selectedForm.value,
+          selectedCourse.value
+      );
+      alert('Данные обучения успешно обновлены!');
+      showLearningModal.value = false;
+      await getAllUsers();
+    } catch (error) {
+      console.error('Ошибка при обновлении данных обучения:', error);
+      alert('Не удалось обновить данные обучения.');
+    }
+  } else {
+    alert('Пожалуйста, заполните все поля.');
+  }
+};
+
 // Метод для получения всех пользователей
 onMounted(() => {
   getAllUsers();
@@ -82,7 +167,7 @@ onMounted(() => {
 
 <template>
   <AccountMoloGuard>
-    <div>
+    <div class="bg">
       <section class="hyperlinks">
         <NuxtLink class="back" to="/login" @click="logoutUser">Вернуться на страницу входа</NuxtLink>
         <NuxtLink class="back" to="/account">Вернуться на страницу аккаунта</NuxtLink>
@@ -91,37 +176,52 @@ onMounted(() => {
       <h3>Добро Пожаловать в панель администратора</h3>
       <h3>Текущий список пользователей</h3>
       <p v-if="loading">Загрузка пользователей...</p>
-      <section v-else>
-        <table class="styled-table">
-          <thead>
-          <tr>
-            <th>Имя пользователя</th>
-            <th>Фамилия</th>
-            <th>Почта</th>
-            <th>Достижения</th>
-            <th>Действия</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="user in userStore.users" :key="user._id">
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              {{
-                Array.isArray(user.achievements) && user.achievements.length > 0
-                    ? user.achievements.sort((a: any, b: any) => parseInt(a) - parseInt(b)).join(', ')
-                    : 'Нет достижений'
-              }}
-            </td>
-            <td class="btns">
-              <button class="delete-button" @click="() => deleteUser(user._id)">Удалить</button>
-              <button class="give-achievement" @click="() => openAchievementModal(user)">Выдать достижение</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-
+      <section class="user-section_v-else" v-else>
+        <section v-for="user in userStore.users"
+                 :key="user._id"
+                 class="user-section"
+        >
+          <hr>
+          <section>
+            <span>Данные о пользователе</span>
+          </section>
+          <hr>
+          <span class="user-span"> Имя пользователя: <span class="user">{{ user.firstName }} </span></span>
+          <span class="user-span"> Фамилия: <span class="user">{{ user.lastName }}</span> </span>
+          <span class="user-span"> Почта: <span class="user">{{ user.email }}</span> </span>
+          <span class="user-span"> Статус: <span class="user">{{ user.status }}</span> </span>
+          <span class="user-span"> Достижения: <span class="user">{{
+              Array.isArray(user.achievements) && user.achievements.length > 0
+                  ? user.achievements.sort((a: any, b: any) => parseInt(a) - parseInt(b)).join(', ')
+                  : 'Нет достижений'
+            }}</span>
+          </span>
+          <hr>
+          <section>
+            <span>Данные о специальности</span>
+          </section>
+          <hr>
+          <span class="user-span"> Специальность: <span class="user">{{ user.specialty }}</span> </span>
+          <span class="user-span"> Группа: <span class="user">{{ user.group }}</span> </span>
+          <span class="user-span"> Шифр: <span class="user">{{ user.code }}</span> </span>
+          <span class="user-span"> Код: <span class="user">{{ user.direction }}</span> </span>
+          <span class="user-span"> Факультет: <span class="user">{{ user.faculty }}</span> </span>
+          <span class="user-span"> Форма обучения: <span class="user">{{ user.form_of_learning }}</span> </span>
+          <span class="user-span"> Обучение: <span class="user">{{ user.learning }}</span> </span>
+          <span class="user-span"> Курс: <span class="user">{{ user.course }}</span> </span>
+          <hr>
+          <section>
+            <span>Действия</span>
+          </section>
+          <hr>
+          <section class="actions">
+            <button class="delete-button" @click="() => deleteUser(user._id)">Удалить</button>
+            <button class="achievement-button" @click="() => openAchievementModal(user)">Выдать достижение</button>
+            <button class="status-button" @click="() => openStatusModal(user)">Изменить статус</button>
+            <button class="specialty-button" @click="() => openSpecialtyModal(user)">Выбор специальности</button>
+            <button class="learning-button" @click="() => openLearningModal(user)">Выбор обучения</button>
+          </section>
+        </section>
         <!-- Модальное окно для выдачи достижения -->
         <div v-if="showAchievementModal" class="modal-overlay">
           <div class="modal-content">
@@ -139,6 +239,71 @@ onMounted(() => {
             </div>
           </div>
         </div>
+
+        <div v-if="showStatusModal" class="modal-overlay">
+          <div class="modal-content">
+            <h4>Изменение статуса для пользователя {{ selectedUserName }}</h4>
+            <select v-model="selectedStatus" class="status-select">
+              <option value="Студент">Студент</option>
+              <option value="Преподаватель">Преподаватель</option>
+              <option value="Администратор">Администратор</option>
+            </select>
+            <div class="modal-buttons">
+              <button class="confirm-button" @click="changeUserStatus">Подтвердить</button>
+              <button class="cancel-button" @click="showStatusModal = false">Отмена</button>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="showSpecialtyModal" class="modal-overlay">
+          <div class="modal-content">
+            <h4>Добавление специальности пользователю {{ selectedUserName }}</h4>
+            <select v-model="selectedSpecialty" class="specialty-select">
+              <option value="" disabled>Выберите специальность</option>
+              <option v-for="specialty in specialtyList" :value="specialty.specialty_name" :key="specialty.id">
+                {{ specialty.specialty_name }}
+              </option>
+            </select>
+            <div class="modal-buttons">
+              <button class="confirm-button" @click="assignSpecialty">Подтвердить</button>
+              <button class="cancel-button" @click="showSpecialtyModal = false">Отмена</button>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="showLearningModal" class="modal-overlay">
+          <div class="modal-content">
+            <h4>Изменение данных обучения для пользователя {{ selectedUserName }}</h4>
+            <div>
+              <label for="learning-select">Обучение:</label>
+              <select id="learning-select" v-model="selectedLearning" class="learning-select">
+                <option value="Очное">Очное</option>
+                <option value="Заочное">Заочное</option>
+              </select>
+            </div>
+            <div>
+              <label for="form-select">Форма обучения:</label>
+              <select id="form-select" v-model="selectedForm" class="form-select">
+                <option value="Коммерция">Коммерция</option>
+                <option value="Бюджет">Бюджет</option>
+              </select>
+            </div>
+            <div>
+              <label for="course-select">Курс:</label>
+              <select id="course-select" v-model="selectedCourse" class="course-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="modal-buttons">
+              <button class="confirm-button" @click="updateLearningDetails">Подтвердить</button>
+              <button class="cancel-button" @click="showLearningModal = false">Отмена</button>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </AccountMoloGuard>
@@ -147,6 +312,12 @@ onMounted(() => {
 
 
 <style scoped>
+
+.bg {
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  overflow: hidden;
+}
 
 .hyperlinks {
   display: flex;
@@ -174,58 +345,53 @@ onMounted(() => {
   }
 }
 
+.user-section_v-else {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0 15px 20px;
 
-
-.styled-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.styled-table thead {
-  background-color: #4c86af;
+.user-section {
+  border: 1px solid #2c2c2c;
+  background-color: #1e1e1e;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+  gap: 10px;
+  text-align: center;
+  border-radius: 20px;
+  width: 20%;
 }
 
-.styled-table th,
-.styled-table td {
-  padding: 12px 15px;
-  text-align: left;
+.user-span {
+  color: #4e45e3;
+  font-weight: bold;
+  & .user {
+    color: white;
+  }
 }
 
-.styled-table tbody tr {
-  border-bottom: 1px solid #dddddd;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 
 h3 {
   text-align: center;
-}
-
-.styled-table tbody tr:hover {
-  background-color: #f1f1f1;
-}
-
-.styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #4c86af;
-}
-
-
-
-.back:hover {
-  text-decoration: underline;
-}
-
-.btns {
-  display: flex;
-  gap: 30px;
+  color: white;
 }
 
 .delete-button {
-  background-color: #e74c3c; /* Красный цвет для кнопки удаления */
+  border: 1px solid #ab1000; /* Красный цвет для кнопки удаления */
+  background-color: #3f0000;
   color: white; /* Белый текст */
-  border: none; /* Убираем границу */
   border-radius: 5px; /* Закругляем углы */
   padding: 8px 12px; /* Отступы внутри кнопки */
   cursor: pointer; /* Курсор в виде указателя */
@@ -233,22 +399,75 @@ h3 {
 }
 
 .delete-button:hover {
-  background-color: #c0392b; /* Темнее при наведении */
+  background-color: #ab1000; /* Темнее при наведении */
 }
 
-.give-achievement {
-  background-color: #32a428;
+.achievement-button {
+  border: 1px solid #0cb000;
+  background-color: #0e4400;
   color: white; /* Белый текст */
-  border: none; /* Убираем границу */
   border-radius: 5px; /* Закругляем углы */
   padding: 8px 12px; /* Отступы внутри кнопки */
   cursor: pointer; /* Курсор в виде указателя */
   transition: background-color 0.3s ease; /* Плавный переход цвета фона */
 }
 
-.give-achievement:hover {
-  background-color: #288520;
+.achievement-button:hover {
+  background-color: #0cb000;
 }
+
+.status-button {
+  border: 1px solid #beae00;
+  background-color: #5b5000;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.status-button:hover {
+  background-color: #beae00;
+}
+
+.specialty-button {
+  border: 1px solid #0020be;
+  background-color: #00055b;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.specialty-button:hover {
+  background-color: #0020be;
+}
+
+.learning-button {
+  border: 1px solid #be4f00;
+  background-color: #5b2900;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.learning-button:hover {
+  background-color: #be4f00;
+
+}
+
+.status-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+
 
 .modal-overlay {
   position: fixed;
@@ -256,6 +475,7 @@ h3 {
   left: 0;
   right: 0;
   bottom: 0;
+
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -264,12 +484,20 @@ h3 {
 }
 
 .modal-content {
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a;
+  border: 1px solid #2c2c2c;
+  color: white;
   border-radius: 8px;
   padding: 20px;
+  gap: 8px;
   width: 400px; /* Ширина модального окна */
+  max-height: 80vh; /* Ограничение по высоте */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.3s ease; /* Анимация появления */
+  overflow-y: auto; /* Добавляем прокрутку, если содержимое слишком большое */
+  text-align: center;
 }
 
 @keyframes fadeIn {
@@ -298,6 +526,7 @@ h4 {
 .modal-buttons {
   display: flex;
   justify-content: space-between;
+  height: 8%;
 }
 
 .confirm-button,
@@ -306,11 +535,13 @@ h4 {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  height: 4%;
 }
 
 .confirm-button {
   background-color: #28a745; /* Зеленый цвет для подтверждения */
   color: white;
+  transition: 0.2s all ease-in-out;
 }
 
 .cancel-button {
@@ -320,6 +551,21 @@ h4 {
 
 .confirm-button:hover,
 .cancel-button:hover {
-  opacity: 0.9; /* Эффект при наведении */
+  opacity: 0.8; /* Эффект при наведении */
+}
+
+
+
+.specialty-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+hr {
+  width: 100%;
+  border: 1px solid #3c3c3c;
 }
 </style>

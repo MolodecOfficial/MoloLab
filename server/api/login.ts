@@ -31,7 +31,16 @@ export default defineEventHandler(async (event) => {
                 _id: user._id,  // Добавляем _id в ответ
                 email: user.email,
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                status: user.status,
+                specialty: user.specialty,
+                group: user.group,
+                code: user.code,
+                direction: user.direction,
+                learning: user.learning,
+                form_of_learning: user.form_of_learning,
+                faculty: user.faculty,
+                course: user.course
             }
         };
     } catch (error) {

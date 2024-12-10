@@ -12,6 +12,7 @@ const loading = ref(false);
 const statusMessage = ref('');
 const router = useRouter();
 const userStore = useUserStore()
+const status = ref('')
 
 useHead({
   title: 'УГНТУ | Вход в аккаунт'
@@ -65,17 +66,48 @@ async function loginUser() {
         firstName: data.user.firstName,
         lastName: data.user.lastName,
         email: data.user.email,
-        _id: data.user._id
+        _id: data.user._id,
+        status: data.user.status,
+        specialty: data.user.specialty,
+        group: data.user.group,
+        code: data.user.code,
+        direction: data.user.direction,
+        learning: data.user.learning,
+        form_of_learning: data.user.form_of_learning,
+        faculty: data.user.faculty,
+        course: data.user.course
       }), { expires: 7 });
 
-      // Сохранение данных пользователя в localStorage
       localStorage.setItem('user', JSON.stringify({
         firstName: data.user.firstName,
         lastName: data.user.lastName,
         email: data.user.email,
-        _id: data.user._id
+        _id: data.user._id,
+        status: data.user.status,
+        specialty: data.user.specialty,
+        group: data.user.group,
+        code: data.user.code,
+        direction: data.user.direction,
+        learning: data.user.learning,
+        form_of_learning: data.user.form_of_learning,
+        faculty: data.user.faculty,
+        course: data.user.course
       }));
-
+      userStore.setUser({
+        email: data.user.email,
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        status: data.user.status,
+        _id: data.user._id,
+        specialty: data.user.specialty,
+        group: data.user.group,
+        code: data.user.code,
+        direction: data.user.direction,
+        learning: data.user.learning,
+        form_of_learning: data.user.form_of_learning,
+        faculty: data.user.faculty,
+        course: data.user.course
+      });
       // Перенаправление для администраторов
       if (data.user.email === 'MolodecOfficial') {
         statusMessage.value = 'Добро пожаловать, Администратор Moloдец';

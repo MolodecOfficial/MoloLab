@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 
 const userStore = useUserStore()
 
@@ -7,6 +7,15 @@ const id = ref('')
 const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
+const status = ref('')
+const userSpecialty = ref('')
+const userGroup = ref('')
+const userCode = ref('')
+const userDirection = ref('')
+const userLearning = ref('')
+const userFormOfLearning = ref('')
+const userFaculty = ref('')
+const userCourse = ref('')
 
 onMounted(() => {
   const storedUser = localStorage.getItem('user');
@@ -16,23 +25,31 @@ onMounted(() => {
     lastName.value = user.lastName;
     email.value = user.email;
     id.value = user._id
+    status.value = user.status
+    userSpecialty.value = user.specialty;
+    userGroup.value = user.group;
+    userCode.value = user.code;
+    userDirection.value = user.direction;
+    userLearning.value = user.learning;
+    userFormOfLearning.value = user.form_of_learning;
+    userFaculty.value = user.faculty;
+    userCourse.value = user.course;
   } else {
     firstName.value = userStore.userFirstName;
     lastName.value = userStore.userLastName
     email.value = userStore.userEmail
     id.value = userStore.userId
+    status.value = userStore.userStatus
+    userSpecialty.value = userStore.userSpecialty;
+    userGroup.value = userStore.userGroup;
+    userCode.value = userStore.userCode;
+    userDirection.value = userStore.userDirection;
+    userLearning.value = userStore.userLearning;
+    userFormOfLearning.value = userStore.userFormOfLearning;
+    userFaculty.value = userStore.userFaculty;
+    userCourse.value = userStore.userCourse;
   }
 });
-
-
-
-
-
-const userStatus = computed(() => {
-  return email.value === 'MolodecOfficial' ? 'Администратор' : 'Студент'
-})
-
-
 
 </script>
 
@@ -45,7 +62,7 @@ const userStatus = computed(() => {
       <span class="info-span">Ваш ID:</span>
       <span class="info">{{ id }}</span>
       <span class="info-span">Ваша категория:</span>
-      <span class="info">{{ userStatus }}</span>
+      <span class="info">{{ status }}</span>
       <span class="info-span">Ваше ФИО:</span>
       <span class="info">{{ firstName }} {{ lastName }}</span>
       <span class="info-span">Ваша дата рождения:</span>
@@ -58,13 +75,13 @@ const userStatus = computed(() => {
       <span class="info-span">Ваш Email:</span>
       <span class="info">{{ email }}</span>
       <span class="info-span">Ваши издания:</span>
-      <span class="info">undefined</span>
+      <span class="info">{{ userSpecialty }}</span>
       <span class="info-span">Ваш факультет:</span>
-      <span class="info">Факультет заочного обучения</span>
+      <span class="info">{{ userFaculty }}</span>
       <span class="info-span">Ваша группа:</span>
-      <span class="info">БПИ, БПИ09з 24-01</span>
+      <span class="info"> {{ userGroup }}</span>
       <span class="info-span">Ваше направление:</span>
-      <span class="info">09.03.03</span>
+      <span class="info">{{ userCode }}</span>
       <span class="hr-container"><hr></span>
       <span class="info-span">Автор сайта:</span>
       <span class="info">Максим или Moloдец</span>
