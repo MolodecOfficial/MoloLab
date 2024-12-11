@@ -12,10 +12,26 @@ import flipList from 'public/account/routeList/flip-list.png'
 import onlineNote from 'public/account/routeList/online-note.png'
 import resources from 'public/account/routeList/resources.png'
 import rating from 'public/account/routeList/star-list.png'
+import admin from 'public/account/routeList/admin.png'
+import {onMounted} from "vue";
 
 const props = defineProps({
   darkTheme: Boolean,
   toggleTheme: Function,
+});
+
+const userStatus = ref('')
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    userStatus.value = user.status
+  } else {
+    userStatus.value = userStore.userStatus
+  }
 });
 
 </script>
@@ -92,6 +108,10 @@ const props = defineProps({
         <img :src="rating" alt="">
         <span>Рейтинг</span>
       </NuxtLink>
+      <NuxtLink class="route" to="/adminPanel" v-if="userStatus === 'Администратор' || userStatus === 'Владелец'">
+        <img :src="admin" alt="">
+        <span>Панель администратора</span>
+      </NuxtLink>
     </section>
   </section>
 </template>
@@ -104,7 +124,7 @@ const props = defineProps({
 }
 
 .routeList_container {
-  height: 100%;
+  min-height: 93vh;
   width: 100%;
   background-color: #ffffff;
 }
@@ -209,20 +229,26 @@ img {
     display: none; /* Прячем текст */
   }
 
-
   .route {
     justify-content: center;
     padding: 10px 10px;
   }
 
   .routeList {
-    height: 100vh;
+    min-height: 100vh;
+  }
+
+  .popup-links {
+    width: 200%;
   }
 }
 
 @media (min-width: 561px) and (max-width: 765px) {
   .route span {
     display: none; /* Прячем текст */
+  }
+  .popup-links {
+    width: 200%;
   }
 }
 
@@ -237,6 +263,9 @@ img {
   .route {
     justify-content: center;
     padding: 10px 20px;
+  }
+  .popup-links {
+    width: 200%;
   }
 
 }

@@ -97,4 +97,30 @@ useThemeStore()
   }
 }
 
+@media (max-width: 560px) {
+  .news-rightBlock {
+    padding: 5px;
+    width: 95%;
+  }
+
+  .news-date {
+    font-size: 10px;
+  }
+
+  .news-title {
+    font-size: 13px;
+  }
+
+  .news-description {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+}
+
 </style>

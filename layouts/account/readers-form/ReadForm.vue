@@ -74,8 +74,12 @@ onMounted(() => {
       <span class="info">undefined</span>
       <span class="info-span">Ваш Email:</span>
       <span class="info">{{ email }}</span>
-      <span class="info-span">Ваши издания:</span>
+      <span class="info-span">Ваша специальность:</span>
       <span class="info">{{ userSpecialty }}</span>
+      <span class="info-span">Ваше обучение:</span>
+      <span class="info">{{ userLearning }}</span>
+      <span class="info-span">Ваша форма обучения:</span>
+      <span class="info">{{ userFormOfLearning }}</span>
       <span class="info-span">Ваш факультет:</span>
       <span class="info">{{ userFaculty }}</span>
       <span class="info-span">Ваша группа:</span>
@@ -105,7 +109,7 @@ onMounted(() => {
   align-items: center;
   flex-direction: column;
   gap: 30px;
-  height: 93vh;
+  min-height: 93vh;
 }
 
 .read-form-header {
@@ -178,6 +182,41 @@ onMounted(() => {
   & .info {
     color: white;
     font-weight: bold;
+  }
+}
+
+@media (max-width: 560px) {
+  .read-form-header span{
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
+  .read-form-info {
+    width: 65%;
+    text-align: center;
+    font-size: clamp(8px, 2vw, 12px);
+  }
+  hr {
+    width: 100%;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+
+  .read-form-info {
+    width: 80%;
+    text-align: center;
+    height: 100%;
+
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .read-form-container {
+    min-height: 94vh;
+  }
+  .read-form-info {
+    width: 80%;
   }
 }
 

@@ -45,8 +45,8 @@ onMounted(() => {
   <section class="professionInfo">
     <span>Наименование: <code>{{ userSpecialty }}</code></span>
     <span>Группа: <code>{{ userGroup }}</code></span>
-    <span>Направление: <code>{{ userCode }}</code></span>
-    <span>Код: <code>{{ userDirection }}</code></span>
+    <span>Направление: <code>{{ userDirection }}</code></span>
+    <span>Код: <code>{{ userCode }}</code></span>
     <span>Форма обучения: <code>{{ userFormOfLearning }}</code></span>
     <span>Факультет: <code>{{ userFaculty }}</code></span>
     <span>Курс: <code>{{ userCourse }}</code></span>
@@ -161,7 +161,5 @@ onMounted(() => {
     }
   }
 }
-@media (min-width: 1281px) and (max-width: 1920px) {
 
-}
 </style>

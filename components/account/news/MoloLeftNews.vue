@@ -24,6 +24,7 @@ useThemeStore()
 }
 
 .news-leftBlock {
+  overflow: hidden;
   margin-top: 45px;
   width: 20vw;
   height: 5vh;
@@ -56,5 +57,27 @@ useThemeStore()
 }
 span {
   text-align: center;
+}
+
+@media (max-width: 560px) {
+  .news-leftBlock {
+    padding: 5px;
+    width: 75%;
+  }
+
+  .link {
+    display: flex;
+  }
+  .link span {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
 }
 </style>

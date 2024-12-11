@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from 'vue';
+import {ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useUserStore} from "~/stores/userStore";
 import Cookies from 'js-cookie';
@@ -108,11 +108,13 @@ async function loginUser() {
         faculty: data.user.faculty,
         course: data.user.course
       });
-      // Перенаправление для администраторов
-      if (data.user.email === 'MolodecOfficial') {
-        statusMessage.value = 'Добро пожаловать, Администратор Moloдец';
-        setTimeout(() => router.push('/adminPanel'), 2000);
-        localStorage.setItem('admin', JSON.stringify(data.user));
+
+      if (data.user.status === 'Администратор') {
+        statusMessage.value = `Добро пожаловать, Администратор ${userStore.userFirstName}`;
+        setTimeout(() => router.push('/account'), 2000);
+      } else if (data.user.status === 'Владелец') {
+        statusMessage.value = `Добро пожаловать, Владелец ${userStore.userFirstName}`;
+        setTimeout(() => router.push('/account'), 2000);
       } else {
         setTimeout(() => router.push('/account'), 2500);
       }

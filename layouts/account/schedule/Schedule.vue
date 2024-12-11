@@ -309,4 +309,30 @@ span {
   }
 }
 
+@media (max-width: 560px) {
+  .schedule-header span{
+    font-size: clamp(12px, 4vw, 22px);
+
+  }
+  .controls {
+    width: 70%;
+    & select {
+      width: 50%;
+    }
+    & input {
+      width: 50%;
+    }
+  }
+  .subject {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+}
+
 </style>

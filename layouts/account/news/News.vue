@@ -171,6 +171,19 @@ const UniversityNews: Array<RightNews> = [
 }
 
 
+@media (max-width: 560px) {
+  .newsHeader span {
+    font-size: clamp(18px, 5vw, 26px);
+  }
 
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
 
 </style>

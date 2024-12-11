@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useUserStore } from '~/stores/userStore';  // Импортируем store для пользователя
-import { achievementsList } from '~/stores/achievementsStore';  // Список достижений
+import {ref, onMounted} from 'vue';
+import {useUserStore} from '~/stores/userStore';  // Импортируем store для пользователя
+import {achievementsList} from '~/stores/achievementsStore';  // Список достижений
 
 // Получаем доступ к userStore
 const userStore = useUserStore();
@@ -57,8 +57,6 @@ onMounted(async () => {
 </template>
 
 
-
-
 <style scoped>
 
 @keyframes load {
@@ -81,6 +79,7 @@ onMounted(async () => {
 .dark-theme .achievements-header {
   background-color: #1e1e1e;
   border: 1px solid #2c2c2c;
+
   & span {
     color: white;
   }
@@ -88,9 +87,11 @@ onMounted(async () => {
 
 .dark-theme .achievement-item {
   background-color: #1e1e1e;
+
   & h3 {
     color: white;
   }
+
   & p {
     color: white;
   }
@@ -98,6 +99,7 @@ onMounted(async () => {
 
 .dark-theme .achievement-item.obtained {
   border-left: 5px solid #28a745; /* Зеленая полоска для полученных достижений */
+
   & h3, p {
     color: #1a1a1a;
   }
@@ -124,6 +126,7 @@ onMounted(async () => {
   align-items: center;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
   & span {
     font-size: 30px;
     color: #3b3b7f;
@@ -152,16 +155,18 @@ onMounted(async () => {
   gap: 14px;
   text-align: center;
   width: calc(25% - 50px); /* Четыре элемента в ряд с отступами */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
+
   & h3 {
     color: #1e1e1e;
   }
+
   & p {
     color: #1a1a1a;
   }
@@ -169,6 +174,7 @@ onMounted(async () => {
 
 .achievement-item.obtained {
   border-left: 6px solid #28a745; /* Зеленая полоска для полученных достижений */
+
   & h3, p {
     color: #1a1a1a;
   }
@@ -193,13 +199,16 @@ p {
   font-size: 14px;
   color: #666;
 }
+
 .achievement-item.obtained {
   background-color: #d4edda; /* Цвет для полученных достижений */
 }
+
 @media (max-width: 765px) {
   .achievements-list {
     display: grid;
   }
+
   .achievement-item {
     width: 80%;
   }
@@ -210,12 +219,18 @@ p {
   .achievements-container {
     height: 100%;
   }
+
+  .achievements-header span{
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
   .achievements-list {
     display: flex;
     justify-content: center;
     align-items: center;
 
   }
+
   .achievement-item {
     flex-direction: column;
     height: 90%;
@@ -228,11 +243,13 @@ p {
   .achievements-container {
     height: 100%;
   }
+
   .achievements-list {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .achievement-item {
     flex-direction: column;
     height: 90%;
@@ -246,11 +263,13 @@ p {
   .achievements-container {
     height: 100%;
   }
+
   .achievements-list {
     display: flex;
     justify-content: space-between;
 
   }
+
   .achievement-item {
     flex-direction: column;
     height: 100%;
@@ -259,10 +278,12 @@ p {
 
   }
 }
+
 @media (min-width: 1281px) and (max-width: 1920px) {
   .achievements-list {
     display: flex;
   }
+
   .achievement-item {
     width: 27%;
 

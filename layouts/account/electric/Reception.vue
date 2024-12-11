@@ -328,4 +328,74 @@ const MyRightAddresses: Array<RightAddress> = [
   background-color: #1a1a1a;
 }
 
+@media (max-width: 560px) {
+  .electric-header span {
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
+  .electric-actions {
+    flex-direction: column;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .other-info {
+    width: 95%;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .addresses-header {
+    width: 100%;
+    & span {
+      font-size: 12px;
+    }
+  }
+
+  .addresses {
+    flex-direction: column;
+    padding: 5px;
+    width: 100%;
+  }
+  .small-addresses {
+    width: 100% ;
+  }
+
+  .big-addresses {
+    font-size: 14px;
+  }
+
+  .help-footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    & span {
+      font-size: clamp(10px, 3vw, 17px);
+    }
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .actions {
+    text-align: center;
+  }
+
+  .action {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .addresses-header span {
+    padding: 5px;
+    font-size: 15px;
+  }
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
+
 </style>

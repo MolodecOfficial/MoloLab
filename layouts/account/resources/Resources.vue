@@ -61,7 +61,7 @@ const props = defineProps({
   width: 100%;
   gap: 30px;
   background-color: #f5f7fa;
-  height: 93vh;
+  min-height: 93vh;
 }
 
 .resources-header {
@@ -178,6 +178,62 @@ a {
   }
 }
 
+@media (max-width: 560px) {
+  .resources-header span,
+  .feedback-header span {
+    font-size: clamp(18px, 5vw, 26px);
+  }
 
+ .otherLinks_container {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: flex-start;
+   gap: 10px;
+ }
+ .other_link {
+   display: flex;
+   justify-content: flex-start;
+ }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .resources-header span,
+  .feedback-header span {
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
+  .otherLinks_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .other_link {
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .resources-header span,
+  .feedback-header span {
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
+  .otherLinks_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .other_link {
+    display: flex;
+    padding: 20px 0 0 20px;
+    justify-content: flex-start;
+  }
+}
 
 </style>

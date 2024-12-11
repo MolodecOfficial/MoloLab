@@ -1,30 +1,38 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useAuthStore } from '~/stores/authStore';
 
-const authStore = useAuthStore();
+const userStatus = ref('')
 
 onMounted(() => {
-  const user = localStorage.getItem('user');
-  const admin = JSON.parse(localStorage.getItem('admin') || '{}');
-
-  authStore.isAuthenticated = !!user;
-  authStore.isAdmin = admin && admin.email === 'MolodecOfficial';
+  const storedUser = localStorage.getItem('user');
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    userStatus.value = user.status
+  }
 });
 </script>
 
 <template>
-  <div v-if="authStore.isAdmin">
+  <div v-if="userStatus === 'Администратор', 'Владелец'">
     <slot></slot>
   </div>
   <div v-else>
-    <p>В данный момент идёт инициализация входа</p>
-    <p>Система ещё в разработке, поэтому вас может выбросить сюда просто так</p>
-    <p>Прошу прощения за неудобства</p>
-    <router-link to="/login">Войти</router-link>
+    <p>Добро пожаловать в загрузочный экран.</p>
+    <p>Если вы сюда попали, значит вы пытались зайти на страницу, доступ к которой вам запрещён.</p>
+    <p class="warn">Пользуйтесь сайтом честно.</p>
+    <router-link to="/account">Вернуться обратно</router-link>
   </div>
 </template>
 
 <style scoped>
-
+div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.warn {
+  color: red;
+}
 </style>

@@ -3,6 +3,8 @@ import {onMounted, ref} from "vue";
 
 const firstName = ref('');
 const lastName = ref('');
+const group = ref('')
+const course = ref('')
 const userStore = useUserStore()
 
 useHead({
@@ -15,9 +17,13 @@ onMounted(() => {
     const user = JSON.parse(storedUser);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
+    group.value = user.group;
+    course.value = user.course
   } else {
     firstName.value = userStore.userFirstName;
-    lastName.value = userStore.userLastName
+    lastName.value = userStore.userLastName;
+    group.value = userStore.userGroup;
+    course.value = userStore.userCourse
   }
 });
 
@@ -38,9 +44,9 @@ onMounted(() => {
         <span class="user_span">Фамилия:</span>
         <span class="user">{{ lastName }}</span>
         <span class="user_span">Группа:</span>
-        <span class="user">БПИ, БПИ09з 24-01</span>
+        <span class="user">{{ group }}</span>
         <span class="user_span">Курс:</span>
-        <span class="user">1</span>
+        <span class="user">{{ course }}</span>
         <span class="no-info">данные пока не доступны</span>
       </section>
     </section>
@@ -346,5 +352,47 @@ onMounted(() => {
   }
 }
 
+@media (max-width: 560px) {
+
+  .flip-header {
+    justify-content: ;
+    width: 80%;
+  }
+
+  .flip-header span{
+    font-size: clamp(18px, 5vw, 26px);
+  }
+
+  .flip-header_inside-header span{
+    font-size: clamp(12px, 4vw, 22px);
+  }
+
+  .flip-header_outside-header span{
+    font-size: clamp(12px, 3vw, 18px);
+  }
+
+  .flip-information_books {
+    width: 80%;
+  }
+
+  .flip-information_main {
+    flex-direction: column;
+  }
+
+  .flip-information_main-places {
+    width: 100%;
+    font-size: 12px;
+  }
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+
+}
 
 </style>

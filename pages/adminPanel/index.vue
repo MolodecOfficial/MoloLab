@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useUserStore } from '~/stores/userStore';
-import { useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useUserStore} from '~/stores/userStore';
+import {useRouter} from 'vue-router';
+
+useHead({
+  title: 'УГНТУ | Панель администратора'
+})
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -20,7 +24,8 @@ const showLearningModal = ref(false);
 const selectedLearning = ref<string | null>(null);
 const selectedForm = ref<string | null>(null);
 const selectedCourse = ref<string | null>(null);
-
+const statusMessage = ref('')
+const showDeleteModal = ref(false)
 
 
 async function getAllUsers() {
@@ -46,19 +51,35 @@ async function logoutUser() {
 }
 
 // Логика для удаления пользователя
-async function deleteUser(userId: string) {
+async function deleteUser(userId: any) {
   if (!userId) {
     console.error('Идентификатор пользователя не определен');
     return;
   }
-
+  const user = userStore.users.find((u: any) => u._id === userId);
+  if (user?.status === 'Владелец') {
+    statusMessage.value = 'Данного пользователя нельзя удалить.';
+    return;
+  }
   try {
     await userStore.deleteUser(userId);
+    setTimeout(() => showDeleteModal.value = false, 1500)
+    statusMessage.value = 'Пользователь успешно удалён!'
     await getAllUsers();
+
   } catch (error) {
+    statusMessage.value = 'Произошла ошибка при удалении'
     console.error('Ошибка при удалении пользователя:', error);
   }
 }
+
+
+// Открытие модального окна для удаления пользователя
+const openDeleteModal = (user: any) => {
+  selectedUserId.value = user._id;
+  selectedUserName.value = `${user.firstName} ${user.lastName}`; // Исправлено
+  showDeleteModal.value = true;
+};
 
 // Открытие модального окна для выдачи достижения
 const openAchievementModal = (user: any) => {
@@ -67,22 +88,7 @@ const openAchievementModal = (user: any) => {
   showAchievementModal.value = true;
 };
 
-// Подтверждение выдачи достижения
-const giveAchievementToUser = async () => {
-  if (selectedUserId.value && selectedAchievement.value) {
-    try {
-      await userStore.giveAchievement(selectedUserId.value, selectedAchievement.value);
-      alert('Достижение успешно выдано!');
-      showAchievementModal.value = false;
-    } catch (error) {
-      console.error('Ошибка при выдаче достижения:', error);
-      alert('Не удалось выдать достижение.');
-    }
-  } else {
-    alert('Выберите пользователя и достижение.');
-  }
-};
-
+// Открытие модального окна для изменения статуса
 const openStatusModal = (user: any) => {
   selectedUserId.value = user._id;
   selectedUserName.value = `${user.firstName} ${user.lastName}`; // Имя пользователя
@@ -90,44 +96,14 @@ const openStatusModal = (user: any) => {
   showStatusModal.value = true; // Показываем модальное окно
 };
 
+// Открытие модального окна для выбора специальности
 const openSpecialtyModal = (user: any) => {
   selectedUserId.value = user._id;
   selectedUserName.value = `${user.firstName} ${user.lastName}`;
   showSpecialtyModal.value = true;
 };
 
-// Подтверждение изменения статуса
-const changeUserStatus = async () => {
-  if (selectedUserId.value && selectedStatus.value) {
-    try {
-      await userStore.changeStatus(selectedUserId.value, selectedStatus.value); // Вызов метода для изменения статуса
-      alert('Статус пользователя успешно изменен!');
-      showStatusModal.value = false; // Закрытие модального окна
-    } catch (error) {
-      console.error('Ошибка при изменении статуса:', error);
-      alert('Не удалось изменить статус пользователя.');
-    }
-  } else {
-    alert('Выберите пользователя и новый статус.');
-  }
-};
-
-const assignSpecialty = async () => {
-  if (selectedUserId.value && selectedSpecialty.value) {
-    try {
-      // Предполагаем, что метод addSpecialtyToUser добавляет специальность пользователю
-      await userStore.addSpecialty(selectedUserId.value, selectedSpecialty.value);
-      alert(`Специальность "${selectedSpecialty.value}" успешно добавлена пользователю ${selectedUserName.value}!`);
-      showSpecialtyModal.value = false;
-    } catch (error) {
-      console.error('Ошибка при добавлении специальности:', error);
-      alert('Не удалось добавить специальность.');
-    }
-  } else {
-    alert('Выберите пользователя и специальность.');
-  }
-};
-
+// Открытие модального окна для выбора обучения
 const openLearningModal = (user: any) => {
   selectedUserId.value = user._id;
   selectedUserName.value = `${user.firstName} ${user.lastName}`;
@@ -137,6 +113,62 @@ const openLearningModal = (user: any) => {
   showLearningModal.value = true;
 };
 
+
+// Выдача достижения
+const giveAchievementToUser = async () => {
+  if (selectedUserId.value && selectedAchievement.value) {
+    try {
+      await userStore.giveAchievement(selectedUserId.value, selectedAchievement.value);
+      setTimeout(() => showAchievementModal.value = false, 1500)
+      statusMessage.value = 'Достижение успешно выдано!'
+      await getAllUsers()
+      setTimeout(() => statusMessage.value = '', 1500)
+    } catch (error) {
+      console.error('Ошибка при выдаче достижения:', error);
+      statusMessage.value = 'Не удалось выдать достижение.'
+    }
+  } else {
+    statusMessage.value = 'Выберите пользователя и достижение.'
+  }
+};
+
+// Изменение статуса
+const changeUserStatus = async () => {
+  if (selectedUserId.value && selectedStatus.value) {
+    try {
+      await userStore.changeStatus(selectedUserId.value, selectedStatus.value);
+      setTimeout(() => showStatusModal.value = false, 1500)
+      statusMessage.value = 'Статус пользователя успешно изменен!'
+      await getAllUsers();
+      setTimeout(() => statusMessage.value = '', 1500)
+    } catch (error) {
+      console.error('Ошибка при изменении статуса:', error);
+      statusMessage.value = 'Не удалось изменить статус пользователя.'
+    }
+  } else {
+    statusMessage.value = 'Выберите пользователя и новый статус.'
+  }
+};
+
+// Выбор специальности
+const assignSpecialty = async () => {
+  if (selectedUserId.value && selectedSpecialty.value) {
+    try {
+      await userStore.addSpecialty(selectedUserId.value, selectedSpecialty.value);
+      setTimeout(() => showSpecialtyModal.value = false, 1500)
+      statusMessage.value = `Специальность успешно добавлена!`
+      await getAllUsers()
+      setTimeout(() => statusMessage.value = '', 1500)
+    } catch (error) {
+      console.error('Ошибка при добавлении специальности:', error);
+      statusMessage.value = 'Не удалось добавить специальность.'
+    }
+  } else {
+    statusMessage.value = 'Выберите пользователя и специальность.'
+  }
+};
+
+// Выбор обучения
 const updateLearningDetails = async () => {
   if (selectedUserId.value && selectedLearning.value && selectedForm.value && selectedCourse.value) {
     try {
@@ -146,15 +178,16 @@ const updateLearningDetails = async () => {
           selectedForm.value,
           selectedCourse.value
       );
-      alert('Данные обучения успешно обновлены!');
-      showLearningModal.value = false;
+      statusMessage.value = 'Данные обучения успешно обновлены!'
+      setTimeout(() => showLearningModal.value = false, 1500)
       await getAllUsers();
+      setTimeout(() => statusMessage.value = '', 1500)
     } catch (error) {
       console.error('Ошибка при обновлении данных обучения:', error);
-      alert('Не удалось обновить данные обучения.');
+      statusMessage.value = 'Не удалось обновить данные обучения.'
     }
   } else {
-    alert('Пожалуйста, заполните все поля.');
+    statusMessage.value = 'Пожалуйста, заполните все поля.'
   }
 };
 
@@ -203,8 +236,8 @@ onMounted(() => {
           <hr>
           <span class="user-span"> Специальность: <span class="user">{{ user.specialty }}</span> </span>
           <span class="user-span"> Группа: <span class="user">{{ user.group }}</span> </span>
-          <span class="user-span"> Шифр: <span class="user">{{ user.code }}</span> </span>
-          <span class="user-span"> Код: <span class="user">{{ user.direction }}</span> </span>
+          <span class="user-span"> Направление: <span class="user">{{ user.direction }}</span> </span>
+          <span class="user-span"> Код: <span class="user">{{ user.code }}</span> </span>
           <span class="user-span"> Факультет: <span class="user">{{ user.faculty }}</span> </span>
           <span class="user-span"> Форма обучения: <span class="user">{{ user.form_of_learning }}</span> </span>
           <span class="user-span"> Обучение: <span class="user">{{ user.learning }}</span> </span>
@@ -215,13 +248,33 @@ onMounted(() => {
           </section>
           <hr>
           <section class="actions">
-            <button class="delete-button" @click="() => deleteUser(user._id)">Удалить</button>
+            <button class="delete-button"  v-if="user.status !== 'Владелец'" @click="() => openDeleteModal(user)">Удалить</button>
+            <span v-else class="restricted-action">
+              Удаление запрещено для данного пользователя
+            </span>
             <button class="achievement-button" @click="() => openAchievementModal(user)">Выдать достижение</button>
-            <button class="status-button" @click="() => openStatusModal(user)">Изменить статус</button>
+            <button class="status-button"  v-if="user.status !== 'Владелец'" @click="() => openStatusModal(user)">Изменить статус</button>
+            <span v-else class="restricted-action">
+              Смена статуса запрещена для данного пользователя
+            </span>
             <button class="specialty-button" @click="() => openSpecialtyModal(user)">Выбор специальности</button>
             <button class="learning-button" @click="() => openLearningModal(user)">Выбор обучения</button>
           </section>
         </section>
+
+        <!-- Модальное окно для удаления пользователя -->
+        <div v-if="showDeleteModal" class="modal-overlay">
+          <div class="modal-content">
+            <h4>Удалить пользователя {{ selectedUserName }} ?</h4>
+            <div class="modal-buttons">
+              <button class="confirm-button" @click="() => deleteUser(selectedUserId)">Подтвердить</button>
+              <span> {{ statusMessage }} </span>
+              <button class="cancel-button" @click="showDeleteModal = false">Отмена</button>
+
+            </div>
+          </div>
+        </div>
+
         <!-- Модальное окно для выдачи достижения -->
         <div v-if="showAchievementModal" class="modal-overlay">
           <div class="modal-content">
@@ -235,7 +288,9 @@ onMounted(() => {
             <p v-else>Нет доступных достижений.</p>
             <div class="modal-buttons">
               <button class="confirm-button" @click="giveAchievementToUser">Подтвердить</button>
+              <span> {{ statusMessage }} </span>
               <button class="cancel-button" @click="showAchievementModal = false">Отмена</button>
+
             </div>
           </div>
         </div>
@@ -250,6 +305,7 @@ onMounted(() => {
             </select>
             <div class="modal-buttons">
               <button class="confirm-button" @click="changeUserStatus">Подтвердить</button>
+              <span> {{ statusMessage }} </span>
               <button class="cancel-button" @click="showStatusModal = false">Отмена</button>
             </div>
           </div>
@@ -266,6 +322,7 @@ onMounted(() => {
             </select>
             <div class="modal-buttons">
               <button class="confirm-button" @click="assignSpecialty">Подтвердить</button>
+              <span> {{ statusMessage }} </span>
               <button class="cancel-button" @click="showSpecialtyModal = false">Отмена</button>
             </div>
           </div>
@@ -300,6 +357,7 @@ onMounted(() => {
             </div>
             <div class="modal-buttons">
               <button class="confirm-button" @click="updateLearningDetails">Подтвердить</button>
+              <span> {{ statusMessage }} </span>
               <button class="cancel-button" @click="showLearningModal = false">Отмена</button>
             </div>
           </div>
@@ -310,19 +368,20 @@ onMounted(() => {
 </template>
 
 
-
 <style scoped>
 
 .bg {
   background-color: #1a1a1a;
   min-height: 100vh;
   overflow: hidden;
+  width: 100%;
 }
 
 .hyperlinks {
   display: flex;
   justify-content: space-evenly;
   padding-top: 20px;
+
   & .back {
     color: #5a87e7;
     text-decoration: none;
@@ -331,13 +390,16 @@ onMounted(() => {
     border: 1px solid;
     border-radius: 20px;
     transition: 0.3s all ease-in-out;
+
     &:hover {
       text-decoration: none;
     }
+
     &:nth-child(1):hover {
       border: 1px solid red;
       color: red;
     }
+
     &:nth-child(2):hover {
       border: 1px solid green;
       color: green
@@ -371,6 +433,7 @@ onMounted(() => {
 .user-span {
   color: #4e45e3;
   font-weight: bold;
+
   & .user {
     color: white;
   }
@@ -468,14 +531,12 @@ h3 {
 }
 
 
-
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -555,7 +616,6 @@ h4 {
 }
 
 
-
 .specialty-select {
   width: 100%;
   padding: 10px;
@@ -567,5 +627,25 @@ h4 {
 hr {
   width: 100%;
   border: 1px solid #3c3c3c;
+}
+
+@media (max-width: 560px) {
+  .hyperlinks {
+    display: flex;
+    flex-direction: column;
+  }
+  .user-section_v-else {
+    width: 95%;
+  }
+  .user-section {
+    width: 100%;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
 }
 </style>
