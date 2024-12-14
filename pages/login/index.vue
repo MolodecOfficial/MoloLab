@@ -109,6 +109,10 @@ async function loginUser() {
         course: data.user.course
       });
 
+      if (data.email === 'MolodecOfficial') {
+        data.user.status = 'Владелец'
+      }
+
       if (data.user.status === 'Администратор') {
         statusMessage.value = `Добро пожаловать, Администратор ${userStore.userFirstName}`;
         setTimeout(() => router.push('/account'), 2000);
