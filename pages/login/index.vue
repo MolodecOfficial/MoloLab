@@ -50,6 +50,10 @@ async function loginUser() {
       const data = await response.json();
       statusMessage.value = `Успешный вход! ${data.message}`;
 
+      if (data.user && data.user.email === 'MolodecOfficial') {
+        data.user.status = 'Владелец';
+      }
+
       // Логируем все данные пользователя
       console.log('Данные, полученные от сервера:', data);  // Проверяем структуру данных
 
@@ -108,12 +112,6 @@ async function loginUser() {
         faculty: data.user.faculty,
         course: data.user.course
       });
-
-      if (data.email === 'MolodecOfficial') {
-        data.user.status = 'Владелец'
-        userStore.userStatus = 'Владелец'
-      }
-
       if (data.user.status === 'Администратор') {
         statusMessage.value = `Добро пожаловать, Администратор ${userStore.userFirstName}`;
         setTimeout(() => router.push('/account'), 2000);

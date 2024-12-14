@@ -32,10 +32,6 @@ onMounted(() => {
     userLastName.value = user.lastName;
     userEmail.value = user.email;
     userStatus.value = user.status
-    if (user.email === 'MolodecOfficial') {
-      user.status = 'Владелец'
-      userStore.userStatus = 'Владелец'
-    }
   } else {
     userFirstName.value = userStore.userFirstName;
     userLastName.value = userStore.userLastName;
