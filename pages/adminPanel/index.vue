@@ -195,6 +195,7 @@ const updateLearningDetails = async () => {
 onMounted(() => {
   getAllUsers();
   getAllAchievements();
+  userStore.users
 });
 </script>
 
