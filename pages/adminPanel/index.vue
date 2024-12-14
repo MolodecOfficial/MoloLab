@@ -248,12 +248,12 @@ onMounted(() => {
           </section>
           <hr>
           <section class="actions">
-            <button class="delete-button"  v-if="user.status !== 'Владелец'" @click="() => openDeleteModal(user)">Удалить</button>
+            <button class="delete-button"  v-if="userStore.userStatus !== 'Владелец'" @click="() => openDeleteModal(user)">Удалить</button>
             <span v-else class="restricted-action">
               Удаление запрещено для данного пользователя
             </span>
             <button class="achievement-button" @click="() => openAchievementModal(user)">Выдать достижение</button>
-            <button class="status-button"  v-if="user.status !== 'Владелец'" @click="() => openStatusModal(user)">Изменить статус</button>
+            <button class="status-button"  v-if="userStore.userStatus !== 'Владелец'" @click="() => openStatusModal(user)">Изменить статус</button>
             <span v-else class="restricted-action">
               Смена статуса запрещена для данного пользователя
             </span>
