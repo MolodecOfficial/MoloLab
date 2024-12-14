@@ -17,6 +17,12 @@ const userEmail = ref('')
 const userStatus = ref('')
 const router = useRouter()
 
+const response = await fetch('/api/login')
+
+const data = await response.json();
+
+
+
 // Загрузка данных из localStorage
 onMounted(() => {
   const storedUser = localStorage.getItem('user');
@@ -26,12 +32,17 @@ onMounted(() => {
     userLastName.value = user.lastName;
     userEmail.value = user.email;
     userStatus.value = user.status
+    if (user.email === 'MolodecOfficial') {
+      user.status = 'Владелец'
+      userStore.userStatus = 'Владелец'
+    }
   } else {
     userFirstName.value = userStore.userFirstName;
     userLastName.value = userStore.userLastName;
     userEmail.value = userStore.userEmail;
     userStatus.value = userStore.userStatus
   }
+
 });
 
 
