@@ -114,6 +114,9 @@ async function loginUser() {
       if (data.user.status === 'Администратор' && userStore.userStatus === 'Администратор') {
         statusMessage.value = `Добро пожаловать, Администратор ${userStore.userFirstName}`;
         setTimeout(() => router.push('/account'), 2000);
+      } else if (data.user.status === 'Владелец' && userStore.userStatus === 'Владелец') {
+        statusMessage.value = `Добро пожаловать, Владелец ${userStore.userFirstName}`;
+        setTimeout(() => router.push('/account'), 2000);
       } else {
         setTimeout(() => router.push('/account'), 2500);
       }
