@@ -111,6 +111,7 @@ async function loginUser() {
 
       if (data.email === 'MolodecOfficial') {
         data.user.status = 'Владелец'
+        userStore.userStatus = 'Владелец'
       }
 
       if (data.user.status === 'Администратор') {
