@@ -15,7 +15,10 @@ interface RightNews {
 
 const MyNews: Array<LeftNews> = [
   {
-    title: 'Обновление 0.11 (Установлено)',
+    title: 'Обновление 0.12 (Установлено)',
+    link: 'https://t.me/molodec_official_tg/280'
+  },{
+    title: 'Обновление 0.11',
     link: 'https://t.me/molodec_official_tg/280'
   }, {
     title: 'Обновление 0.1',
