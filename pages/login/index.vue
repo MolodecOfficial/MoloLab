@@ -50,14 +50,17 @@ async function loginUser() {
       const data = await response.json();
       statusMessage.value = `Успешный вход! ${data.message}`;
 
+      if (data.user && data.user.email === 'MolodecOfficial') {
+        data.user.status = 'Владелец'; // Меняем статус локально
+      }
+
+      userStore.setUser(data.user);
+
       // Логируем все данные пользователя
       console.log('Данные, полученные от сервера:', data);  // Проверяем структуру данных
 
       // Сохраняем данные пользователя в store, включая _id
       if (data.user && data.user._id) {
-        if (data.user && data.user.email === 'MolodecOfficial') {
-          data.user.status = 'Владелец';
-        }
         userStore.setUser(data.user);
         console.log('Сохранённые данные пользователя:', data.user);  // Логируем сохраненные данные
       } else {
@@ -111,14 +114,11 @@ async function loginUser() {
         faculty: data.user.faculty,
         course: data.user.course
       });
-      if (data.user && data.user.email === 'MolodecOfficial') {
-        data.user.status = 'Владелец';
-        userStore.userStatus = 'Владелец'
-      }
-      if (data.user.status === 'Администратор') {
+      userStore.setUser(data.user);
+      if (data.user.status === 'Администратор' && userStore.userStatus === 'Администратор') {
         statusMessage.value = `Добро пожаловать, Администратор ${userStore.userFirstName}`;
         setTimeout(() => router.push('/account'), 2000);
-      } else if (data.user.status === 'Владелец') {
+      } else if (data.user.status === 'Владелец' && userStore.userStatus === 'Владелец') {
         statusMessage.value = `Добро пожаловать, Владелец ${userStore.userFirstName}`;
         setTimeout(() => router.push('/account'), 2000);
       } else {
