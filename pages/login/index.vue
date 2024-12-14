@@ -50,10 +50,6 @@ async function loginUser() {
       const data = await response.json();
       statusMessage.value = `Успешный вход! ${data.message}`;
 
-      if (data.user && data.user.email === 'MolodecOfficial') {
-        data.user.status = 'Владелец'; // Меняем статус локально
-      }
-
       userStore.setUser(data.user);
 
       // Логируем все данные пользователя
