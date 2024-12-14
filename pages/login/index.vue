@@ -113,7 +113,7 @@ async function loginUser() {
         course: data.user.course
       });
       if (data.user.status === 'Администратор') {
-        statusMessage.value = `Добро пожаловать, ${userStore.userStatus} ${userStore.userFirstName}`;
+        statusMessage.value = `Добро пож  аловать, ${userStore.userStatus} ${userStore.userFirstName}`;
         setTimeout(() => router.push('/account'), 2000);
       } else if (data.user.status === 'Владелец') {
         statusMessage.value = `Добро пожаловать, ${userStore.userStatus} ${userStore.userFirstName}`;
