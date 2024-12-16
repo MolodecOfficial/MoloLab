@@ -611,7 +611,11 @@ h4 {
   display: flex;
   justify-content: space-between;
   height: 8%;
+  & span {
+
+  }
 }
+
 
 .confirm-button,
 .cancel-button {
@@ -623,20 +627,33 @@ h4 {
 }
 
 .confirm-button {
-  background-color: #28a745; /* Зеленый цвет для подтверждения */
-  color: white;
-  transition: 0.2s all ease-in-out;
+  border: 1px solid #0cb000;
+  background-color: #0e4400;
+  color: white; /* Белый текст */
+  border-radius: 5px; /* Закругляем углы */
+  padding: 8px 12px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя */
+  transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+  &:hover {
+    background-color: #0cb000;
+  }
 }
+
+
 
 .cancel-button {
-  background-color: #dc3545; /* Красный цвет для отмены */
-  color: white;
+  border: 1px solid #ab1000; /* Красный цвет для кнопки удаления */
+  background-color: #3f0000;
+  color: white; /* Белый текст */
+  border-radius: 5px; /* Закругляем углы */
+  padding: 8px 12px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор в виде указателя */
+  transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+  &:hover {
+    background-color: #ab1000;
+  }
 }
 
-.confirm-button:hover,
-.cancel-button:hover {
-  opacity: 0.8; /* Эффект при наведении */
-}
 
 
 .specialty-select {
