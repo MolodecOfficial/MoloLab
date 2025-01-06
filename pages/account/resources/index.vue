@@ -35,7 +35,7 @@ useHead({
           <img :src="testResult" alt="">
           <span>Система тестирования</span>
         </NuxtLink>
-        <NuxtLink class="other_link" to="/account/news">
+        <NuxtLink class="other_link" to="/in-progress">
           <img :src="info" alt="">
           <span>Информация по образовательным программам</span>
         </NuxtLink>
