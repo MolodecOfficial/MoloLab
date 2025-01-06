@@ -36,6 +36,8 @@ useThemeStore()
   border-radius: 15px; /* Округлые углы */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для глубины */
   transition: transform 0.2s ease, box-shadow 0.2s ease; /* Плавный переход для эффектов */
+  border: 1px solid #e0e0e0;
+
 }
 
 .news-leftBlock:hover {

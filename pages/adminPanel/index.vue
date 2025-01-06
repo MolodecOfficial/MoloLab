@@ -3,6 +3,7 @@ import {onMounted, ref} from 'vue';
 import {useUserStore} from '~/stores/userStore';
 import {useRouter} from 'vue-router';
 
+
 useHead({
   title: 'УГНТУ | Панель администратора'
 })
@@ -26,11 +27,17 @@ const selectedForm = ref<string | null>(null);
 const selectedCourse = ref<string | null>(null);
 const statusMessage = ref('')
 const showDeleteModal = ref(false)
-
+const selectedSubject = ref<string | null>(null);
+const selectedScore = ref<number | null>(null);
+const showScoresModal = ref(false);
 const userFirstName = ref('');
 const userLastName = ref('');
 const userEmail = ref('')
 const userStatus = ref('')
+const userData = ref(null);
+const availableSubjects = ref<any[]>()
+const currentUser = ref<any>(null); // Это будет объект с данными текущего пользователя
+
 
 // Загрузка данных из localStorage
 onMounted(() => {
@@ -54,7 +61,7 @@ async function getAllUsers() {
   try {
     await userStore.getUsers();
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error('Ошибка при загрузке пользователей:', error);
   } finally {
     loading.value = false;
   }
@@ -135,6 +142,12 @@ const openLearningModal = (user: any) => {
   showLearningModal.value = true;
 };
 
+const openScoresModal = (user: any) => {
+  selectedUserId.value = user._id;
+  selectedUserName.value = `${user.firstName} ${user.lastName}`;
+  selectedScore.value = user.scores || 0; // Текущие оценки пользователя
+  showScoresModal.value = true;
+};
 
 // Выдача достижения
 const giveAchievementToUser = async () => {
@@ -213,11 +226,74 @@ const updateLearningDetails = async () => {
   }
 };
 
+const updateUserScores = async () => {
+  console.log('Updating user scores', selectedUserId.value, selectedSubject.value, selectedScore.value); // Логирование
+
+  if (selectedUserId.value && selectedSubject.value && selectedScore.value !== null) {
+    try {
+      // Добавляем или обновляем оценку
+      await userStore.addScore(selectedUserId.value, selectedSubject.value, selectedScore.value);
+
+      // Обновляем средний балл и рейтинг пользователя
+      const updatedUser = userStore.users.find((user) => user._id === selectedUserId.value);
+      if (updatedUser) {
+        console.log('Обновленные данные пользователя:', updatedUser); // Логирование обновленных данных пользователя
+        setTimeout(() => showScoresModal.value = false, 1500);
+        await getAllUsers();
+        statusMessage.value = 'Оценки пользователя успешно обновлены!';
+        setTimeout(() => statusMessage.value = '', 1500);
+      }
+    } catch (error) {
+      console.error('Ошибка при обновлении оценок:', error);
+      statusMessage.value = 'Не удалось обновить оценки.';
+    }
+  } else {
+    statusMessage.value = 'Пожалуйста, укажите предмет и оценку.';
+  }
+};
+
+const calculateAverage = (scores: any) => {
+  if (Array.isArray(scores) && scores.length > 0) {
+    const sum = scores.reduce((acc, score) => acc + Number(score), 0);
+    return (sum / scores.length).toFixed(2);
+  }
+  return 'Нет оценок';
+}
+
+
+async function fetchAvailableSubjects() {
+  try {
+    const response = await fetch('/api/edit-scores');
+    if (response.ok) {
+      const data = await response.json();
+      availableSubjects.value = data.allowedSubjects.sort((a, b) => a.localeCompare(b, 'ru'));
+    } else {
+      console.error('Не удалось получить список предметов');
+    }
+  } catch (error) {
+    console.error('Ошибка при загрузке предметов:', error);
+  }
+}
+
+// Вычисляем цвет на основе среднего балла
+function getAverageColor(scores: any) {
+  const average = parseFloat(calculateAverage(scores));
+  if (isNaN(average)) return '#ffffff';
+
+  if (average >= 4.5) return '#0cb000';  // Green
+  if (average >= 4.0) return '#8ab000';  // Yellow-Green
+  if (average >= 3.5) return '#ffcc00';  // Yellow
+  if (average >= 3.0) return '#ff5900';  // Orange
+  if (average >= 2.5) return '#ff0000';  // Red
+  return '#731601';  // Dark Red
+}
+
+
 // Метод для получения всех пользователей
-onMounted(() => {
-  getAllUsers();
-  getAllAchievements();
-  userStore.users
+onMounted(async () => {
+  await getAllUsers();
+  await getAllAchievements();
+  await fetchAvailableSubjects();
 });
 </script>
 
@@ -231,7 +307,11 @@ onMounted(() => {
 
       <h3>Добро Пожаловать в панель администратора</h3>
       <h3>Текущий список пользователей</h3>
-      <p v-if="loading">Загрузка пользователей...</p>
+      <div v-if="loading" class="fun-loader">
+        <div class="loader">
+          <div class="dot"></div>
+        </div>
+      </div>
       <section class="user-section_v-else" v-else>
         <section v-for="user in userStore.users"
                  :key="user._id"
@@ -246,11 +326,14 @@ onMounted(() => {
           <span class="user-span"> Фамилия: <span class="user">{{ user.lastName }}</span> </span>
           <span class="user-span"> Почта: <span class="user">{{ user.email }}</span> </span>
           <span class="user-span"> Статус: <span class="user">{{ user.status }}</span> </span>
-          <span class="user-span"> Достижения: <span class="user">{{
-              Array.isArray(user.achievements) && user.achievements.length > 0
-                  ? user.achievements.sort((a: any, b: any) => parseInt(a) - parseInt(b)).join(', ')
-                  : 'Нет достижений'
-            }}</span>
+          <span class="user-span"> Достижения:
+            <span class="user">
+              {{
+                Array.isArray(user.achievements) && user.achievements.length > 0
+                    ? user.achievements.sort((a: any, b: any) => parseInt(a) - parseInt(b)).join(', ')
+                    : 'Нет достижений'
+              }}
+            </span>
           </span>
           <hr>
           <section>
@@ -267,21 +350,49 @@ onMounted(() => {
           <span class="user-span"> Курс: <span class="user">{{ user.course }}</span> </span>
           <hr>
           <section>
+            <span>Данные о успеваемости</span>
+          </section>
+          <hr>
+          <section>
+            <span>
+              Общий балл: {{ user.generalScore }}
+            </span>
+          </section>
+          <section>
+            <span>
+              Средний балл: {{ user.averageScore }}
+            </span>
+          </section>
+          <hr>
+          <div v-for="(scores, subject) in user.score" :key="subject" class="user-scores">
+            <span class="user-span">{{ subject }}</span>
+            <span v-if="Array.isArray(scores)" class="user" :data-average="calculateAverage(scores)"
+                  :style="{ color: getAverageColor(scores) }">
+              {{ calculateAverage(scores) }}
+            </span>
+          </div>
+          <hr>
+          <section>
             <span>Действия</span>
           </section>
           <hr>
           <section class="actions">
-            <button class="delete-button" v-if="user.email !== 'MolodecOfficial'" @click="() => openDeleteModal(user)">Удалить</button>
+            <button class="delete-button" v-if="user.email !== 'MolodecOfficial'" @click="() => openDeleteModal(user)">
+              Удалить
+            </button>
             <span v-else class="restricted-action">
               Удаление запрещено для данного пользователя
             </span>
             <button class="achievement-button" @click="() => openAchievementModal(user)">Выдать достижение</button>
-            <button class="status-button" v-if="user.email !== 'MolodecOfficial'" @click="() => openStatusModal(user)">Изменить статус</button>
+            <button class="status-button" v-if="user.email !== 'MolodecOfficial'" @click="() => openStatusModal(user)">
+              Изменить статус
+            </button>
             <span v-else class="restricted-action">
               Смена статуса запрещена для данного пользователя
             </span>
-            <button  class="specialty-button" @click="() => openSpecialtyModal(user)">Выбор специальности</button>
+            <button class="specialty-button" @click="() => openSpecialtyModal(user)">Выбор специальности</button>
             <button class="learning-button" @click="() => openLearningModal(user)">Выбор обучения</button>
+            <button class="scores-button" @click="() => openScoresModal(user)">Добавить оценку</button>
           </section>
         </section>
 
@@ -302,7 +413,7 @@ onMounted(() => {
         <div v-if="showAchievementModal" class="modal-overlay">
           <div class="modal-content">
             <h4>Выдача достижения пользователю {{ selectedUserName }}</h4>
-            <select v-if="achievements.length > 0" v-model="selectedAchievement" class="achievement-select">
+            <select v-if="achievements.length > 0" v-model="selectedAchievement" class="select">
               <option value="" disabled>Выберите достижение</option>
               <option v-for="achievement in achievements" :value="achievement.id" :key="achievement.id">
                 {{ achievement.title }}
@@ -321,7 +432,7 @@ onMounted(() => {
         <div v-if="showStatusModal" class="modal-overlay">
           <div class="modal-content">
             <h4>Изменение статуса для пользователя {{ selectedUserName }}</h4>
-            <select v-model="selectedStatus" class="status-select">
+            <select v-model="selectedStatus" class="select">
               <option value="Студент">Студент</option>
               <option value="Преподаватель">Преподаватель</option>
               <option value="Администратор">Администратор</option>
@@ -337,7 +448,7 @@ onMounted(() => {
         <div v-if="showSpecialtyModal" class="modal-overlay">
           <div class="modal-content">
             <h4>Добавление специальности пользователю {{ selectedUserName }}</h4>
-            <select v-model="selectedSpecialty" class="specialty-select">
+            <select v-model="selectedSpecialty" class="select">
               <option value="" disabled>Выберите специальность</option>
               <option v-for="specialty in specialtyList" :value="specialty.specialty_name" :key="specialty.id">
                 {{ specialty.specialty_name }}
@@ -356,21 +467,21 @@ onMounted(() => {
             <h4>Изменение данных обучения для пользователя {{ selectedUserName }}</h4>
             <div>
               <label for="learning-select">Обучение:</label>
-              <select id="learning-select" v-model="selectedLearning" class="learning-select">
+              <select id="learning-select" v-model="selectedLearning" class="select">
                 <option value="Очное">Очное</option>
                 <option value="Заочное">Заочное</option>
               </select>
             </div>
             <div>
               <label for="form-select">Форма обучения:</label>
-              <select id="form-select" v-model="selectedForm" class="form-select">
+              <select id="form-select" v-model="selectedForm" class="select">
                 <option value="Коммерция">Коммерция</option>
                 <option value="Бюджет">Бюджет</option>
               </select>
             </div>
             <div>
               <label for="course-select">Курс:</label>
-              <select id="course-select" v-model="selectedCourse" class="course-select">
+              <select id="course-select" v-model="selectedCourse" class="select">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -385,8 +496,37 @@ onMounted(() => {
             </div>
           </div>
         </div>
+        <div v-if="showScoresModal" class="modal-overlay">
+          <div class="modal-content">
+            <h4>Добавить оценку для пользователя {{ selectedUserName }}</h4>
+            <div>
+              <label for="subject-select">Предмет:</label>
+              <select id="subject-select" v-model="selectedSubject" class="select">
+                <option v-for="subject in availableSubjects" :key="subject" :value="subject">
+                  {{ subject }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label for="score-input">Оценка:</label>
+              <select type="number" id="score-input" v-model.number="selectedScore" class="select">
+                <option :value="5">Отлично</option>
+                <option :value="4">Хорошо</option>
+                <option :value="3">Удовлетворительно</option>
+                <option :value="2">Неудовлетворительно</option>
+                <option :value="1">Плохо</option>
+              </select>
+            </div>
+            <div class="modal-buttons">
+              <button class="confirm-button" @click="updateUserScores">Подтвердить</button>
+              <span>{{ statusMessage }}</span>
+              <button class="cancel-button" @click="showScoresModal = false">Отмена</button>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
+    <AccountRatingMoloRating v-if="currentUser" :user="currentUser" class="rating-invisible"/>
   </AccountMoloGuard>
 </template>
 
@@ -394,7 +534,7 @@ onMounted(() => {
 <style scoped>
 
 .bg {
-  background-color: #1a1a1a;
+  background-color: #151515;
   min-height: 100vh;
   overflow: hidden;
   width: 100%;
@@ -427,6 +567,37 @@ onMounted(() => {
       border: 1px solid green;
       color: green
     }
+  }
+}
+
+.fun-loader {
+  display: flex;
+  justify-content: center;
+}
+
+.loader {
+
+  width: 300px;
+  height: 10px;
+  background: #333;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  & .dot {
+    width: 0;
+    background: linear-gradient(90deg, #ff6a00, #ab0028);
+    height: 100%;
+    box-shadow: 0 0 10px #ff6a00, 0 0 20px #ab0028;
+    animation: bounce 2s forwards;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
   }
 }
 
@@ -545,12 +716,37 @@ h3 {
 
 }
 
-.status-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
+.scores-button {
+  border: 1px solid #00bea8;
+  background-color: #005b50;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scores-button:hover {
+  background-color: #00bea8;
+
+}
+
+.user-scores {
+  display: flex;
+  justify-content: space-between;
+  text-align: start;
+  align-items: start;
+
+  & .user-span {
+    width: 70%;
+  }
+
+  & .user {
+    padding: 2px;
+    text-decoration: underline 1px;
+    text-underline-offset: 4px;
+    text-align: end;
+  }
 }
 
 
@@ -599,21 +795,10 @@ h4 {
   margin-bottom: 15px;
 }
 
-.achievement-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
-}
-
 .modal-buttons {
   display: flex;
   justify-content: space-between;
   height: 8%;
-  & span {
-
-  }
 }
 
 
@@ -634,11 +819,11 @@ h4 {
   padding: 8px 12px; /* Отступы внутри кнопки */
   cursor: pointer; /* Курсор в виде указателя */
   transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+
   &:hover {
     background-color: #0cb000;
   }
 }
-
 
 
 .cancel-button {
@@ -649,14 +834,14 @@ h4 {
   padding: 8px 12px; /* Отступы внутри кнопки */
   cursor: pointer; /* Курсор в виде указателя */
   transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+
   &:hover {
     background-color: #ab1000;
   }
 }
 
 
-
-.specialty-select {
+.select {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
@@ -669,14 +854,20 @@ hr {
   border: 1px solid #3c3c3c;
 }
 
+.rating-invisible {
+  display: none;
+}
+
 @media (max-width: 560px) {
   .hyperlinks {
     display: flex;
     flex-direction: column;
   }
+
   .user-section_v-else {
     width: 95%;
   }
+
   .user-section {
     width: 100%;
   }

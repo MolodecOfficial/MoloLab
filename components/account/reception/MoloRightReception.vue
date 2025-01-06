@@ -74,6 +74,7 @@ const receptionProps = defineProps({
   border-radius: 20px;
   background-color: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 
   & .address-title {
     font-size: 20px;
@@ -98,6 +99,8 @@ const receptionProps = defineProps({
   border-radius: 20px;
   background-color: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+
 }
 
 .other-address {

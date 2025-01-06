@@ -88,8 +88,8 @@ onMounted(() => {
         </NuxtLink>
         <div class="popup-links">
           <NuxtLink class="popup-link" to="/in-progress">Стипендия</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Оплата обучения</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Общежитие</NuxtLink>
+          <NuxtLink class="popup-link" to="/account/finance/payment">Оплата обучения</NuxtLink>
+          <NuxtLink class="popup-link" to="/account/finance/dormitory">Общежитие</NuxtLink>
         </div>
       </div>
       <NuxtLink class="route" to="/account/flip-list">
@@ -104,7 +104,7 @@ onMounted(() => {
         <img :src="resources" alt="">
         <span>Ресурсы</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/account/rating">
         <img :src="rating" alt="">
         <span>Рейтинг</span>
       </NuxtLink>
@@ -114,19 +114,21 @@ onMounted(() => {
       </NuxtLink>
     </section>
   </section>
+
 </template>
 
 <style scoped>
 .routeList {
   display: flex;
   flex-direction: column;
-  width: 13vw;
+  width: 12vw;
 }
 
 .routeList_container {
-  min-height: 93vh;
+  min-height: 100%;
   width: 100%;
   background-color: #ffffff;
+
 }
 img {
   width: 30px;
@@ -137,12 +139,14 @@ img {
   gap: 5px;
   padding: 10px 20px;
   text-decoration: none;
-  transition: 1ms all ease-in-out;
   color: #919191;
+  position: relative;
   &:hover {
     text-decoration: underline 1px;
     text-underline-offset: 3px;
     color: black;
+    background: linear-gradient(to right, #dcdcdc, #ffffff);
+    border-radius: 10px;
   }
 }
 
@@ -208,6 +212,10 @@ img {
 
 .dark-theme .route {
   color: white;
+
+  &:hover {
+    background: linear-gradient(to right, #333, #1e1e1e);
+  }
 }
 
 .dark-theme .popup-links {

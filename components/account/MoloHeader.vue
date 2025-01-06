@@ -45,10 +45,10 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 
 <template>
   <section class="header_container">
-    <section class="logoSection">
+    <NuxtLink to="/" class="logoSection">
       <img :src="logo" alt="">
       <span>УГНТУ</span>
-    </section>
+    </NuxtLink>
     <section class="hello">
         <span class="greetings">
           {{ greetings }}
@@ -82,7 +82,6 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
   flex-direction: row;
   justify-content: space-between;
   background-color: #ffffff;
-
 }
 
 .logoSection {
@@ -91,7 +90,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
   justify-content: center;
   align-items: center;
   flex-direction: row;
-
+  text-decoration: none;
   & img {
     width: 45px;
   }
@@ -120,7 +119,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 .hello {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+    gap: 10px;
   & button {
     background-color: transparent;
     border: none;
@@ -141,7 +140,7 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 }
 
 .greetings {
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;

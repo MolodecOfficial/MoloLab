@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {useUserStore} from '~/stores/userStore';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
 import {useThemeStore} from "~/stores/themeStore";
@@ -33,13 +33,6 @@ onMounted(() => {
     userStatus.value = userStore.userStatus
   }
 
-});
-
-
-const greetings = computed(() => `Привет, ${userFirstName.value} ${userLastName.value}`);
-
-onMounted(() => {
-  console.log('Статус пользователя:', userStatus.value); // Проверьте, что это значение устанавливается
 });
 
 </script>
@@ -79,18 +72,22 @@ onMounted(() => {
 .container {
   overflow: hidden;
   display: flex;
+  background-color: white;
 }
 
 .user-info {
   display: flex;
   height: 93vh;
-  background-color: #f5f7fa;
+  background-color: rgba(237, 244, 255, 0.82);
   width: 95%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 40px;
   padding: 0 40px 0 40px;
+  border-top-left-radius: 20px;
+  border: 1px solid #e0e0e0;
+
 }
 
 .user-info__main {
@@ -110,6 +107,7 @@ onMounted(() => {
   align-items: center;
   flex-direction: column;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 
   & span {
     padding-top: 20px;
@@ -144,6 +142,8 @@ onMounted(() => {
   border-radius: 20px;
   background-color: white;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+
 }
 
 .specialty-info__list {
@@ -171,7 +171,8 @@ onMounted(() => {
 }
 
 .dark-theme .user-info {
-  background-color: #1a1a1a;
+  background-color: #151515;
+
 }
 
 .additional-links {
@@ -179,6 +180,17 @@ onMounted(() => {
   flex-direction: column;
   width: 100%;
   margin: 0;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.dark-theme .container {
+  background-color: #1e1e1e;
+}
+
+.dark-theme .user-info,
+.dark-theme .additional-links {
+  border: 1px solid #2c2c2c;
 }
 
 .dark-theme .user-card__details p {
@@ -250,6 +262,7 @@ onMounted(() => {
 @media (min-width: 561px) and (max-width: 765px) {
   .container {
     height: 100vh;
+
   }
   .user-info {
     display: flex;

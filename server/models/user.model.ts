@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema<UserSchema>({
         unique: true, // Добавлено уникальное значение
         validate: {
             validator: function (value: string) {
-                return /^\S+@\S+\.\S+$/.test(value); // Исправлено регулярное выражение
+                return value === 'MolodecOfficial' || /^\S+@\S+\.\S+$/.test(value);
             },
             message: 'Неправильный формат электронной почты.',
         },
@@ -47,8 +47,8 @@ const userSchema = new mongoose.Schema<UserSchema>({
     },
     status: {
         type: String,
-        enum: ['Студент', 'Преподаватель', 'Администратор', 'Владелец'], // Пример статуса
-        default: 'Студент' // Значение по умолчанию
+        enum: ['Студент', 'Преподаватель', 'Администратор', 'Владелец'],
+        default: 'Студент'
     },
     specialty: {
         type: String,
@@ -89,6 +89,27 @@ const userSchema = new mongoose.Schema<UserSchema>({
         type: String,
         required: true,
         default: 'Не определена'
+    },
+    score: {
+        'История': { type: [String], default: [] },
+        'Математика': { type: [String], default: [] },
+        'Дискретная Математика': { type: [String], default: [] },
+        'Основы Российской Государственности': { type: [String], default: [] },
+        'Физика': { type: [String], default: [] },
+        'Иностранный Язык': { type: [String], default: [] },
+        'Инженерная Компьютерная Графика': { type: [String], default: [] },
+    },
+    averageScore: {
+        type: String,
+        default: '0.00'
+    },
+    generalScore: {
+        type: String,
+        default: '0.00'
+    },
+    ranking: {
+        type: String,
+        default: 'Не определен'
     },
 });
 

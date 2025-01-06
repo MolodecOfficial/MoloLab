@@ -28,6 +28,8 @@ const receptionProps = defineProps({
   background-color: #ffffff;
   width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+
   & .address-title {
     font-size: 20px;
     color: #4e45e3;

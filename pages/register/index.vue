@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '~/stores/userStore'
+import Cookies from "js-cookie";
 
 useHead({
   title: 'УГНТУ | Регистрация аккаунта'
@@ -57,9 +58,9 @@ async function registerUser() {
 
       // Сохраняем данные в store (например, email, имя, фамилию)
       userStore.setUser({
-        email: email.value,
-        firstName: firstName.value,
-        lastName: lastName.value,
+        email: data.user.email,
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
         _id: data.user._id,
         status: data.user.status,
         specialty: data.user.specialty,
@@ -69,8 +70,53 @@ async function registerUser() {
         learning: data.user.learning,
         form_of_learning: data.user.form_of_learning,
         faculty: data.user.faculty,
-        course: data.user.course
-      })
+        course: data.user.course,
+        scores: data.user.scores || {},
+        ranking: data.user.ranking,
+        averageScore: data.user.averageScore,
+        generalScore: data.user.generalScore,
+      });
+      userStore.setUser(data.user);
+
+      localStorage.setItem('user', JSON.stringify({
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email,
+        _id: data.user._id,
+        status: data.user.status,
+        specialty: data.user.specialty,
+        group: data.user.group,
+        code: data.user.code,
+        direction: data.user.direction,
+        learning: data.user.learning,
+        form_of_learning: data.user.form_of_learning,
+        faculty: data.user.faculty,
+        course: data.user.course,
+        scores: data.user.scores || {},
+        averageScore: data.user.averageScore,
+        generalScore: data.user.generalScore,
+      }));
+
+      Cookies.set('user', JSON.stringify({
+        firstName: data.user.firstName,
+        lastName: data.user.lastName,
+        email: data.user.email,
+        _id: data.user._id,
+        status: data.user.status,
+        specialty: data.user.specialty,
+        group: data.user.group,
+        code: data.user.code,
+        direction: data.user.direction,
+        learning: data.user.learning,
+        form_of_learning: data.user.form_of_learning,
+        faculty: data.user.faculty,
+        course: data.user.course,
+        scores: data.user.scores || {},
+        averageScore: data.user.averageScore,
+        generalScore: data.user.generalScore,
+
+      }), { expires: 7 });
+
       userStore.setEmail(email.value);
       userStore.setFirstName(firstName.value);
       userStore.setLastName(lastName.value);
@@ -229,5 +275,81 @@ async function registerUser() {
 img {
   width: 100%;
 }
+
+@media (max-width: 560px) {
+  .body {
+    align-items: center;
+    overflow: hidden;
+  }
+  .container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+  .container-image {
+    width: 90%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .body {
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+  .container-image {
+    width: 80%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    border: none;
+  }
+  .input-container {
+    width: 100%;
+    height: 80%;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+  }
+  .container-image {
+    width: 70%;
+    border: none;
+    padding: 20px;
+  }
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .input-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
 
 </style>

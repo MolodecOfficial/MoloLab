@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
 
         // Проверяем, что в запросе есть необходимые данные
         const { userId, newStatus } = body;
+
         if (!userId || !newStatus) {
             throw createError({
                 statusCode: 400,

@@ -40,7 +40,11 @@ export default defineEventHandler(async (event) => {
                 learning: user.learning,
                 form_of_learning: user.form_of_learning,
                 faculty: user.faculty,
-                course: user.course
+                course: user.course,
+                score: user.score || {},
+                ranking: user.ranking,
+                averageScore: user.averageScore,
+                generalScore: user.generalScore,
             }
         };
     } catch (error) {

@@ -52,18 +52,14 @@ async function loginUser() {
 
       userStore.setUser(data.user);
 
-      // Логируем все данные пользователя
-      console.log('Данные, полученные от сервера:', data);  // Проверяем структуру данных
-
       // Сохраняем данные пользователя в store, включая _id
       if (data.user && data.user._id) {
         userStore.setUser(data.user);
-        console.log('Сохранённые данные пользователя:', data.user);  // Логируем сохраненные данные
       } else {
         console.error('Отсутствует ID пользователя в ответе:', data);
       }
 
-      // Сохранение данных пользователя в Cookies
+      // Сохранение данных пользователя в Cookies, включая оценки
       Cookies.set('user', JSON.stringify({
         firstName: data.user.firstName,
         lastName: data.user.lastName,
@@ -77,9 +73,13 @@ async function loginUser() {
         learning: data.user.learning,
         form_of_learning: data.user.form_of_learning,
         faculty: data.user.faculty,
-        course: data.user.course
+        course: data.user.course,
+        scores: data.user.scores || {},
+        averageScore: data.user.averageScore,
+        generalScore: data.user.generalScore,
       }), { expires: 7 });
 
+      // Сохраняем данные в localStorage, включая оценки
       localStorage.setItem('user', JSON.stringify({
         firstName: data.user.firstName,
         lastName: data.user.lastName,
@@ -93,14 +93,19 @@ async function loginUser() {
         learning: data.user.learning,
         form_of_learning: data.user.form_of_learning,
         faculty: data.user.faculty,
-        course: data.user.course
+        course: data.user.course,
+        score: data.user.scores || {},
+        averageScore: data.user.averageScore,
+        generalScore: data.user.generalScore,
       }));
+
+      // Обновляем store с полными данными пользователя
       userStore.setUser({
         email: data.user.email,
         firstName: data.user.firstName,
         lastName: data.user.lastName,
-        status: data.user.status,
         _id: data.user._id,
+        status: data.user.status,
         specialty: data.user.specialty,
         group: data.user.group,
         code: data.user.code,
@@ -108,7 +113,11 @@ async function loginUser() {
         learning: data.user.learning,
         form_of_learning: data.user.form_of_learning,
         faculty: data.user.faculty,
-        course: data.user.course
+        course: data.user.course,
+        score: data.user.scores || {},
+        ranking: data.user.ranking,
+        averageScore: data.user.averageScore,
+        generalScore: data.user.generalScore,
       });
       userStore.setUser(data.user);
       if (data.user.status === 'Администратор' && userStore.userStatus === 'Администратор') {
@@ -298,6 +307,83 @@ async function loginUser() {
 
 img {
   width: 100%;
+}
+
+
+@media (max-width: 560px) {
+  .body {
+    align-items: center;
+  }
+  .container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+  .container-image {
+    width: 90%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .body {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    justify-content: center;
+  }
+  .container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+  .container-image {
+    width: 80%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    border: none;
+  }
+
+  .input-container {
+    width: 100%;
+    height: 50%;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    padding: 0;
+  }
+  .container-image {
+    width: 70%;
+    border: none;
+  }
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .input-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 
 </style>

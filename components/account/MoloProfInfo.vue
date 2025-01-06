@@ -10,6 +10,8 @@ const userLearning = ref('')
 const userFormOfLearning = ref('')
 const userFaculty = ref('')
 const userCourse = ref('')
+const userAverageScore = ref('')
+const userGeneralScore = ref('')
 const userStore = useUserStore()
 
 useThemeStore()
@@ -18,7 +20,6 @@ onMounted(() => {
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     const user = JSON.parse(storedUser);
-    console.log(user);
     userSpecialty.value = user.specialty;
     userGroup.value = user.group;
     userCode.value = user.code;
@@ -27,6 +28,8 @@ onMounted(() => {
     userFormOfLearning.value = user.form_of_learning;
     userFaculty.value = user.faculty;
     userCourse.value = user.course;
+    userAverageScore.value = user.averageScore;
+    userGeneralScore.value = user.generalScore;
   } else {
     userSpecialty.value = userStore.userSpecialty;
     userGroup.value = userStore.userGroup;
@@ -50,6 +53,8 @@ onMounted(() => {
     <span>Форма обучения: <code>{{ userFormOfLearning }}</code></span>
     <span>Факультет: <code>{{ userFaculty }}</code></span>
     <span>Курс: <code>{{ userCourse }}</code></span>
+    <span>Средний балл: <code>{{ userAverageScore }}</code></span>
+    <span>Общий балл: <code>{{ userGeneralScore }}</code></span>
   </section>
 </template>
 
