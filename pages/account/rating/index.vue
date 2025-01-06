@@ -214,9 +214,9 @@ onMounted(() => {
 .rating-cell {
   flex: 1;
   text-align: center;
-  padding: 15px; /* Унифицированный padding */
+  padding: 15px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .rating-header-row .rating-cell {
@@ -277,5 +277,78 @@ onMounted(() => {
   color: white;
 }
 
+@media (max-width: 560px) {
+
+  .rating-info {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .rating-section {
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .rating-plate {
+    width: 90%;
+  }
+
+  .rating-all-users {
+    width: 85%;
+  }
+  .rating-header-row {
+    & .rating-cell {
+      font-size: 5px;
+      padding: 6px 11px;
+    }
+  }
+
+  .rating-cell {
+    font-size: 7px;
+  }
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .rating-info {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .rating-section {
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .rating-plate {
+    width: 100%;
+  }
+
+  .rating-all-users {
+    width: 85%;
+  }
+  .rating-header-row {
+    & .rating-cell {
+      font-size: 8px;
+      padding: 6px 11px;
+    }
+  }
+
+  .rating-cell {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+
+}
 
 </style>
