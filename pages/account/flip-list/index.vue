@@ -28,9 +28,6 @@ onMounted(() => {
 });
 
 
-useHead({
-  title: 'УГНТУ | Ресурсы'
-})
 </script>
 
 <template>
