@@ -10,7 +10,7 @@ useThemeStore()
 
 <template>
   <section class="news-leftBlock">
-    <NuxtLink :to="myProps.link" class="link">
+    <NuxtLink :to="myProps.link" class="link" target="_blank">
       <span>{{ myProps.title }}</span>
     </NuxtLink>
   </section>

@@ -6,8 +6,8 @@ useHead({
   title: 'УГНТУ | Рейтинг'
 })
 
-const userAverageScore = ref('');
-const userGeneralScore = ref('');
+const userAverageScore = ref('Не вычислен');
+const userGeneralScore = ref('Не вычислен');
 const userRanking = ref('Не определено'); // Для хранения ранга текущего пользователя
 const userStore = useUserStore();
 

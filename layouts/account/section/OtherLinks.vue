@@ -24,11 +24,11 @@ const props = defineProps({
     <section class="other">
       <span>Прочее</span>
       <section class="otherLinks_container">
-        <NuxtLink class="other_link" to="/in-progress">
+        <NuxtLink class="other_link" to="https://ams.rusoil.net/oau/docs/ams.rusoil.net_usptuapp_2.0.1.sig.apk">
           <img :src="android" alt="">
           Версия ЛК на Android версия: 2.0.1
         </NuxtLink>
-        <NuxtLink class="other_link" to="/in-progress">
+        <NuxtLink class="other_link" to="/account/finance/dormitory">
           <img :src="dormitory" alt="">
           Общежитие
         </NuxtLink>
@@ -36,11 +36,11 @@ const props = defineProps({
           <img :src="payments" alt="">
           Выплаты
         </NuxtLink>
-        <NuxtLink class="other_link" to="/in-progress">
+        <NuxtLink class="other_link" to="/account/finance/payment">
           <img :src="receipts" alt="">
           Квитанции на оплату
         </NuxtLink>
-        <NuxtLink class="other_link" to="/in-progress">
+        <NuxtLink class="other_link" to="/account/rating">
           <img :src="rating" alt="">
           Рейтинг
         </NuxtLink>
