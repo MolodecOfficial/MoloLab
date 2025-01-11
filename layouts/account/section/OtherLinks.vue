@@ -24,7 +24,7 @@ const props = defineProps({
     <section class="other">
       <span>Прочее</span>
       <section class="otherLinks_container">
-        <NuxtLink class="other_link" to="https://ams.rusoil.net/oau/docs/ams.rusoil.net_usptuapp_2.0.1.sig.apk">
+        <NuxtLink class="other_link" to="https://ams.rusoil.net/oau/docs/ams.rusoil.net_usptuapp_2.0.1.sig.apk" target="_blank">
           <img :src="android" alt="">
           Версия ЛК на Android версия: 2.0.1
         </NuxtLink>
@@ -56,7 +56,7 @@ const props = defineProps({
           <img :src="library" alt="">
           Библиотека
         </NuxtLink>
-        <NuxtLink class="other_link" to="https://do.rusoil.net/login/index.php">
+        <NuxtLink class="other_link" to="https://do.rusoil.net/login/index.php" target="_blank">
           <img :src="sdo" alt="">
           СДО Дистанционное образование
         </NuxtLink>

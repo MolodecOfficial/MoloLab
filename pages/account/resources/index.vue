@@ -23,7 +23,7 @@ useHead({
           <img :src="library" alt="">
           <span>Библиотека</span>
         </NuxtLink>
-        <NuxtLink class="other_link" to="https://do.rusoil.net/login/index.php">
+        <NuxtLink class="other_link" to="https://do.rusoil.net/login/index.php" target="_blank">
           <img :src="sdo" alt="">
           <span>СДО Дистанционное образование</span>
         </NuxtLink>
