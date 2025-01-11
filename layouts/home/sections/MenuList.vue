@@ -312,4 +312,16 @@ p {
   font-weight: bold;
 }
 
+
+@media (max-width: 560px) {
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
 </style>

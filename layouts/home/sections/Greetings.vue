@@ -5,9 +5,9 @@
 <template>
   <section class="main_header">
     <section class="header-name">
-      <h2>Ведущий</h2>
-      <h2>нефтегазовый вуз</h2>
-      <h2>России</h2>
+      <h3>Ведущий</h3>
+      <h3>нефтегазовый вуз</h3>
+      <h3>России</h3>
     </section>
   </section>
   <section class="main_info">
@@ -27,6 +27,7 @@
     gap: 10px;
     font-size: 6px;
   }
+
   .main_header {
     position: absolute;
     top: 0;
@@ -34,6 +35,7 @@
     transform: translate(37%, 75%);
   }
 }
+
 .main_header {
   position: absolute;
   top: 0;
@@ -44,23 +46,28 @@
   box-sizing: border-box;
   z-index: 2;
 }
-h2 {
+
+h3 {
   font-size: clamp(20px, 5vw, 100px);
   font-family: "Samsung Sans", sans-serif;
   font-weight: bold;
   margin: -8px 0;
 }
-h2:first-child {
+
+h3:first-child {
   color: #dedede;
 }
-h2:nth-child(2),
-h2:nth-child(3){
+
+h3:nth-child(2),
+h3:nth-child(3) {
   color: rgb(133, 144, 169);
 }
+
 .header-name {
   display: flex;
   flex-direction: column;
 }
+
 .main_info {
   display: flex;
   justify-content: end;
@@ -68,6 +75,7 @@ h2:nth-child(3){
   position: relative;
   align-items: flex-start;
 }
+
 .main_info_plates {
   position: absolute;
   display: flex;
@@ -77,6 +85,7 @@ h2:nth-child(3){
   justify-content: start;
   align-items: start;
 }
+
 .main_info a {
   width: 100%;
   height: clamp(10px, 4vw, 70px);
@@ -88,6 +97,7 @@ h2:nth-child(3){
   text-decoration: none;
   padding: 5px 10px;
   transition: 0.1s all ease-in-out;
+
   &:hover {
     text-decoration: underline 1px;
     text-underline-offset: 4px;
@@ -96,11 +106,52 @@ h2:nth-child(3){
     border-left: 1px solid #eee;
 
   }
+
   &:nth-child(5) {
     border-bottom: 1px solid rgba(180, 180, 180, 0.27);
+
     &:hover {
       border-bottom: 1px solid #eee;
     }
   }
 }
+
+@media (max-width: 560px) {
+
+  .header-name {
+    gap: 10px;
+    font-size: 18px;
+  }
+
+  .main_header {
+    position: absolute;
+    top: 10%;
+    left: 52%;
+    transform: translate(-50%, 50%);
+    padding: 0 20px;
+    z-index: 2;
+  }
+}
+
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .header-name {
+    gap: 10px;
+    font-size: 22px;
+  }
+
+  .main_header {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
+}
+
 </style>

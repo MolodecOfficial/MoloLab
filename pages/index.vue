@@ -66,7 +66,7 @@ video {
   left: 0;
   width: clamp(20vw, 100vw, 100vw);
   height: clamp(20%, 65vw, 57vw);
-  background-color: rgba(3, 51, 157, 0.46); /* Правый фильтр */
+  background-color: rgba(9, 60, 171, 0.46); /* Правый фильтр */
   z-index: 1; /* Фильтр над видео */
 }
 
@@ -93,5 +93,19 @@ video {
     min-width: 100%; /* Убирает сжатие по ширине */
     object-fit: cover; /* Сохраняет пропорции */
   }
+}
+@media (max-width: 560px) {
+  .video-overlay {
+    display: ;
+  }
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+
 }
 </style>
