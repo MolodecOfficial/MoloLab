@@ -15,7 +15,7 @@ import bg_img from 'public/img.png'
   <section class="mobile-container">
     <section class="mobile-header">
       <img :src="Icon" alt="" class="icon">
-      <span>Версия 0.14 (Сборка 76)</span>
+      <span>Версия 0.14 (Сборка 77)</span>
     </section>
     <section class="mobile-description">
       <section class="mobile-name">
@@ -144,7 +144,7 @@ import bg_img from 'public/img.png'
 .right-logo {
   position: absolute;
   left: 68%;
-  top: 15%;
+  top: 16%;
   z-index: 1;
 
   & .main-logo {
