@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { scheduleList } from '~/stores/scheduleStore';
+import {ref, computed} from "vue";
+import {scheduleList} from '~/stores/scheduleStore';
 
 useHead({
   title: 'УГНТУ | Расписание'
 });
 
-const selectedGroup = ref<string | null>('БПИ, БПИ09з');
-const selectedDate = ref<string | null>('2024-11-05');
+const availableDates = Object.keys(scheduleList);
+const selectedDate = ref<string>(availableDates[0]);
 
 // Получаем список групп
-const groupOptions = Object.keys(scheduleList);
+const groupOptions = computed(() => {
+  if (!selectedDate.value) return [];
+  return Object.keys(scheduleList[selectedDate.value] || {});
+});
+
+const selectedGroup = ref<string | null>(groupOptions.value[0] || null);
 
 // Фильтруем расписание по выбранной группе и дате
 const filteredSchedule = computed(() => {
-  if (!selectedGroup.value) return [];
+  if (!selectedDate.value || !selectedGroup.value) return [];
 
-  const schedule = scheduleList[selectedGroup.value];
-
-  if (!schedule) return [];
-
-  if (!selectedDate.value) return schedule;
-
-  return schedule.filter(day => day.date === selectedDate.value);
+  const daySchedule = scheduleList[selectedDate.value];
+  return daySchedule[selectedGroup.value] || [];
 });
 
 // Форматирование даты
@@ -35,35 +35,49 @@ const formatDate = (dateString: string) => {
   });
 };
 
+const formattedSelectedDate = computed(() => {
+  return formatDate(selectedDate.value);
+});
+
 </script>
 
 <template>
   <AccountMoloHeader/>
   <div class="container">
-    <AccountMoloRouteList />
+    <AccountMoloRouteList/>
     <section class="schedule-container">
       <section class="schedule-header">
         <span>Расписание занятий</span>
       </section>
 
       <div class="controls">
+        <!-- Выбор даты -->
+        <input
+            type="date"
+            v-model="selectedDate"
+            :min="availableDates[0]"
+            :max="availableDates[availableDates.length - 1]"
+            class="date-picker"
+        />
         <!-- Выбор группы -->
         <select v-model="selectedGroup">
           <option v-for="(group, index) in groupOptions" :key="index" :value="group">
             {{ group }}
           </option>
         </select>
+      </div>
 
-        <!-- Выбор даты -->
-        <input type="date" v-model="selectedDate" />
+      <div v-if="filteredSchedule.length > 0" class="selected-date">
+        <span>{{ formattedSelectedDate }}</span>
       </div>
 
       <!-- Вывод расписания -->
       <div class="schedule-list">
-        <div v-if="filteredSchedule.length === 0">Нет данных для отображения</div>
-        <div class="schedule-item" v-for="(day, index) in filteredSchedule" :key="index">
-          <h3>{{ formatDate(day.date) }}</h3>
-          <div v-for="(subject, subIndex) in day.subjects" :key="subIndex" class="subject-item">
+        <div v-if="filteredSchedule.length === 0" class="no-info">
+          Нет данных для отображения, возможно расписание ещё не готово
+        </div>
+        <div class="schedule-item" v-for="(subject, index) in filteredSchedule" :key="index">
+          <div class="subject-item">
             <span class="subject">{{ subject.subject }}</span>
             <div class="details">
               <span :class="{
@@ -87,9 +101,9 @@ const formatDate = (dateString: string) => {
 <style scoped>
 
 
-
 .dark-theme .container {
   background-color: #1e1e1e;
+
   & h1 {
     color: white;
   }
@@ -99,7 +113,7 @@ const formatDate = (dateString: string) => {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: auto;
   display: flex;
-  height: 100vh;
+
   background-color: white;
 }
 
@@ -117,13 +131,17 @@ const formatDate = (dateString: string) => {
   border: 1px solid #2c2c2c;
 }
 
-.dark-theme .subject-item {
+.dark-theme .date {
   background-color: #2c2c2c;
+  border: 1px solid #2c2c2c;
 }
 
-.dark-theme .schedule-list {
-  background: linear-gradient(to top, #1a1a1a, #151515);
+.dark-theme .subject-item {
+  background-color: #2c2c2c;
+  border: 1px solid #2c2c2c;
 }
+
+
 
 .dark-theme .controls {
   background-color: #1e1e1e;
@@ -142,10 +160,17 @@ const formatDate = (dateString: string) => {
   color: #a9a9a9;
 }
 
+.dark-theme .no-info {
+  border: 1px solid #2c2c2c;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #1e1e1e;
+}
+
 .schedule-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 100%;
   gap: 20px;
@@ -154,6 +179,7 @@ const formatDate = (dateString: string) => {
   border-top-left-radius: 20px;
   border: 1px solid #e0e0e0;
 }
+
 .schedule-header {
   background-color: #ffffff;
   width: 90%;
@@ -166,6 +192,7 @@ const formatDate = (dateString: string) => {
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
+
   & span {
     font-size: 30px;
     color: #3b3b7f;
@@ -193,6 +220,27 @@ select {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+.date-section {
+  display: flex;
+  justify-content: center;
+}
+
+.no-info {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.date {
+  background-color: white;
+  width: 25%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+
+}
+
 .schedule-list {
   display: flex;
   flex-direction: column;
@@ -200,10 +248,11 @@ select {
   align-items: center;
   border-radius: 20px;
   width: 100%;
-  height: 70%;
+  height: fit-content;
   overflow-x: auto;
 
 }
+
 .schedule-item {
   flex-grow: 1;
   display: flex;
@@ -227,12 +276,16 @@ select {
   padding-bottom: 10px;
   background-color: #ffffff;
   border-radius: 20px;
-
+  border: 1px solid #e0e0e0;
+  &:last-child {
+    margin-bottom: 20px;
+  }
 }
 
 .details {
   display: flex;
   flex-direction: column;
+
   & .lecture-type {
     color: green; /* Цвет для лекции */
   }
@@ -252,6 +305,7 @@ select {
 
 span {
   padding: 1px 15px;
+
   &:first-child {
     padding-top: 8px;
   }
@@ -268,19 +322,26 @@ span {
 
 
 @media (max-width: 560px) {
-  .schedule-header span{
+  .schedule-header span {
     font-size: clamp(12px, 4vw, 22px);
 
   }
+
   .controls {
     width: 70%;
+
     & select {
       width: 50%;
     }
+
     & input {
       width: 50%;
     }
   }
+  .date {
+    width: 100%;
+  }
+
   .subject {
     font-size: 14px;
   }
@@ -292,7 +353,6 @@ span {
 
 @media (min-width: 766px) and (max-width: 1280px) {
 }
-
 
 
 </style>

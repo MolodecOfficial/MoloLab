@@ -38,6 +38,15 @@ const userData = ref(null);
 const availableSubjects = ref<any[]>()
 const currentUser = ref<any>(null); // Это будет объект с данными текущего пользователя
 
+const showScheduleModal = ref(false);  // Состояние для отображения модального окна для расписания
+const selectedSchedule = ref<any[]>([]);  // Данные расписания
+const newSchedule = ref({
+  day: '',
+  time: '',
+  subject: '',
+  group: '',
+});
+
 
 // Загрузка данных из localStorage
 onMounted(() => {
@@ -147,6 +156,12 @@ const openScoresModal = (user: any) => {
   selectedUserName.value = `${user.firstName} ${user.lastName}`;
   selectedScore.value = user.scores || 0; // Текущие оценки пользователя
   showScoresModal.value = true;
+};
+
+const openScheduleModal = (user: any) => {
+  selectedUserId.value = user._id;
+  selectedUserName.value = `${user.firstName} ${user.lastName}`;
+  showScheduleModal.value = true;
 };
 
 // Выдача достижения
@@ -275,6 +290,39 @@ async function fetchAvailableSubjects() {
   }
 }
 
+// const addSchedule = async () => {
+//   if (newSchedule.value.day && newSchedule.value.time && newSchedule.value.subject && newSchedule.value.group) {
+//     try {
+//       // Подготовим данные для отправки в нужном формате
+//       const scheduleData: any = {
+//         userId: selectedUserId.value,  // Убедитесь, что selectedUserId передается
+//         date: newSchedule.value.day,   // Используем день для даты
+//         groups: {
+//           [newSchedule.value.group]: [
+//             {
+//               time: newSchedule.value.time,
+//               subject: newSchedule.value.subject,
+//             }
+//           ]
+//         }
+//       };
+//
+//       // Добавляем новое расписание
+//       await userStore.addSchedule(scheduleData);
+//
+//       statusMessage.value = 'Расписание успешно добавлено!';
+//       setTimeout(() => showScheduleModal.value = false, 1500);
+//       await getAllUsers();  // Обновляем список пользователей
+//       setTimeout(() => statusMessage.value = '', 1500);
+//     } catch (error) {
+//       console.error('Ошибка при добавлении расписания:', error);
+//       statusMessage.value = 'Не удалось добавить расписание.';
+//     }
+//   } else {
+//     statusMessage.value = 'Пожалуйста, заполните все поля.';
+//   }
+// }
+
 // Вычисляем цвет на основе среднего балла
 function getAverageColor(scores: any) {
   const average = parseFloat(calculateAverage(scores));
@@ -393,6 +441,8 @@ onMounted(async () => {
             <button class="specialty-button" @click="() => openSpecialtyModal(user)">Выбор специальности</button>
             <button class="learning-button" @click="() => openLearningModal(user)">Выбор обучения</button>
             <button class="scores-button" @click="() => openScoresModal(user)">Добавить оценку</button>
+<!--            <button class="schedule-button" @click="() => openScheduleModal(user)">Добавить расписание</button>-->
+
           </section>
         </section>
 
@@ -524,9 +574,38 @@ onMounted(async () => {
             </div>
           </div>
         </div>
+
+<!--        <div v-if="showScheduleModal" class="modal-overlay">-->
+<!--          <div class="modal-content">-->
+<!--            <div>-->
+<!--              <label for="date-input">Дата:</label>-->
+<!--              <input type="date" id="date-input" v-model="newSchedule.date" class="select">-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--              <label for="time-input">Время:</label>-->
+<!--              <input type="time" id="time-input" v-model="newSchedule.time" class="select">-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--              <label for="subject-input">Предмет:</label>-->
+<!--              <input type="text" id="subject-input" v-model="newSchedule.subject" class="select">-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--              <label for="group-input">Группа:</label>-->
+<!--              <input type="text" id="group-input" v-model="newSchedule.group" class="select">-->
+<!--            </div>-->
+
+<!--            <div class="modal-buttons">-->
+<!--              <button class="confirm-button" @click="addSchedule">Подтвердить</button>-->
+<!--              <span>{{ statusMessage }}</span>-->
+<!--              <button class="cancel-button" @click="showScheduleModal = false">Отмена</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
       </section>
     </div>
-    <AccountRatingMoloRating v-if="currentUser" :user="currentUser" class="rating-invisible"/>
   </AccountMoloGuard>
 </template>
 
@@ -542,15 +621,17 @@ onMounted(async () => {
 
 .hyperlinks {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
   padding-top: 20px;
-
+  align-items: center;
   & .back {
-    color: #5a87e7;
+    background-color: #1e1e1e;
+    color: white;
     text-decoration: none;
     display: inline-block;
     padding: 15px;
-    border: 1px solid;
+    border: 1px solid #2c2c2c;
     border-radius: 20px;
     transition: 0.3s all ease-in-out;
 

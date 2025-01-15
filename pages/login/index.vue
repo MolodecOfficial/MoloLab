@@ -151,10 +151,13 @@ async function loginUser() {
         <img src="/auth/logo.png" alt="Логотип">
       </section>
       <section class="input-container">
+
         <section class="input-container_inside">
           <p class="header">Вход в систему</p>
           <p class="not_login">Ещё не зарегистрированы?
             <NuxtLink class="redirect" to="/register">Регистрация</NuxtLink>
+            |
+            <NuxtLink class="redirect" to="/">Вернуться на главную</NuxtLink>
           </p>
           <div class="inputs">
             <p class="input_helper">E-mail</p>
@@ -239,6 +242,9 @@ async function loginUser() {
     &:hover {
       text-decoration: underline 1px;
       text-underline-offset: 2px;
+    }
+    &:last-child {
+      color: #ab0000;
     }
   }
 }

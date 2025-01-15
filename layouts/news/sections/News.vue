@@ -59,7 +59,7 @@ let MoloNewsArray: Array<MoloNew> = [
       <p>Новости Университета</p>
     </header>
     <section>
-      <div v-for="(news, idx) in MoloNewsArray" :key="idx">
+      <div v-for="(news, idx) in MoloNewsArray" :key="idx" class="news">
         <MoloNews
             :image="news.image"
             :description="news.description"
@@ -83,12 +83,13 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Автоматическое заполнение */
   grid-template-rows: repeat(2, 1fr); /* Позволяет строкам адаптироваться */
-  grid-column-gap: 0;
   grid-row-gap: 14px;
-  width: 100%; /* Занимает всю ширину */
-  max-width: 100vw; /* Ограничивает максимальную ширину */
-  box-sizing: border-box; /* Учитывает отступы и границы */
+  width: 100%;
+  max-width: 100vw;
   justify-items: center;
+  align-content: center;
+  align-items: center;
+
 }
 header {
   display: flex;
@@ -111,6 +112,9 @@ button {
     cursor: pointer;
   }
 }
+.news {
+  display: flex;
+}
 .showMore {
   width: 100%;
   display: flex;
@@ -130,5 +134,17 @@ button {
 
 .showMore_btn:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 560px) {
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+  .news {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+  }
 }
 </style>

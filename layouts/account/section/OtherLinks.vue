@@ -84,6 +84,7 @@ const props = defineProps({
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Гарантирует правильный расчет ширины с учетом отступов */
 
 }
 
@@ -159,10 +160,44 @@ hr {
 .dark-theme .other_link {
   color: white;
 }
+
+@media (max-width: 560px) {
+
+  .otherLinks_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+
+  }
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+  .other-links {
+    width: 100%;
+  }
+
+  .otherLinks_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .other_link {
+
+    padding: 0 10px;
+  }
+}
+
 @media (min-width: 766px) and (max-width: 1280px) {
   .other_link img {
     width: 30%;
   }
+
   .other_link {
     font-size: 12px;
     width: 80%;

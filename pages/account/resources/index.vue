@@ -193,6 +193,10 @@ a {
   }
 }
 
+.dark-theme .other_link:hover {
+  color: white;
+}
+
 @media (max-width: 560px) {
   .resources-header span,
   .feedback-header span {
@@ -209,6 +213,8 @@ a {
   .other_link {
     display: flex;
     justify-content: flex-start;
+    padding: 10px;
+    width: 93%;
   }
 }
 
@@ -228,6 +234,7 @@ a {
   .other_link {
     display: flex;
     justify-content: flex-start;
+    padding: 10px;
   }
 }
 
