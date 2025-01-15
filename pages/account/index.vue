@@ -341,6 +341,7 @@ onMounted(() => {
     justify-content: start;
     & span {
       font-size: clamp(14px, 5vw, 16px);
+
     }
   }
 
