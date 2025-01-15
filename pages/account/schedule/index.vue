@@ -168,6 +168,15 @@ const formattedSelectedDate = computed(() => {
   background-color: #1e1e1e;
 }
 
+.dark-theme .selected-date {
+  background-color: #1e1e1e;
+  border: 1px solid #2c2c2c;
+  & span {
+    color: #4e45e3;
+    font-weight: bold;
+  }
+}
+
 .schedule-container {
   display: flex;
   flex-direction: column;
@@ -220,10 +229,6 @@ select {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.date-section {
-  display: flex;
-  justify-content: center;
-}
 
 .no-info {
   border: 1px solid #e0e0e0;
@@ -232,13 +237,15 @@ select {
   background-color: white;
 }
 
-.date {
+.selected-date {
   background-color: white;
-  width: 25%;
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #e0e0e0;
-
+  & span {
+    color: #4e45e3;
+    font-weight: bold;
+  }
 }
 
 .schedule-list {
@@ -248,16 +255,16 @@ select {
   align-items: center;
   border-radius: 20px;
   width: 100%;
-  height: fit-content;
   overflow-x: auto;
-
+  gap: 12px;
+  &:last-child {
+    margin-bottom: 20px;
+  }
 }
 
 .schedule-item {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 60%;
 
 }
@@ -267,7 +274,6 @@ select {
   padding-left: 10px;
   color: #007bff; /* Цвет заголовка для дней */
   text-align: center;
-
 }
 
 .subject-item {
@@ -277,15 +283,12 @@ select {
   background-color: #ffffff;
   border-radius: 20px;
   border: 1px solid #e0e0e0;
-  &:last-child {
-    margin-bottom: 20px;
-  }
 }
+
 
 .details {
   display: flex;
   flex-direction: column;
-
   & .lecture-type {
     color: green; /* Цвет для лекции */
   }
