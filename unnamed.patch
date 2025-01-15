@@ -1,0 +1,14 @@
+Index: server/api/schedules.get.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/server/api/schedules.get.ts b/server/api/schedules.get.ts
+--- a/server/api/schedules.get.ts	(revision 3659f168e658bc2e6289f3ce78805d5925c6c5ee)
++++ b/server/api/schedules.get.ts	(revision 88c47869b7552cd47c740b7c237f59a5ff741c45)
+@@ -1,4 +1,4 @@
+-import Schedule from "~/server/models/schedule.model"
++import { Schedule } from "~/server/models/schedule.model"
+ 
+ export default defineEventHandler(async (event) => {
+     const schedules = await Schedule.find();

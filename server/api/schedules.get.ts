@@ -5,4 +5,8 @@ export default defineEventHandler(async (event) => {
     return {
         schedules,
     }
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> fe738c3e8acd9af89f00ef05e57a1853552a5ab9
