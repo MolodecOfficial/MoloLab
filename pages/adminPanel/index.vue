@@ -645,8 +645,8 @@ onMounted(async () => {
     }
 
     &:nth-child(2):hover {
-      border: 1px solid green;
-      color: green
+      border: 1px solid #00ff00;
+      color: #00ff00
     }
   }
 }
