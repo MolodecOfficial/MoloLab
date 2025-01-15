@@ -9,7 +9,7 @@ const MoloNewsProps = defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="news-base">
     <section class="news-container">
       <section class="news">
         <img class="news-image" :src='MoloNewsProps.image' alt="">
@@ -21,6 +21,32 @@ const MoloNewsProps = defineProps({
 </template>
 
 <style scoped>
+
+@media (max-width: 560px) {
+  .news-base {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .news-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .news {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .news-image {
+    display: flex;
+    width: 80%;
+  }
+
+}
 
 .news-image {
   width: 100%;

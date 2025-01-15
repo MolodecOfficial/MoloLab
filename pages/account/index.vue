@@ -59,6 +59,9 @@ onMounted(() => {
             <AccountMoloProfInfo/>
           </section>
         </section>
+        <section class="additional-links-mobile">
+          <OtherLinks/>
+        </section>
       </section>
       <section class="additional-links">
         <OtherLinks/>
@@ -73,6 +76,7 @@ onMounted(() => {
   overflow: hidden;
   display: flex;
   background-color: white;
+  min-height: fit-content;
 }
 
 .user-info {
@@ -175,6 +179,10 @@ onMounted(() => {
 
 }
 
+.additional-links-mobile {
+  display: none;
+}
+
 .additional-links {
   display: flex;
   flex-direction: column;
@@ -195,6 +203,8 @@ onMounted(() => {
 
 .dark-theme .user-card__details p {
   color: #4e45e3;
+  font-weight: bold;
+
 }
 
 .dark-theme .user-card__details code {
@@ -207,9 +217,7 @@ onMounted(() => {
 }
 
 @media (max-width: 560px) {
-  .container {
-    height: 100vh;
-  }
+
   .user-info {
     display: flex;
     width: 100%;
@@ -247,7 +255,6 @@ onMounted(() => {
     display: none
   }
   .specialty-info {
-    height: 100vh;
     padding-bottom: 10px;
   }
 
@@ -257,13 +264,16 @@ onMounted(() => {
       font-size: clamp(16px, 5vw, 24px);
     }
   }
+
+  .additional-links-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 }
 
 @media (min-width: 561px) and (max-width: 765px) {
-  .container {
-    height: 100vh;
-
-  }
   .user-info {
     display: flex;
     width: 100%;
@@ -297,11 +307,8 @@ onMounted(() => {
       font-size: clamp(16px, 4vw, 20px);
     }
   }
-  .additional-links {
-    display: none
-  }
+
   .specialty-info {
-    height: 100vh;
     padding-bottom: 20px;
   }
 
@@ -310,6 +317,14 @@ onMounted(() => {
     & span {
       font-size: clamp(16px, 5vw, 24px);
     }
+  }
+  .additional-links-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .additional-links {
+    display: none;
   }
 }
 
@@ -346,7 +361,7 @@ onMounted(() => {
   }
 
   .additional-links {
-    width: clamp(90%, 50px, 100%);
+    width: 100%;
     font-size: 14px;
   }
 }

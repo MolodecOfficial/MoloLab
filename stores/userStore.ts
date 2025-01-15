@@ -107,13 +107,10 @@ export const useUserStore = defineStore('user', () => {
             const response = await $fetch('/api/users'); // Замените на правильный URL
             users.value = response.users; // Предполагаем, что список пользователей хранится в поле "users"
 
-            console.log('Загруженные пользователи:', users.value); // Логируем полученные данные
-
             // Ищем пользователя по userId
             const currentUserData = users.value.find((user: any) => user._id === userId.value);
             if (currentUserData) {
                 setUser(currentUserData);
-                console.log('Данные текущего пользователя:', currentUserData); // Логируем данные текущего пользователя
             } else {
                 console.log('Пользователь с таким ID не найден');
             }
@@ -171,10 +168,8 @@ export const useUserStore = defineStore('user', () => {
             const obtainedAchievements: any = achievementsList.filter(achievement =>
                 user.achievements.includes(achievement.id)
             );
-            console.log("Найденные достижения пользователя:", obtainedAchievements);
             return obtainedAchievements;
         }
-        console.log("Пользователь не найден");
         return [];
     }
 
@@ -199,9 +194,6 @@ export const useUserStore = defineStore('user', () => {
         }
 
         try {
-            console.log('Ищем специальность с названием:', specialtyName);
-            console.log('Список специальностей:', specialtyList);
-
             // Ищем специальность по названию
             const selectedSpecialty = specialtyList.find(specialty => specialty.specialty_name === specialtyName);
 
@@ -218,8 +210,6 @@ export const useUserStore = defineStore('user', () => {
                 },
             });
 
-            console.log('Ответ от сервера:', response); // Логируем ответ
-
             if (response && response.message === 'Специальность успешно добавлена') {
                 // Обновляем данные пользователя в store
                 const user = users.value.find(user => user._id === userId);
@@ -230,7 +220,6 @@ export const useUserStore = defineStore('user', () => {
                     user.direction = selectedSpecialty.direction;
                     user.faculty = selectedSpecialty.faculty
                 }
-                console.log(`Специальность ${selectedSpecialty.specialty_name} успешно добавлена пользователю ${userId}`);
                 return response;
             } else {
                 console.error("Ошибка при добавлении специальности:", response);
@@ -308,17 +297,48 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
+    // async function addSchedule(scheduleData: {
+    //     userId: string;
+    //     date: string;
+    //     groups: { [group: string]: any[] }; // Массив объектов с информацией о группе
+    // }) {
+    //     if (!scheduleData.userId || !scheduleData.date || !scheduleData.groups) {
+    //         console.error("Не переданы необходимые данные для расписания");
+    //         throw new Error("Не переданы необходимые данные для расписания");
+    //     }
+    //
+    //     try {
+    //         const response = await $fetch('/api/give-schedule', {
+    //             method: 'POST',
+    //             body: scheduleData,
+    //         });
+    //
+    //         if (response && response.message === 'Расписание успешно добавлено или обновлено') {
+    //             console.log('Расписание успешно добавлено или обновлено');
+    //             const user = users.value.find(user => user._id === scheduleData.userId);
+    //             if (user) {
+    //                 user.schedule = response.schedule;
+    //             }
+    //             return response;
+    //         } else {
+    //             console.error("Ошибка при добавлении расписания:", response);
+    //             throw new Error("Ошибка при добавлении расписания");
+    //         }
+    //     } catch (error) {
+    //         console.error('Ошибка при добавлении расписания:', error);
+    //         throw error;
+    //     }
+    // }
+
     onMounted(() => {
         console.log('Инициализация userStore...')
         if (currentUser.value) {
-            console.log('Данные пользователя уже загружены:', currentUser.value);
             return;
         }
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
             const user = JSON.parse(savedUser);
             setUser(user);
-            console.log('Данные пользователя загружены из localStorage:', user);
             currentUser.value = user;
             userId.value = user._id;
             userEmail.value = user.email;
@@ -377,6 +397,6 @@ export const useUserStore = defineStore('user', () => {
         addSpecialty,
         addLearningDetails,
         addScore,
-
+        // addSchedule
     };
 });
