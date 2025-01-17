@@ -18,14 +18,7 @@ export default defineNuxtConfig({
   mongodb: process.env.MONGODB_URI,
   jwt: process.env.JWT_SECRET,
   public: {
-   commitCount: (() => {
-    try {
-     return execSync('git rev-list --count HEAD').toString().trim();
-    } catch (error) {
-     console.error('Ошибка при получении количества коммитов:', error);
-     return '0';
-    }
-   })(),
+   commitCountFile: '/commit-count.txt',
   },
  },
 
