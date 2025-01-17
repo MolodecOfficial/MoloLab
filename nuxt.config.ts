@@ -17,9 +17,6 @@ export default defineNuxtConfig({
  runtimeConfig: {
   mongodb: process.env.MONGODB_URI,
   jwt: process.env.JWT_SECRET,
-  public: {
-   commitCountFile: '/commit-count.txt',
-  },
  },
 
  modules: ['@pinia/nuxt']

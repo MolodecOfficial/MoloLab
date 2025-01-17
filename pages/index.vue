@@ -15,7 +15,7 @@ import bg_img from 'public/img.png'
   <section class="mobile-container">
     <section class="mobile-header">
       <img :src="Icon" alt="" class="icon">
-      <span>Версия 0.14 (Сборка 85)</span>
+      <span>Версия 0.14 (Сборка 86)</span>
     </section>
     <section class="mobile-description">
       <section class="mobile-name">
