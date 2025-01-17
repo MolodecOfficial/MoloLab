@@ -333,6 +333,7 @@ function getAverageColor(scores: any) {
   if (average >= 3.5) return '#ffcc00';  // Yellow
   if (average >= 3.0) return '#ff5900';  // Orange
   if (average >= 2.5) return '#ff0000';  // Red
+  if (average >= 2.0) return '#ff0000';  // Max red
   return '#731601';  // Dark Red
 }
 
