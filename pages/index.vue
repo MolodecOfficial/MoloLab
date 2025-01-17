@@ -9,13 +9,17 @@ import Education from "~/layouts/education/sections/Education.vue";
 import Icon from 'public/icon_account_2.png'
 import bg_img from 'public/img.png'
 
+const config = useRuntimeConfig()
+
+const countCommit = config.public.commitCount;
+
 </script>
 
 <template>
   <section class="mobile-container">
     <section class="mobile-header">
       <img :src="Icon" alt="" class="icon">
-      <span>Версия 0.14 (Сборка 80)</span>
+      <span>Версия 0.14 (Сборка {{ countCommit }})</span>
     </section>
     <section class="mobile-description">
       <section class="mobile-name">
