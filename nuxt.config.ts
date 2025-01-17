@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   public: {
    commitCount: (() => {
     try {
-     return execSync('git rev-list --count HEAD').toString().trim();
+     return execSync('git rev-list --count main').toString().trim();
     } catch (error) {
      console.error('Ошибка при получении количества коммитов:', error);
      return '0';

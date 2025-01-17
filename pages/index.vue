@@ -13,7 +13,6 @@ const config = useRuntimeConfig()
 
 const countCommit = config.public.commitCount;
 
-
 </script>
 
 <template>
