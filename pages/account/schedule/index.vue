@@ -80,15 +80,60 @@ const formattedSelectedDate = computed(() => {
           <div class="subject-item">
             <span class="subject">{{ subject.subject }}</span>
             <div class="details">
-              <span :class="{
-                'lecture-type': subject.typeOfLesson === 'Лекция',
-                'practice-type': subject.typeOfLesson === 'Практика',
-                'laboratory-type': subject.typeOfLesson === 'Лабораторная работа',
-                'independent-type': subject.typeOfLesson === 'Самостоятельная работа',
-              }">
-                {{ subject.typeOfLesson }} | {{ subject.time }}
-              </span>
-              <span class="teacher">{{ subject.teacher }}</span>
+
+              <section
+                  v-if="subject.conditionOfLesson && subject.typeOfLesson !== 'Окно' && subject.typeOfLesson !== 'Нет занятий'">
+                <!-- Для занятий с разделением на подгруппы -->
+                <section v-if="subject.conditionOfLesson.subgroup1 && subject.conditionOfLesson.subgroup2">
+                  <div class="subgroup-span">
+                    <span class="lesson-info">1 подгруппа</span>
+                    <span class="lesson-info">
+                      {{ subject.conditionOfLesson.subgroup1.cabinet }} | {{ subject.conditionOfLesson.subgroup1.teacher }}
+                    </span>
+                  </div>
+                  <hr>
+                  <div>
+                    <span :class="{
+                      'lecture-type': subject.typeOfLesson === 'Лекция',
+                      'practice-type': subject.typeOfLesson === 'Практика',
+                      'laboratory-type': subject.typeOfLesson === 'Лабораторная работа',
+                      'independent-type': subject.typeOfLesson === 'Самостоятельная работа',
+                      'consultation-type': subject.typeOfLesson === 'Консультация',
+                      'exam-type': subject.typeOfLesson === 'Экзамен',
+                      }"
+                    >
+                      {{ subject.typeOfLesson }} | {{ subject.time }}
+                    </span>
+                  </div>
+                  <hr>
+                  <div class="subgroup-span">
+                    <span class="lesson-info">2 подгруппа</span>
+                    <span class="lesson-info">
+                      {{ subject.conditionOfLesson.subgroup2.cabinet }} | {{ subject.conditionOfLesson.subgroup2.teacher }}
+                    </span>
+                  </div>
+                </section>
+
+                <!-- Для занятий без разделения на подгруппы -->
+                <section v-else class="subgroup-container">
+                  <span :class="{
+                    'lecture-type': subject.typeOfLesson === 'Лекция',
+                    'practice-type': subject.typeOfLesson === 'Практика',
+                    'laboratory-type': subject.typeOfLesson === 'Лабораторная работа',
+                    'independent-type': subject.typeOfLesson === 'Самостоятельная работа',
+                    'consultation-type': subject.typeOfLesson === 'Консультация',
+                    'exam-type': subject.typeOfLesson === 'Экзамен',
+                    }" class="type-of-lesson"
+                  >
+                    {{ subject.typeOfLesson }} | {{ subject.time }}
+                  </span>
+
+                  <!-- Показываем кабинет и преподавателя только если это не "Окно" и не "Нет занятий" -->
+                  <span v-if="subject.typeOfLesson !== 'Окно' && subject.typeOfLesson !== 'Нет занятий'" class="lesson-info">
+                    {{ subject.conditionOfLesson?.common }} | {{ subject.teacher }}
+                  </span>
+                </section>
+              </section>
             </div>
           </div>
         </div>
@@ -142,7 +187,6 @@ const formattedSelectedDate = computed(() => {
 }
 
 
-
 .dark-theme .controls {
   background-color: #1e1e1e;
   border: 1px solid #2c2c2c;
@@ -156,7 +200,7 @@ const formattedSelectedDate = computed(() => {
   color: white;
 }
 
-.dark-theme .teacher {
+.dark-theme .lesson-info {
   color: #a9a9a9;
 }
 
@@ -171,6 +215,7 @@ const formattedSelectedDate = computed(() => {
 .dark-theme .selected-date {
   background-color: #1e1e1e;
   border: 1px solid #2c2c2c;
+
   & span {
     color: #4e45e3;
     font-weight: bold;
@@ -242,6 +287,7 @@ select {
   padding: 10px;
   border-radius: 20px;
   border: 1px solid #e0e0e0;
+
   & span {
     color: #4e45e3;
     font-weight: bold;
@@ -257,6 +303,7 @@ select {
   width: 100%;
   overflow-x: auto;
   gap: 12px;
+
   &:last-child {
     margin-bottom: 20px;
   }
@@ -285,16 +332,32 @@ select {
   border: 1px solid #e0e0e0;
 }
 
+.subgroup-span {
+  display: flex;
+  flex-direction: column;
+}
+
+.type-of-lesson {
+  display: flex;
+  text-align: center;
+  flex-direction: row;
+
+}
+
+hr {
+  width: 97%;
+}
 
 .details {
   display: flex;
   flex-direction: column;
+
   & .lecture-type {
     color: green; /* Цвет для лекции */
   }
 
   & .practice-type {
-    color: #0015ff; /* Цвет для других типов уроков */
+    color: #008cff; /* Цвет для других типов уроков */
   }
 
   & .laboratory-type {
@@ -303,6 +366,14 @@ select {
 
   & .independent-type {
     color: #ffd500;
+  }
+
+  & .consultation-type {
+    color: #4800ff;
+  }
+
+  & .exam-type {
+    color: #ff0000;
   }
 }
 
@@ -319,7 +390,7 @@ span {
   font-size: 19px;
 }
 
-.teacher {
+.lesson-info {
   color: #555555;
 }
 
@@ -341,6 +412,7 @@ span {
       width: 50%;
     }
   }
+
   .date {
     width: 100%;
   }

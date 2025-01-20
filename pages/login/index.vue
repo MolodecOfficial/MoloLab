@@ -114,7 +114,7 @@ async function loginUser() {
         form_of_learning: data.user.form_of_learning,
         faculty: data.user.faculty,
         course: data.user.course,
-        score: data.user.scores || {},
+        scores: data.user.scores || {},
         ranking: data.user.ranking,
         averageScore: data.user.averageScore,
         generalScore: data.user.generalScore,
@@ -136,6 +136,84 @@ async function loginUser() {
   } catch (error) {
     console.error('Ошибка:', error);
     statusMessage.value = 'Произошла ошибка при входе';
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function loginAsGuest() {
+  const guestData = {
+    email: 'guest@example.com',
+    password: 'guest-password',
+  };
+
+  try {
+    loading.value = true;
+    statusMessage.value = 'Идёт вход как Гость...';
+
+    // Симуляция успешного входа для гостя
+    const response = { ok: true };
+
+    if (response.ok) {
+      // Примерные данные для гостя
+      const guestUser = {
+        firstName: 'Гость',
+        lastName: 'Гость',
+        status: 'Гость',
+        email: 'guest@example.com',
+        _id: 'guest-id',
+        specialty: 'Гостевая специальность',
+        group: 'Гостевая группа',
+        course: 1,
+        faculty: 'Гостевой факультет',
+        averageScore: 0,
+        generalScore: 0,
+        scores: {},
+      };
+      statusMessage.value = 'Добро пожаловать, Гость!';
+      setTimeout(() => router.push('/account'), 2000);
+
+
+      // Сохранение данных пользователя в Cookies
+      Cookies.set('user', JSON.stringify({
+        firstName: guestUser.firstName,
+        lastName: guestUser.lastName,
+        email: guestUser.email,
+        _id: guestUser._id,
+        status: guestUser.status,
+        specialty: guestUser.specialty,
+        group: guestUser.group,
+        course: guestUser.course,
+        faculty: guestUser.faculty,
+        averageScore: guestUser.averageScore,
+        generalScore: guestUser.generalScore,
+        scores: guestUser.scores,
+      }), { expires: 7 });
+
+      // Сохранение данных в localStorage
+      localStorage.setItem('user', JSON.stringify({
+        firstName: guestUser.firstName,
+        lastName: guestUser.lastName,
+        email: guestUser.email,
+        _id: guestUser._id,
+        status: guestUser.status,
+        specialty: guestUser.specialty,
+        group: guestUser.group,
+        course: guestUser.course,
+        faculty: guestUser.faculty,
+        averageScore: guestUser.averageScore,
+        generalScore: guestUser.generalScore,
+        scores: guestUser.scores,
+      }));
+
+      userStore.setUser(guestUser);
+
+    } else {
+      statusMessage.value = 'Ошибка при входе как Гость';
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
+    statusMessage.value = 'Произошла ошибка при входе как Гость';
   } finally {
     loading.value = false;
   }
@@ -170,12 +248,23 @@ async function loginUser() {
             <label for="remember-me">Запомнить меня</label>
           </div>
           <div class="log-forget">
-            <AccountMoloFormSubmit
-                label="Войти"
-                :loading="loading"
-                :message="statusMessage"
-                @click="loginUser"
-            />
+            <section class="buttons">
+              <AccountMoloFormSubmit
+                  label="Войти"
+                  :loading="loading"
+                  :message="statusMessage"
+                  class="button-user"
+                  @click="loginUser"
+              />
+              <AccountMoloFormSubmit
+                  label="Гость"
+                  :loading="loading"
+                  :message="statusMessage"
+                  class="button-guest"
+                  @click="loginAsGuest"
+                  />
+            </section>
+
             <NuxtLink class="forget" to="/in-progress">Восстановление пароля</NuxtLink>
             <ClickedCreating :message="statusMessage"/>
           </div>
@@ -309,6 +398,18 @@ async function loginUser() {
     }
   }
 
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  & .button-user {
+    width: 70%;
+  }
+  & .button-guest {
+    width: 30%;
+  }
 }
 
 img {
