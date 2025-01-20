@@ -27,9 +27,8 @@ const MyNews: Array<LeftNews> = [
   },
   {
     title: 'Обновление 0.14',
-    link: 'https://t.me/molodec_official_tg/357'
-  },
-  {
+    link: 'https://t.me/molodec_official_tg/369'
+  }, {
     title: 'Обновление 0.13',
     link: 'https://t.me/molodec_official_tg/345'
   }, {
