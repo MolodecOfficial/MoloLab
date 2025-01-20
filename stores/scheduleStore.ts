@@ -174,13 +174,19 @@ export const scheduleList: any = {
                 time: '9:00 - 10:30',
                 subject: 'Программирование',
                 teacher: 'Кузнецов К.К.',
-                typeOfLesson: 'Лекция'
+                typeOfLesson: 'Лекция',
+                conditionOfLesson: {
+                    common: 'Онлайн',
+                },
             },
             {
                 time: '10:45 - 12:15',
                 subject: 'Алгебра',
                 teacher: 'Смирнов С.С.',
-                typeOfLesson: 'Практика'
+                typeOfLesson: 'Практика',
+                conditionOfLesson: {
+                    common: 'Онлайн',
+                },
             },
             {
                 time: '12:30 - 14:00',
