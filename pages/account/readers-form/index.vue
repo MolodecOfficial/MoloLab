@@ -72,12 +72,12 @@ useHead({
         <span class="info-span">Ваше ФИО:</span>
         <span class="info">{{ firstName }} {{ lastName }}</span>
         <span class="info-span">Ваша дата рождения:</span>
-        <span class="info">undefined</span>
+        <span class="no-info">данные пока не доступны</span>
         <span class="info-span">Ваш пол:</span>
-        <span class="info">undefined</span>
+        <span class="no-info">данные пока не доступны</span>
         <span class="hr-container"><hr></span>
         <span class="info-span">Ваш домашний адрес:</span>
-        <span class="info">undefined</span>
+        <span class="no-info">данные пока не доступны</span>
         <span class="info-span">Ваш Email:</span>
         <span class="info">{{ email }}</span>
         <span class="info-span">Ваша специальность:</span>
@@ -150,6 +150,12 @@ useHead({
     justify-content: center;
     align-items: center;
   }
+}
+
+.no-info {
+  align-self: center; /* Вертикальное выравнивание по центру */
+  font-style: italic;
+  color: #999; /* Для придания дополнительного визуального акцента */
 }
 
 .read-form-info {

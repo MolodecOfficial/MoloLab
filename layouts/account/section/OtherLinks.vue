@@ -64,7 +64,7 @@ const props = defineProps({
           <img :src="timetable" alt="">
           Расписание занятий
         </NuxtLink>
-        <NuxtLink class="other_link" to="/in-progress">
+        <NuxtLink class="other_link" to="https://testirov.rusoil.net/" target="_blank">
           <img :src="testResult" alt="">
           Система тестирования
         </NuxtLink>

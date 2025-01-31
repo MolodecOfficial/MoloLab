@@ -11,19 +11,19 @@ export interface UserSchema {
     direction: string;
     faculty: string;
     form_of_learning: string;
-    course: string,
+    course: any,
     learning: string,
-    averageScore: string,
-    generalScore: string,
+    averageScore: number,
+    generalScore: number,
     ranking: string,
     score: {
-        'История': string[];
-        'Математика': string[];
-        'Дискретная Математика': string[];
-        'Основы Российской Государственности': string[];
-        'Физика': string[];
-        'Иностранный Язык': string[];
-        'Инженерная Компьютерная Графика': string[];
+        'История': number[];
+        'Математика': number[];
+        'Дискретная Математика': number[];
+        'Основы Российской Государственности': number[];
+        'Физика': number[];
+        'Иностранный Язык': number[];
+        'Инженерная Компьютерная Графика': number[];
     };
 }
 

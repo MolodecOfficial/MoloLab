@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {UserSchema} from "~/types/User";
+import {AnyMap} from "@jridgewell/trace-mapping";
 
 const userSchema = new mongoose.Schema<UserSchema>({
     firstName: {
@@ -63,7 +64,7 @@ const userSchema = new mongoose.Schema<UserSchema>({
     code: {
         type: String,
         required: true,
-        default: 'Не определена'
+        default: "0"
     },
     direction: {
         type: String,
@@ -86,26 +87,26 @@ const userSchema = new mongoose.Schema<UserSchema>({
         default: 'Не определена'
     },
     course: {
-        type: String,
+        type: Number,
         required: true,
-        default: 'Не определена'
+        default: 0
     },
     score: {
-        'История': { type: [String], default: [] },
-        'Математика': { type: [String], default: [] },
-        'Дискретная Математика': { type: [String], default: [] },
-        'Основы Российской Государственности': { type: [String], default: [] },
-        'Физика': { type: [String], default: [] },
-        'Иностранный Язык': { type: [String], default: [] },
-        'Инженерная Компьютерная Графика': { type: [String], default: [] },
+        'История': { type: [Number], default: [] },
+        'Математика': { type: [Number], default: [] },
+        'Дискретная Математика': { type: [Number], default: [] },
+        'Основы Российской Государственности': { type: [Number], default: [] },
+        'Физика': { type: [Number], default: [] },
+        'Иностранный Язык': { type: [Number], default: [] },
+        'Инженерная Компьютерная Графика': { type: [Number], default: [] },
     },
     averageScore: {
-        type: String,
-        default: '0.00'
+        type: Number,
+        default: 0.00
     },
     generalScore: {
-        type: String,
-        default: '0.00'
+        type: Number,
+        default: 0.00
     },
     ranking: {
         type: String,

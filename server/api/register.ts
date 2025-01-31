@@ -3,7 +3,6 @@ import { User } from "~/server/models/user.model";
 
 export default defineEventHandler(async (event) => {
  const body = await readBody(event);
- console.log('Received body:', body);
  const { _id, firstName, lastName, email, password } = body;
 
  // Проверяем, существует ли пользователь с таким же email

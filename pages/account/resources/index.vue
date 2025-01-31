@@ -31,7 +31,7 @@ useHead({
           <img :src="timetable" alt="">
           <span>Расписание занятий</span>
         </NuxtLink>
-        <NuxtLink class="other_link" to="/in-progress">
+        <NuxtLink class="other_link" to="https://testirov.rusoil.net/" target="_blank">
           <img :src="testResult" alt="">
           <span>Система тестирования</span>
         </NuxtLink>

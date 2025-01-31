@@ -252,7 +252,7 @@ const updateUserScores = async () => {
       // Обновляем средний балл и рейтинг пользователя
       const updatedUser = userStore.users.find((user) => user._id === selectedUserId.value);
       if (updatedUser) {
-        console.log('Обновленные данные пользователя:', updatedUser); // Логирование обновленных данных пользователя
+        console.table('Обновленные данные пользователя:', updatedUser); // Логирование обновленных данных пользователя
         setTimeout(() => showScoresModal.value = false, 1500);
         await getAllUsers();
         statusMessage.value = 'Оценки пользователя успешно обновлены!';

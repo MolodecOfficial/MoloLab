@@ -61,7 +61,7 @@ export const useUserStore = defineStore('user', () => {
                          form_of_learning: string,
                          faculty: string,
                          course: string,
-                         scores: any;
+                         score: any;
                          ranking: number;
                          averageScore: string;
                          generalScore: string;
@@ -80,7 +80,7 @@ export const useUserStore = defineStore('user', () => {
         userFormOfLearning.value = user.form_of_learning
         userFaculty.value = user.faculty
         userCourse.value = user.course
-        userScores.value = user.scores
+        userScores.value = user.score
         userAverageScore.value = user.averageScore
         userGeneralScore.value = user.generalScore
 
@@ -353,7 +353,7 @@ export const useUserStore = defineStore('user', () => {
             userFormOfLearning.value = user.form_of_learning;
             userFaculty.value = user.faculty;
             userCourse.value = user.course;
-            userScores.value = user.scores
+            userScores.value = user.score
             userAverageScore.value = user.averageScore
             userGeneralScore.value = user.generalScore
         }
