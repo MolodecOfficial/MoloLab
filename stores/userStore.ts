@@ -262,7 +262,7 @@ export const useUserStore = defineStore('user', () => {
     }
 
     const addScore = async (userId: string, subject: string, score: number) => {
-        if (!userId || !subject || score === undefined || score === null) {
+        if (!userId || !subject || typeof score !== 'number' || isNaN(score)) {
             console.error("Не передан айди, предмет или оценка");
             throw new Error("Не переданы необходимые данные");
         }
@@ -273,7 +273,7 @@ export const useUserStore = defineStore('user', () => {
                 body: { userId, subject, score }
             });
 
-            if (response && response.message === 'Оценка успешно добавлена.') {
+            if (response && typeof response === 'object' && response.message === 'Оценка успешно добавлена.') {
                 console.log("Received request to edit scores:", { userId, subject, score });
                 // Обновляем данные пользователя
                 const user = users.value.find(user => user._id === userId);
