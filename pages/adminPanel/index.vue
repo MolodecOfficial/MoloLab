@@ -484,7 +484,7 @@ onMounted(async () => {
           <div class="modal-content">
             <h4>Изменение статуса для пользователя {{ selectedUserName }}</h4>
             <select v-model="selectedStatus" class="select">
-              <option value="Студент">Студент</option>
+              <option value="Абитуриент">Абитуриент</option>
               <option value="Преподаватель">Преподаватель</option>
               <option value="Администратор">Администратор</option>
             </select>

@@ -85,7 +85,6 @@ const props = defineProps({
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   box-sizing: border-box; /* Гарантирует правильный расчет ширины с учетом отступов */
-
 }
 
 hr {

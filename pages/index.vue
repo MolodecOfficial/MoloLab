@@ -15,7 +15,7 @@ import bg_img from 'public/img.png'
   <section class="mobile-container">
     <section class="mobile-header">
       <img :src="Icon" alt="" class="icon">
-      <span>Версия 0.14 (Сборка 95)</span>
+      <span>Версия 0.14 (Сборка 96)</span>
     </section>
     <section class="mobile-description">
       <section class="mobile-name">
@@ -38,7 +38,12 @@ import bg_img from 'public/img.png'
     <section class="mobile-functional">
       <NuxtLink to="/login" class="info-button">
         <span>
-          Личный Кабинет
+          Личный Кабинет абитуриента
+        </span>
+      </NuxtLink>
+      <NuxtLink to="/login-student" class="info-button">
+        <span>
+          Личный Кабинет студента
         </span>
       </NuxtLink>
     </section>
@@ -189,14 +194,11 @@ import bg_img from 'public/img.png'
 
 .mobile-functional {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(9, 32, 89, 0.6);
-  width: 30%;
+
   z-index: 1;
-  padding: 10px;
-  backdrop-filter: blur(10px);
   margin-top: 20px;
+  flex-direction: column;
+  gap: 20px;
 }
 
 
@@ -206,9 +208,12 @@ import bg_img from 'public/img.png'
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  background-color: rgba(9, 32, 89, 0.6);
+  padding: 10px 20px;
+  width: max-content;
   & span {
     font-size: 12px;
-    text-align: center;
+    text-align: start;
     color: white;
   }
 }

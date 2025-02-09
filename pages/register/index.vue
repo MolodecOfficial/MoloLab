@@ -71,7 +71,7 @@ async function registerUser() {
         form_of_learning: data.user.form_of_learning,
         faculty: data.user.faculty,
         course: data.user.course,
-        scores: data.user.scores || {},
+        score: data.user.score || {},
         ranking: data.user.ranking,
         averageScore: data.user.averageScore,
         generalScore: data.user.generalScore,

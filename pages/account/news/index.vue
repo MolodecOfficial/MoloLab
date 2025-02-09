@@ -19,7 +19,6 @@ interface RightNews {
 useThemeStore()
 
 
-
 const MyNews: Array<LeftNews> = [
   {
     title: 'Обновление 0.15 (Установлено)',
@@ -57,7 +56,7 @@ const MyNews: Array<LeftNews> = [
   }, {
     title: 'Обновление 0.031',
     link: 'https://t.me/molodec_official_tg/195'
-  },{
+  }, {
     title: 'Обновление 0.03',
     link: 'https://t.me/molodec_official_tg/182'
   }, {
@@ -112,12 +111,12 @@ const UniversityNews: Array<RightNews> = [
 <template>
   <AccountMoloHeader/>
   <div class="container">
-    <AccountMoloRouteList />
+    <AccountMoloRouteList/>
     <section class="newsContainer">
+      <section class="newsHeader">
+        <span>Последние новости</span>
+      </section>
       <section class="newsContainer-block">
-        <section class="newsHeader">
-          <span>Последние новости</span>
-        </section>
         <section class="news">
           <section class="leftNews">
             <AccountNewsMoloLeftNews v-for="(leftNews, idx) in MyNews "
@@ -160,6 +159,7 @@ const UniversityNews: Array<RightNews> = [
 .dark-theme .newsHeader {
   background-color: #1e1e1e;
   border: 1px solid #2c2c2c;
+
   & span {
     color: white;
   }
@@ -177,12 +177,16 @@ const UniversityNews: Array<RightNews> = [
 }
 
 .newsContainer-block {
-  width: 90%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .newsHeader {
   background-color: #ffffff;
-  width: 100%;
+  width: 90%;
   height: 12vh;
   margin-top: 74px;
   display: flex;
@@ -190,12 +194,12 @@ const UniversityNews: Array<RightNews> = [
   border-radius: 20px;
   align-items: center;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
 
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   & span {
     font-size: 30px;
-    color: #053969;
+    color: #3b3b7f;
     text-align: center;
     display: flex;
     justify-content: center;

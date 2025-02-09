@@ -48,8 +48,8 @@ const userSchema = new mongoose.Schema<UserSchema>({
     },
     status: {
         type: String,
-        enum: ['Студент', 'Преподаватель', 'Администратор', 'Владелец'],
-        default: 'Студент'
+        enum: ['Абитуриент', 'Преподаватель', 'Администратор', 'Владелец'],
+        default: 'Абитуриент'
     },
     specialty: {
         type: String,

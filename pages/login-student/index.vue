@@ -15,7 +15,7 @@ const userStore = useUserStore()
 const status = ref('')
 
 useHead({
-  title: 'УГНТУ | Вход в аккаунт абитуриента'
+  title: 'УГНТУ | Вход в аккаунт'
 });
 
 onMounted(() => {
@@ -122,12 +122,12 @@ async function loginUser() {
       userStore.setUser(data.user);
       if (data.user.status === 'Администратор' && userStore.userStatus === 'Администратор') {
         statusMessage.value = `Добро пожаловать, Администратор ${userStore.userFirstName}`;
-        setTimeout(() => router.push('/account'), 2000);
+        setTimeout(() => router.push('/account-student'), 2000);
       } else if (data.user.status === 'Владелец' && userStore.userStatus === 'Владелец') {
         statusMessage.value = `Добро пожаловать, Владелец ${userStore.userFirstName}`;
-        setTimeout(() => router.push('/account'), 2000);
+        setTimeout(() => router.push('/account-student'), 2000);
       } else {
-        setTimeout(() => router.push('/account'), 2500);
+        setTimeout(() => router.push('/account-student'), 2500);
       }
     } else {
       const errorData = await response.json();
@@ -174,7 +174,7 @@ async function loginAsGuest() {
         scores: {},
       };
       statusMessage.value = 'Добро пожаловать, Гость!';
-      setTimeout(() => router.push('/account'), 1000);
+      setTimeout(() => router.push('/account-student'), 1000);
 
 
       // Сохранение данных пользователя в Cookies
@@ -240,7 +240,7 @@ async function loginAsGuest() {
       <section class="input-container">
 
         <section class="input-container_inside">
-          <p class="header">Вход в систему абитуриента</p>
+          <p class="header">Вход в систему студента</p>
           <p class="not_login">Ещё не зарегистрированы?
             <NuxtLink class="redirect" to="/register">Регистрация</NuxtLink>
             |

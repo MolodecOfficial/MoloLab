@@ -45,7 +45,7 @@ onMounted(() => {
       <section class="user-info__main">
         <section class="user-card">
           <span>
-            Личные данные студента
+            Личные данные абитуриента
           </span>
           <section class="user-card__details">
             <p>ФИО: <code>{{ userFirstName }}</code> <code>{{ userLastName }}</code></p>
