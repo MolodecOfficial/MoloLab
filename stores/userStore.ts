@@ -262,7 +262,7 @@ export const useUserStore = defineStore('user', () => {
     }
 
     const addScore = async (userId: string, subject: string, score: number) => {
-        if (!userId || !subject || typeof score !== 'number' || isNaN(score)) {
+        if (!userId || !subject || typeof score !== 'number' || score < 1 || score > 5) {
             console.error("Не передан айди, предмет или оценка");
             throw new Error("Не переданы необходимые данные");
         }
