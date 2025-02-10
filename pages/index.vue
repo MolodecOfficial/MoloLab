@@ -33,7 +33,6 @@ import bg_img from 'public/img.png'
           </a>
         </section>
       </section>
-      <!-- Переместили ссылку на личный кабинет в конец -->
     </section>
     <section class="mobile-functional">
       <NuxtLink to="/login" class="info-button">
