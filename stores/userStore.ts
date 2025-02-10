@@ -274,7 +274,6 @@ export const useUserStore = defineStore('user', () => {
             });
 
             if (response && typeof response === 'object' && response.message === 'Оценка успешно добавлена.') {
-                console.log("Received request to edit scores:", { userId, subject, score });
                 // Обновляем данные пользователя
                 const user = users.value.find(user => user._id === userId);
                 if (user) {

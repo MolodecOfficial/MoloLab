@@ -22,14 +22,14 @@ export default defineEventHandler(async (event) => {
         if (!userId || !subject || typeof score !== 'number' || score < 1 || score > 5) {
             throw createError({
                 statusCode: 400,
-                statusMessage: 'Не переданы корректные данные (userId, subject, score).'
+                message: 'Не переданы корректные данные (userId, subject, score).'
             });
         }
 
         if (!allowedSubjects.includes(subject)) {
             throw createError({
                 statusCode: 400,
-                statusMessage: 'Недопустимый предмет.'
+                message: 'Недопустимый предмет.'
             });
         }
 
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
         if (!user) {
             throw createError({
                 statusCode: 404,
-                statusMessage: 'Пользователь не найден.'
+                message: 'Пользователь не найден.'
             });
         }
 
@@ -84,7 +84,7 @@ export default defineEventHandler(async (event) => {
         if (error.statusCode) throw error;
         throw createError({
             statusCode: 500,
-            statusMessage: 'Внутренняя ошибка сервера.'
+            message: 'Внутренняя ошибка сервера.'
         });
     }
 });
