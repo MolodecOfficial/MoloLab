@@ -27,7 +27,6 @@ export interface UserSchema {
     };
 }
 
-
 export interface SignInRequestBody {
     email: string
     password: string
