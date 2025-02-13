@@ -27,7 +27,7 @@ useHead({
           <img :src="sdo" alt="">
           <span>СДО Дистанционное образование</span>
         </NuxtLink>
-        <NuxtLink class="other_link" to="/account/schedule">
+        <NuxtLink class="other_link" to="/applicant/schedule">
           <img :src="timetable" alt="">
           <span>Расписание занятий</span>
         </NuxtLink>

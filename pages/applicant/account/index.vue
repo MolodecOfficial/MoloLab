@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {onMounted, ref} from 'vue';
 import {useUserStore} from '~/stores/userStore';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
@@ -6,7 +6,7 @@ import {useThemeStore} from "~/stores/themeStore";
 
 
 useHead({
-  title: 'УГНТУ | Личный кабинет'
+  title: 'УГНТУ | Личный кабинет абитуриента'
 })
 
 const userStore = useUserStore();
@@ -155,6 +155,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   & span {
     padding: 20px 0 20px 0;
     color: #053969;
@@ -237,6 +238,7 @@ onMounted(() => {
     height: 38%;
     gap: 20px;
   }
+
   .user-card {
     width: 100%;
     display: flex;
@@ -246,20 +248,24 @@ onMounted(() => {
       font-size: clamp(16px, 5vw, 24px);
     }
   }
+
   .user-card__details {
     & p {
       font-size: clamp(16px, 4vw, 20px);
     }
   }
+
   .additional-links {
     display: none
   }
+
   .specialty-info {
     padding-bottom: 10px;
   }
 
   .specialty-info__list {
     text-align: center;
+
     & span {
       font-size: clamp(16px, 5vw, 24px);
     }
@@ -293,6 +299,7 @@ onMounted(() => {
     height: 38%;
     gap: 40px;
   }
+
   .user-card {
     width: 100%;
     display: flex;
@@ -302,6 +309,7 @@ onMounted(() => {
       font-size: clamp(16px, 5vw, 24px);
     }
   }
+
   .user-card__details {
     & p {
       font-size: clamp(16px, 4vw, 20px);
@@ -314,10 +322,12 @@ onMounted(() => {
 
   .specialty-info__list {
     text-align: center;
+
     & span {
       font-size: clamp(16px, 5vw, 24px);
     }
   }
+
   .additional-links-mobile {
     display: flex;
     flex-direction: column;
@@ -339,6 +349,7 @@ onMounted(() => {
     width: 25%;
     display: flex;
     justify-content: start;
+
     & span {
       font-size: clamp(14px, 5vw, 16px);
 
@@ -348,9 +359,11 @@ onMounted(() => {
   .user-card__details {
     height: 60%;
     padding: 10px;
+
     & p {
       font-size: clamp(13px, 5vw, 17px);
     }
+
     & code {
       font-size: clamp(13px, 5vw, 17px);
 

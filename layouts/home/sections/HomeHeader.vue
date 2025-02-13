@@ -10,8 +10,8 @@
     </a>
     <section class="main-links">
       <NuxtLink class="link" to="/in-progress">Подать документы</NuxtLink>
-      <NuxtLink class="link" to="/login">Личный кабинет абитуриента</NuxtLink>
-      <NuxtLink class="link" to="/login-student">Личный кабинет студента</NuxtLink>
+      <NuxtLink class="link" to="/login/applicant">Личный кабинет абитуриента</NuxtLink>
+      <NuxtLink class="link" to="/login/student">Личный кабинет студента</NuxtLink>
       <NuxtLink class="link" to="/in-progress">Списки поступающих</NuxtLink>
     </section>
   </header>

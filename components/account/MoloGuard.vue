@@ -20,7 +20,7 @@ onMounted(() => {
     <p>Добро пожаловать в загрузочный экран.</p>
     <p>Если вы сюда попали, значит вы пытались зайти на страницу, доступ к которой вам запрещён.</p>
     <p class="warn">Пользуйтесь сайтом честно.</p>
-    <router-link to="/account">Вернуться обратно</router-link>
+    <router-link to="/applicant/account">Вернуться обратно</router-link>
   </div>
 </template>
 

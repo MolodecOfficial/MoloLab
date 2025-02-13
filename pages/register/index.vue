@@ -146,7 +146,7 @@ async function registerUser() {
         <section class="input-container_inside">
           <p class="header">Регистрация</p>
           <p class="not_login">Уже имеете аккаунт?
-            <NuxtLink class="redirect" to="/login">Войти</NuxtLink>
+            <NuxtLink class="redirect" to="/login/applicant">Войти</NuxtLink>
           </p>
           <div class="inputs">
             <p class="input_helper">Имя</p>

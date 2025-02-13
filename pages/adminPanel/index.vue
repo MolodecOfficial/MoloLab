@@ -350,8 +350,8 @@ onMounted(async () => {
   <AccountMoloGuard>
     <div class="bg">
       <section class="hyperlinks">
-        <NuxtLink class="back" to="/login" @click="logoutUser">Вернуться на страницу входа</NuxtLink>
-        <NuxtLink class="back" to="/account">Вернуться на страницу аккаунта</NuxtLink>
+        <NuxtLink class="back" to="/login/applicant" @click="logoutUser">Вернуться на страницу входа</NuxtLink>
+        <NuxtLink class="back" to="/applicant/account">Вернуться на страницу аккаунта</NuxtLink>
       </section>
 
       <h3>Добро Пожаловать в панель администратора</h3>

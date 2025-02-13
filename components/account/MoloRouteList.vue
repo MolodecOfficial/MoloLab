@@ -39,15 +39,15 @@ onMounted(() => {
 <template>
   <section class="routeList" :class="{ 'dark-theme': darkTheme }">
     <section class="routeList_container">
-      <NuxtLink class="route" to="/account">
+      <NuxtLink class="route" to="/applicant/account">
         <img :src="home" alt="">
         <span>Главная</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/news">
+      <NuxtLink class="route" to="/applicant/news">
         <img :src="news" alt="">
         <span>Новости</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/schedule">
+      <NuxtLink class="route" to="/applicant/schedule">
         <img :src="schedule" alt="">
         <span>Расписание</span>
       </NuxtLink>
@@ -73,11 +73,11 @@ onMounted(() => {
         <img :src="tracking" alt="">
         <span>Индивидуальный трек</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/achievements">
+      <NuxtLink class="route" to="/applicant/achievements">
         <img :src="achievements" alt="">
         <span>Достижения</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/readers-form">
+      <NuxtLink class="route" to="/applicant/readers-form">
         <img :src="read" alt="">
         <span>Читательский формуляр</span>
       </NuxtLink>
@@ -88,23 +88,23 @@ onMounted(() => {
         </NuxtLink>
         <div class="popup-links">
           <NuxtLink class="popup-link" to="/in-progress">Стипендия</NuxtLink>
-          <NuxtLink class="popup-link" to="/account/finance/payment">Оплата обучения</NuxtLink>
-          <NuxtLink class="popup-link" to="/account/finance/dormitory">Общежитие</NuxtLink>
+          <NuxtLink class="popup-link" to="/applicant/finance/payment">Оплата обучения</NuxtLink>
+          <NuxtLink class="popup-link" to="/applicant/finance/dormitory">Общежитие</NuxtLink>
         </div>
       </div>
-      <NuxtLink class="route" to="/account/flip-list">
+      <NuxtLink class="route" to="/applicant/flip-list">
         <img :src="flipList" alt="">
         <span>Обходной</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/electronic-reception">
+      <NuxtLink class="route" to="/applicant/electronic-reception">
         <img :src="onlineNote" alt="">
         <span>Электронная приёмная</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/resources">
+      <NuxtLink class="route" to="/applicant/resources">
         <img :src="resources" alt="">
         <span>Ресурсы</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/account/rating">
+      <NuxtLink class="route" to="/applicant/rating">
         <img :src="rating" alt="">
         <span>Рейтинг</span>
       </NuxtLink>

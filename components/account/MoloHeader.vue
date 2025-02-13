@@ -32,7 +32,7 @@ async function logoutUser() {
   try {
     localStorage.removeItem('user')
     userStore.clearUser()
-    await router.push('/login')
+    await router.push('/login/applicant')
   } catch (error) {
     console.error('Ошибка при выходе из аккаунта:', error)
   }
