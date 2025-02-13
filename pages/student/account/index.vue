@@ -328,16 +328,19 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   background-color: #eaeaea;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .student-main-container {
   width: 625px;
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
   background-color: #ededf1;
   align-items: center;
   gap: 10px;
+  height: 100%;
+  overflow: auto;
 
 }
 
