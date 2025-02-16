@@ -56,7 +56,6 @@ async function registerUser() {
       // Логируем ID нового пользователя в консоль
       console.log('ID нового пользователя:', data.user._id);  // Выводим ID
 
-      // Сохраняем данные в store (например, email, имя, фамилию)
       userStore.setUser({
         email: data.user.email,
         firstName: data.user.firstName,

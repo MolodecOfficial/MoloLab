@@ -38,9 +38,9 @@
 
 .main_header {
   position: absolute;
-  top: 0;
+  top: 1%;
   left: 0;
-  transform: translate(77%, 35%);
+  transform: translate(70%, 0%);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -48,10 +48,11 @@
 }
 
 h3 {
-  font-size: clamp(20px, 5vw, 100px);
+  font-size: clamp(20px, 5vw, 180px);
   font-family: "Samsung Sans", sans-serif;
-  font-weight: bold;
+  font-weight: bolder;
   margin: -8px 0;
+  opacity: 80%;
 }
 
 h3:first-child {

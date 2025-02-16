@@ -90,7 +90,7 @@ useHead({
         <span class="info">{{ userFaculty }}</span>
         <span class="info-span">Ваша группа:</span>
         <span class="info"> {{ userGroup }}</span>
-        <span class="info-span">Ваше направление:</span>
+        <span class="info-span">Ваш код:</span>
         <span class="info">{{ userCode }}</span>
         <span class="hr-container"><hr></span>
         <span class="info-span">Автор сайта:</span>

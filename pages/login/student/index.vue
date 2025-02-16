@@ -156,7 +156,7 @@ async function loginAsGuest() {
 
     if (response.ok) {
       // Примерные данные для гостя
-      const guestUser = {
+      const guestUser: any = {
         firstName: 'Гость',
         lastName: 'Гость',
         status: 'Гость',

@@ -156,193 +156,170 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="student-container">
-    <section class="student-main-container">
-      <section class="student-header">
-        <div class="header-user">
-          {{ firstName }} {{ lastName }}
-        </div>
-        <div class="header-user-info">
+  <AccountMoloMobile>
+    <section class="student-header">
+      <div class="header-user">
+        {{ firstName }} {{ lastName }}
+      </div>
+      <div class="header-user-info">
           <span>
             {{ group }} • {{ faculty }}
           </span>
-          <span>
+        <span>
             {{ specialty }}
           </span>
-        </div>
+      </div>
 
-      </section>
-      <NuxtLink class="student-userdata" to="/student">
-        <section class="span">
-          <svg fill="none" height="20" viewBox="0 0 16 20" width="20" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M7.9997 11.5C4.5419 11.5 1.63061 13.84 0.763071 17.0229C0.472601 18.0886 1.39517 19 2.49974 19H13.4997C14.6043 19 15.5269 18.0886 15.2364 17.0229C14.3689 13.84 11.4576 11.5 7.9997 11.5Z"
-                stroke="black" stroke-linecap="round" stroke-width="1.25"/>
-            <path
-                d="M11.4997 5C11.4997 6.933 9.93272 8.5 7.99972 8.5C6.06672 8.5 4.49976 6.933 4.49976 5C4.49976 3.067 6.06672 1.5 7.99972 1.5C9.93272 1.5 11.4997 3.067 11.4997 5Z"
-                stroke="black" stroke-linecap="round" stroke-width="1.25"/>
-          </svg>
-          <span>
+    </section>
+    <NuxtLink class="student-userdata" to="/student/personal-data">
+      <section class="span">
+        <svg fill="none" height="20" viewBox="0 0 16 20" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path
+              d="M7.9997 11.5C4.5419 11.5 1.63061 13.84 0.763071 17.0229C0.472601 18.0886 1.39517 19 2.49974 19H13.4997C14.6043 19 15.5269 18.0886 15.2364 17.0229C14.3689 13.84 11.4576 11.5 7.9997 11.5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+          <path
+              d="M11.4997 5C11.4997 6.933 9.93272 8.5 7.99972 8.5C6.06672 8.5 4.49976 6.933 4.49976 5C4.49976 3.067 6.06672 1.5 7.99972 1.5C9.93272 1.5 11.4997 3.067 11.4997 5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+        </svg>
+        <span>
             Персональные данные
           </span>
-        </section>
-        <section class="vector">
-          <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
-          </svg>
-        </section>
-      </NuxtLink>
-      <section class="student-actions">
-        <NuxtLink
-            v-for="(action, index) in actions"
-            :key="index"
-            :class="{ 'first-item': index === 0, 'last-item': index === actions.length - 1 }"
-            :to="action.route"
-            class="student-action"
-        >
-          <section class="span">
-            <svg
-                v-if="action.icon"
-                :style="{ stroke: isActive(action.route) ? 'blue' : 'black' }"
-                class="action-icon"
-                fill="none"
-                height="20"
-                viewBox="0 0 20 20"
-                width="20"
-                v-html="action.icon"
-            ></svg>
-            <span>
+      </section>
+      <section class="vector">
+        <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
+        </svg>
+      </section>
+    </NuxtLink>
+    <section class="student-actions">
+      <NuxtLink
+          v-for="(action, index) in actions"
+          :key="index"
+          :class="{ 'first-item': index === 0, 'last-item': index === actions.length - 1 }"
+          :to="action.route"
+          class="student-action"
+      >
+        <section class="span">
+          <svg
+              v-if="action.icon"
+              :style="{ stroke: isActive(action.route) ? 'blue' : 'black' }"
+              class="action-icon"
+              fill="none"
+              height="20"
+              viewBox="0 0 20 20"
+              width="20"
+              v-html="action.icon"
+          ></svg>
+          <span>
               {{ action.label }}
             </span>
-          </section>
-          <section class="vector">
-            <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
-            </svg>
-          </section>
-
-        </NuxtLink>
-      </section>
-      <section class="student-actions">
-        <NuxtLink
-            v-for="(buss, index) in business"
-            :key="index"
-            :to="buss.route"
-            class="student-action"
-        >
-          <section class="span">
-            <svg
-                v-if="buss.icon"
-                :style="{ stroke: isActive(buss.route) ? 'blue' : 'black' }"
-                class="action-icon"
-                fill="none"
-                height="20"
-                viewBox="0 0 20 20"
-                width="20"
-                v-html="buss.icon"
-            ></svg>
-            <span>
-              {{ buss.label }}
-            </span>
-          </section>
-          <section class="vector">
-            <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
-            </svg>
-          </section>
-
-        </NuxtLink>
-      </section>
-      <section class="student-actions">
-        <NuxtLink
-            v-for="(inter, index) in internet"
-            :key="index"
-            :to="inter.route"
-            class="student-action"
-        >
-          <section class="span">
-            <svg
-                v-if="inter.icon"
-                :style="{ stroke: isActive(inter.route) ? 'blue' : 'black' }"
-                class="action-icon"
-                fill="none"
-                height="20"
-                viewBox="0 0 20 20"
-                width="20"
-                v-html="inter.icon"
-            ></svg>
-            <span>
-              {{ inter.label }}
-            </span>
-          </section>
-          <section class="vector">
-            <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
-            </svg>
-          </section>
-
-        </NuxtLink>
-      </section>
-      <NuxtLink class="student-userdata" to="/student">
-        <section class="span">
-          <svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M13.9282 13.5C11.7649 15.8049 14.0812 21.1089 9.5 20.3822C4.96602 19.6631 1.5 15.7363 1.5 11C1.5 5.75329 5.75329 1.5 11 1.5C15.7363 1.5 19.6631 4.96602 20.3822 9.5C21.0886 13.9534 16.0034 11.289 13.9282 13.5Z"
-                stroke="black" stroke-linecap="round" stroke-width="1.25"/>
-            <path
-                d="M9 13.5C9 14.3284 8.32843 15 7.5 15C6.67157 15 6 14.3284 6 13.5C6 12.6716 6.67157 12 7.5 12C8.32843 12 9 12.6716 9 13.5Z"
-                stroke="black" stroke-linecap="round" stroke-width="1.25"/>
-            <path
-                d="M10 7.5C10 8.32843 9.3284 9 8.5 9C7.67157 9 7 8.32843 7 7.5C7 6.67157 7.67157 6 8.5 6C9.3284 6 10 6.67157 10 7.5Z"
-                stroke="black" stroke-linecap="round" stroke-width="1.25"/>
-            <path
-                d="M16 7C16 7.82843 15.3284 8.5 14.5 8.5C13.6716 8.5 13 7.82843 13 7C13 6.17157 13.6716 5.5 14.5 5.5C15.3284 5.5 16 6.17157 16 7Z"
-                stroke="black" stroke-linecap="round" stroke-width="1.25"/>
-          </svg>
-          <span>
-            Оформление
-          </span>
         </section>
         <section class="vector">
           <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
           </svg>
         </section>
-      </NuxtLink>
 
-      <NuxtLink class="exit" to="/login/student">
-        <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
-          <path
-              d="M15 6.17648V13.5294M19.4125 9.11765C21.1981 10.4592 22.3529 12.5947 22.3529 15C22.3529 19.0609 19.0609 22.3529 15 22.3529C10.9391 22.3529 7.64707 19.0609 7.64707 15C7.64707 12.5947 8.80198 10.4592 10.5875 9.11765M28.9706 15C28.9706 22.7157 22.7157 28.9706 15 28.9706C7.28426 28.9706 1.02942 22.7157 1.02942 15C1.02942 7.28426 7.28426 1.02942 15 1.02942C22.7157 1.02942 28.9706 7.28426 28.9706 15Z"
-              stroke="#FF0000" stroke-linecap="round" stroke-width="1.25" />
-        </svg>
       </NuxtLink>
-      <LazyAccountMoloNavbar/>
     </section>
-  </section>
+    <section class="student-actions">
+      <NuxtLink
+          v-for="(buss, index) in business"
+          :key="index"
+          :to="buss.route"
+          class="student-action"
+      >
+        <section class="span">
+          <svg
+              v-if="buss.icon"
+              :style="{ stroke: isActive(buss.route) ? 'blue' : 'black' }"
+              class="action-icon"
+              fill="none"
+              height="20"
+              viewBox="0 0 20 20"
+              width="20"
+              v-html="buss.icon"
+          ></svg>
+          <span>
+              {{ buss.label }}
+            </span>
+        </section>
+        <section class="vector">
+          <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
+          </svg>
+        </section>
+
+      </NuxtLink>
+    </section>
+    <section class="student-actions">
+      <NuxtLink
+          v-for="(inter, index) in internet"
+          :key="index"
+          :to="inter.route"
+          class="student-action"
+      >
+        <section class="span">
+          <svg
+              v-if="inter.icon"
+              :style="{ stroke: isActive(inter.route) ? 'blue' : 'black' }"
+              class="action-icon"
+              fill="none"
+              height="20"
+              viewBox="0 0 20 20"
+              width="20"
+              v-html="inter.icon"
+          ></svg>
+          <span>
+              {{ inter.label }}
+            </span>
+        </section>
+        <section class="vector">
+          <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
+          </svg>
+        </section>
+
+      </NuxtLink>
+    </section>
+    <NuxtLink class="student-userdata" to="/student">
+      <section class="span">
+        <svg fill="none" height="22" viewBox="0 0 22 22" width="22" xmlns="http://www.w3.org/2000/svg">
+          <path
+              d="M13.9282 13.5C11.7649 15.8049 14.0812 21.1089 9.5 20.3822C4.96602 19.6631 1.5 15.7363 1.5 11C1.5 5.75329 5.75329 1.5 11 1.5C15.7363 1.5 19.6631 4.96602 20.3822 9.5C21.0886 13.9534 16.0034 11.289 13.9282 13.5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+          <path
+              d="M9 13.5C9 14.3284 8.32843 15 7.5 15C6.67157 15 6 14.3284 6 13.5C6 12.6716 6.67157 12 7.5 12C8.32843 12 9 12.6716 9 13.5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+          <path
+              d="M10 7.5C10 8.32843 9.3284 9 8.5 9C7.67157 9 7 8.32843 7 7.5C7 6.67157 7.67157 6 8.5 6C9.3284 6 10 6.67157 10 7.5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+          <path
+              d="M16 7C16 7.82843 15.3284 8.5 14.5 8.5C13.6716 8.5 13 7.82843 13 7C13 6.17157 13.6716 5.5 14.5 5.5C15.3284 5.5 16 6.17157 16 7Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+        </svg>
+        <span>
+            Оформление
+          </span>
+      </section>
+      <section class="vector">
+        <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
+        </svg>
+      </section>
+    </NuxtLink>
+
+    <NuxtLink class="exit" to="/login/student">
+      <svg fill="none" height="30" viewBox="0 0 30 30" width="30" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M15 6.17648V13.5294M19.4125 9.11765C21.1981 10.4592 22.3529 12.5947 22.3529 15C22.3529 19.0609 19.0609 22.3529 15 22.3529C10.9391 22.3529 7.64707 19.0609 7.64707 15C7.64707 12.5947 8.80198 10.4592 10.5875 9.11765M28.9706 15C28.9706 22.7157 22.7157 28.9706 15 28.9706C7.28426 28.9706 1.02942 22.7157 1.02942 15C1.02942 7.28426 7.28426 1.02942 15 1.02942C22.7157 1.02942 28.9706 7.28426 28.9706 15Z"
+            stroke="#FF0000" stroke-linecap="round" stroke-width="1.25"/>
+      </svg>
+    </NuxtLink>
+  </AccountMoloMobile>
 </template>
 
 <style scoped>
-.student-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: #eaeaea;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.student-main-container {
-  width: 625px;
-  display: flex;
-  flex-direction: column;
-  background-color: #ededf1;
-  align-items: center;
-  gap: 10px;
-  height: 100%;
-  overflow: auto;
-
-}
 
 .student-header {
   background-color: white;

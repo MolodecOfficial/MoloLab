@@ -5,7 +5,7 @@
 <template>
   <div>
     <header>
-      <p>Образовательные программы</p>
+      <p>Продолжение в разработке</p>
     </header>
   </div>
 </template>

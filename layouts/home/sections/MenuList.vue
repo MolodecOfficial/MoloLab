@@ -106,7 +106,6 @@ function hideLinks() {
 <template>
   <section class="easy-list">
     <div class="easy-list_overlay">
-      <div class="easy-list_overlay_test"></div>
     </div>
     <section class="easy-list_container">
       <NuxtLink class="link" to="/in-progress">Поступающим</NuxtLink>
@@ -167,19 +166,12 @@ function hideLinks() {
 .easy-list_overlay {
   position: absolute;
   height: clamp(15%, 56vw, 100%);
-  width: clamp(10%, 65vw, 31vw);
-  background-color: rgba(47, 53, 89, 0.84); /* Левый фильтр */
+  width: clamp(10%, 65vw, 35vw);
+  background-color: rgba(13, 31, 98, 0.51);
   opacity: 1;
-
+  backdrop-filter: blur(10px);
 }
 
-.easy-list_overlay_test {
-  position: absolute;
-  filter: blur(2px);
-  height: clamp(15%, 56vw, 100%);
-  width: clamp(20%, 65vw, 31vw);
-  background-color: rgba(9, 24, 70, 0.82); /* Левый фильтр */
-}
 
 .easy-list_container {
   display: flex;
