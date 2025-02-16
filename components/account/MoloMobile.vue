@@ -25,7 +25,7 @@
   width: 625px;
   display: flex;
   flex-direction: column;
-  background-color: rgba(202, 203, 203, 0.19);
+  background-color: rgba(109, 109, 171, 0.09);
   align-items: center;
   gap: 10px;
   height: 100%;

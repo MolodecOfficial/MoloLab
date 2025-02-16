@@ -21,7 +21,10 @@ useThemeStore()
 
 const MyNews: Array<LeftNews> = [
   {
-    title: 'Обновление 0.15 (Установлено)',
+    title: 'Обновление 0.16 (Установлено)',
+    link: 'https://t.me/molodec_official_tg/369'
+  },{
+    title: 'Обновление 0.15',
     link: 'https://t.me/molodec_official_tg/369'
   }, {
     title: 'Обновление 0.14',

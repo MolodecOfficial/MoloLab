@@ -5,7 +5,7 @@ const route = useRoute();
 
 <template>
   <section class="student-nav">
-    <NuxtLink to="/student/schedule" class="nav-link" :class="{ active: route.path === '/student/schedule'}">
+    <NuxtLink to="/in-progress" class="nav-link" :class="{ active: route.path === '/student/schedule'}">
       <svg
           width="22"
           height="22"
@@ -23,7 +23,7 @@ const route = useRoute();
       </svg>
       <span>Расписание</span>
     </NuxtLink>
-    <NuxtLink to="/student/grade" class="nav-link" :class="{ active: route.path === '/student/grade' }">
+    <NuxtLink to="/in-progress" class="nav-link" :class="{ active: route.path === '/student/grade' }">
       <svg
           width="18"
           height="22"
