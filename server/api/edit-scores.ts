@@ -57,7 +57,7 @@ export default defineEventHandler(async (event) => {
         const subjectAverages = Object.entries(user.score).map(([subj, scores]) => {
             if (scores.length === 0) return 0;  // Избегаем деления на ноль
             const numericScores = scores.map(Number);
-            const average = numericScores.reduce((sum, s) => sum + s, 0) / numericScores.length;
+            const average = numericScores.reduce((sum: any, s: any) => sum + s, 0) / numericScores.length;
             return average;
         });
 

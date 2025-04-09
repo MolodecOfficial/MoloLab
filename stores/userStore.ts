@@ -4,6 +4,7 @@ import {achievementsList} from '~/stores/achievementsStore';
 import Cookies from "js-cookie";
 
 export const useUserStore = defineStore('user', () => {
+    const users = ref<any[]>(process.client ? JSON.parse(localStorage.getItem('users') || '[]') : []);
     const userId = ref('');
     const userEmail = ref('');
     const userFirstName = ref('');
@@ -21,12 +22,13 @@ export const useUserStore = defineStore('user', () => {
     const userGeneralScore = ref('')
     const userScores = ref<any>({});
     const currentUser = ref<any>(null);
-    const users = ref<any[]>([]);
     const loading = ref(false);
     const error = ref('');
     const loadingUser = ref(false); // Флаг, который будет показывать, загружен ли текущий пользователь
     const averageScore = computed(() => userAverageScore.value);
     const generalScore = computed(() => userGeneralScore.value);
+
+    const messages = ref<any[]>([]);
 
     const achievements = ref<any[]>(achievementsList); // Список доступных достижений
 
@@ -46,26 +48,26 @@ export const useUserStore = defineStore('user', () => {
         userLastName.value = lastName;
     }
 
-    function setUser(user:
-                     {
-                         email: string;
-                         firstName: string;
-                         lastName: string;
-                         _id?: string;
-                         status: string;
-                         specialty: string,
-                         group: string,
-                         code: string,
-                         direction: string,
-                         learning: string,
-                         form_of_learning: string,
-                         faculty: string,
-                         course: string,
-                         score: any;
-                         ranking: number;
-                         averageScore: string;
-                         generalScore: string;
-                     }) {
+    function setUser(user: {
+        email: string;
+        firstName: string;
+        lastName: string;
+        _id?: string;
+        status: string;
+        specialty: string;
+        group: string;
+        code: string;
+        direction: string;
+        learning: string;
+        form_of_learning: string;
+        faculty: string;
+        course: string;
+        score: any;
+        ranking: number;
+        averageScore: string;
+        generalScore: string;
+    }) {
+        // Устанавливаем значения в реактивные переменные
         userEmail.value = user.email;
         userFirstName.value = user.firstName;
         userLastName.value = user.lastName;
@@ -73,20 +75,30 @@ export const useUserStore = defineStore('user', () => {
         userId.value = user._id || '';  // Сохраняем ID пользователя
         userStatus.value = user.status;
         userSpecialty.value = user.specialty;
-        userGroup.value = user.group
-        userCode.value = user.code
-        userDirection.value = user.direction
-        userLearning.value = user.learning
-        userFormOfLearning.value = user.form_of_learning
-        userFaculty.value = user.faculty
-        userCourse.value = user.course
-        userScores.value = user.score
-        userAverageScore.value = user.averageScore
-        userGeneralScore.value = user.generalScore
+        userGroup.value = user.group;
+        userCode.value = user.code;
+        userDirection.value = user.direction;
+        userLearning.value = user.learning;
+        userFormOfLearning.value = user.form_of_learning;
+        userFaculty.value = user.faculty;
+        userCourse.value = user.course;
+        userScores.value = user.score;
+        userAverageScore.value = user.averageScore;
+        userGeneralScore.value = user.generalScore;
 
-
-        localStorage.setItem('user', JSON.stringify(user));
-        Cookies.set('user', JSON.stringify(user), {expires: 7});
+        // Проверяем, выполняется ли код в браузере
+        if (typeof window !== 'undefined') {
+            try {
+                // Сохраняем данные в localStorage
+                localStorage.setItem('user', JSON.stringify(user));
+                // Сохраняем данные в Cookies
+                Cookies.set('user', JSON.stringify(user), { expires: 7 });
+            } catch (error) {
+                console.error('Ошибка при сохранении данных пользователя:', error);
+            }
+        } else {
+            console.warn('localStorage недоступен на стороне сервера');
+        }
     }
 
     function setUserScores(scores: any) {
@@ -105,8 +117,8 @@ export const useUserStore = defineStore('user', () => {
         loadingUser.value = true;
         try {
             const response = await $fetch('/api/users'); // Замените на правильный URL
-            users.value = response.users; // Предполагаем, что список пользователей хранится в поле "users"
-
+            users.value = response.users;
+            localStorage.setItem('users', JSON.stringify(users.value));
             // Ищем пользователя по userId
             const currentUserData = users.value.find((user: any) => user._id === userId.value);
             if (currentUserData) {
@@ -114,12 +126,14 @@ export const useUserStore = defineStore('user', () => {
             } else {
                 console.log('Пользователь с таким ID не найден');
             }
+
         } catch (err) {
             error.value = 'Ошибка при получении пользователей';
             console.error(error.value, err);
         } finally {
             loadingUser.value = false;
         }
+
     };
 
     // Удаление пользователя
@@ -141,7 +155,9 @@ export const useUserStore = defineStore('user', () => {
             console.error("Не переданы userId или achievementId");
             throw new Error("Не переданы необходимые данные");
         }
-
+        if (userId.includes(achievementId)) {
+            console.warn("Данное достижение уже выдано пользователю")
+        }
         try {
             const response = await $fetch('/api/give-achievement', {
                 method: 'POST',
@@ -330,10 +346,42 @@ export const useUserStore = defineStore('user', () => {
     //     }
     // }
 
+    function addMessage(newMessage: any) {
+        messages.value.push(newMessage);
+
+        if (typeof window !== 'undefined') {
+            try {
+                localStorage.setItem('messages', JSON.stringify(messages.value));
+            } catch (error) {
+                console.error('Ошибка при сохранении сообщений:', error);
+            }
+        }
+    }
+
+    function loadMessages() {
+        if (typeof window !== 'undefined') {
+            try {
+                const savedMessages = localStorage.getItem('messages');
+                if (savedMessages) {
+                    messages.value = JSON.parse(savedMessages);
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке сообщений:', error);
+            }
+        }
+    }
+
     onMounted(() => {
+        loadMessages()
         console.log('Инициализация userStore...')
         if (currentUser.value) {
             return;
+        }
+        if (process.client && !currentUser.value) {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                // ... существующая логика
+            }
         }
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
@@ -384,6 +432,7 @@ export const useUserStore = defineStore('user', () => {
         achievements,
         averageScore,
         generalScore,
+        messages,
         setEmail,
         setFirstName,
         setLastName,
@@ -397,6 +446,7 @@ export const useUserStore = defineStore('user', () => {
         addSpecialty,
         addLearningDetails,
         addScore,
+        addMessage
         // addSchedule
     };
 });

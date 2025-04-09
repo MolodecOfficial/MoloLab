@@ -174,7 +174,7 @@ async function loginAsGuest() {
         scores: {},
       };
       statusMessage.value = 'Добро пожаловать, Гость!';
-      setTimeout(() => router.push('/account'), 1000);
+      setTimeout(() => router.push('/applicant/account'), 1000);
 
 
       // Сохранение данных пользователя в Cookies
@@ -242,7 +242,7 @@ async function loginAsGuest() {
         <section class="input-container_inside">
           <p class="header">Вход в систему абитуриента</p>
           <p class="not_login">Ещё не зарегистрированы?
-            <NuxtLink class="redirect" to="/register">Регистрация</NuxtLink>
+            <NuxtLink class="redirect" to="/register/applicant">Регистрация</NuxtLink>
             |
             <NuxtLink class="redirect" to="/">Вернуться на главную</NuxtLink>
           </p>

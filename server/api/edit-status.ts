@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
         // Возвращаем обновленного пользователя
         return {
             message: "Статус пользователя успешно обновлен.",
-            user: user, // возвращаем обновленного пользователя
+            user: user,
         };
     } catch (error: any) {
         sendError(event, error);

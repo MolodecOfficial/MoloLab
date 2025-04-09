@@ -19,5 +19,10 @@ export default defineNuxtConfig({
   jwt: process.env.JWT_SECRET,
  },
 
+ app: {
+  router: {
+   middleware: ['track-activity']
+  }
+ },
  modules: ['@pinia/nuxt']
 })

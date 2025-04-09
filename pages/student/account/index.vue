@@ -106,7 +106,7 @@ const business = [
 const internet = [
   {
     label: "Новости",
-    route: "/in-progress",
+    route: "/student/news",
     icon: `
 <svg width="18" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11 20.5C16.2467 20.5 20.5 16.2467 20.5 11C20.5 5.75329 16.2467 1.5 11 1.5M11 20.5C5.75329 20.5 1.5 16.2467 1.5 11C1.5 5.75329 5.75329 1.5 11 1.5M11 20.5C13.2091 20.5 15 16.2467 15 11C15 5.75329 13.2091 1.5 11 1.5M11 20.5C8.79086 20.5 7 16.2467 7 11C7 5.75329 8.79086 1.5 11 1.5M2 8H20M2 14H20" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
@@ -351,7 +351,7 @@ onMounted(() => {
   border-radius: 10px;
   text-decoration: none;
   color: black;
-
+  -webkit-tap-highlight-color: transparent;
   &:hover {
     background-color: #e7e7e7;
     cursor: pointer;
@@ -390,6 +390,7 @@ onMounted(() => {
   border: 1px ridge rgba(229, 231, 235, 0.42);
   color: black;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     background-color: #e7e7e7;
@@ -419,6 +420,7 @@ onMounted(() => {
   padding: 10px;
   background-color: white;
   margin-bottom: 100px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .exit svg path {

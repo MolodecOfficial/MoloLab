@@ -120,7 +120,7 @@ async function registerUser() {
       userStore.setFirstName(firstName.value);
       userStore.setLastName(lastName.value);
 
-      setTimeout(() => router.push('/login'), 2000);
+      setTimeout(() => router.push('/login/applicant'), 2000);
     } else {
       const errorData = await response.json();
       statusMessage.value = errorData.message || 'Произошла ошибка при регистрации';
@@ -143,7 +143,7 @@ async function registerUser() {
       </section>
       <section class="input-container">
         <section class="input-container_inside">
-          <p class="header">Регистрация</p>
+          <p class="header">Регистрация абитуриента</p>
           <p class="not_login">Уже имеете аккаунт?
             <NuxtLink class="redirect" to="/login/applicant">Войти</NuxtLink>
           </p>
