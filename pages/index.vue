@@ -40,11 +40,6 @@ import bg_img from 'public/img.png'
           Личный Кабинет абитуриента
         </span>
       </NuxtLink>
-      <NuxtLink to="/login/student" class="info-button">
-        <span>
-          Личный Кабинет студента
-        </span>
-      </NuxtLink>
     </section>
   </section>
 

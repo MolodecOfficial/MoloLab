@@ -30,7 +30,7 @@ const formProps = defineProps({
   cursor: pointer;
   width: 100%;
   &:hover {
-    background-color: #4038bb;
+    background-color: #231e67;
   }
 }
 

@@ -56,6 +56,7 @@ onMounted(async () => {
   <AdminpanelMoloLoader :is-loading="loading"/>
 
   <section v-if="!loading" class="user-section_v-else">
+    <div v-if="!users || users.length === 0" class="no">Нет пользователя с таким именем</div>
     <section v-for="user in props.users"
              :key="user._id"
              class="user-section"
@@ -301,5 +302,14 @@ hr {
 .btn {
   display: flex;
   justify-content: flex-end;
+}
+
+.no {
+  padding: 10px 20px;
+  background-color: var(--dk-bg-color);
+  text-align: center;
+  width: max-content;
+  border: 1px solid var(--dk-border-color);
+  border-radius: 10px;
 }
 </style>

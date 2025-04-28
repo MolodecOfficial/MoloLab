@@ -12,7 +12,6 @@ const props = defineProps({
   <div class="admin-panel">
     <AdminpanelMoloAdminHeader/>
     <section class="route-main">
-      <AdminpanelMoloAdminRoute/>
       <section class="admin-main-container">
         <div class="welcome-message">
           <span>{{ header_text }}</span>
@@ -40,15 +39,17 @@ const props = defineProps({
 }
 .route-main {
   display: flex;
+
   height: 100%;
+  justify-content: center;
 }
 .admin-main-container {
-  width: 100%;
+  width: 75%;
   min-height: max-content;
   padding: 20px;
   border: 1px solid var(--dk-border-color);
   background-color: var(--dk-bg-ins-color);
-  border-top-left-radius: 20px;
+  border-radius: 20px;
 }
 .welcome-message {
   display: flex;

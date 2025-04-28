@@ -34,7 +34,6 @@ const handleKeyPress = (event: KeyboardEvent) => {
 
 <template>
   <input
-
       @input="handleInput"
       :value="modelValue"
       :placeholder="placeholder"

@@ -86,8 +86,7 @@ export const useUserStore = defineStore('user', () => {
         userAverageScore.value = user.averageScore;
         userGeneralScore.value = user.generalScore;
 
-        // Проверяем, выполняется ли код в браузере
-        if (typeof window !== 'undefined') {
+        if (process.client) {
             try {
                 // Сохраняем данные в localStorage
                 localStorage.setItem('user', JSON.stringify(user));
@@ -116,9 +115,15 @@ export const useUserStore = defineStore('user', () => {
     const getUsers = async () => {
         loadingUser.value = true;
         try {
-            const response = await $fetch('/api/users'); // Замените на правильный URL
+            const response = await $fetch('/api/users');
             users.value = response.users;
-            localStorage.setItem('users', JSON.stringify(users.value));
+            if (process.client) {
+                try {
+                    localStorage.setItem('users', JSON.stringify(users.value));
+                } catch (error) {
+                    console.error('Ошибка при сохранении данных пользователей в localStorage:', error);
+                }
+            }
             // Ищем пользователя по userId
             const currentUserData = users.value.find((user: any) => user._id === userId.value);
             if (currentUserData) {
@@ -359,7 +364,7 @@ export const useUserStore = defineStore('user', () => {
     }
 
     function loadMessages() {
-        if (typeof window !== 'undefined') {
+        if (process.client) {
             try {
                 const savedMessages = localStorage.getItem('messages');
                 if (savedMessages) {
@@ -380,30 +385,26 @@ export const useUserStore = defineStore('user', () => {
         if (process.client && !currentUser.value) {
             const savedUser = localStorage.getItem('user');
             if (savedUser) {
-                // ... существующая логика
+                const user = JSON.parse(savedUser);
+                setUser(user);
+                currentUser.value = user;
+                userId.value = user._id;
+                userEmail.value = user.email;
+                userFirstName.value = user.firstName;
+                userLastName.value = user.lastName;
+                userStatus.value = user.status;
+                userSpecialty.value = user.specialty;
+                userGroup.value = user.group;
+                userCode.value = user.code;
+                userDirection.value = user.direction;
+                userLearning.value = user.learning;
+                userFormOfLearning.value = user.form_of_learning;
+                userFaculty.value = user.faculty;
+                userCourse.value = user.course;
+                userScores.value = user.score;
+                userAverageScore.value = user.averageScore;
+                userGeneralScore.value = user.generalScore;
             }
-        }
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            const user = JSON.parse(savedUser);
-            setUser(user);
-            currentUser.value = user;
-            userId.value = user._id;
-            userEmail.value = user.email;
-            userFirstName.value = user.firstName;
-            userLastName.value = user.lastName;
-            userStatus.value = user.status;
-            userSpecialty.value = user.specialty
-            userGroup.value = user.group;
-            userCode.value = user.code;
-            userDirection.value = user.direction;
-            userLearning.value = user.learning;
-            userFormOfLearning.value = user.form_of_learning;
-            userFaculty.value = user.faculty;
-            userCourse.value = user.course;
-            userScores.value = user.score
-            userAverageScore.value = user.averageScore
-            userGeneralScore.value = user.generalScore
         }
     });
 

@@ -7,9 +7,7 @@ onMounted(() => {
   const storedUser = localStorage.getItem('user');
   if (storedUser) {
     const user = JSON.parse(storedUser);
-    console.log('Информация о текущем пользователе', user)
     userStatus.value = user.status;
-    console.log('User status:', userStatus.value);
   } else {
     console.log('No user data found in localStorage');
   }

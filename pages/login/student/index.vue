@@ -232,182 +232,37 @@ async function loginAsGuest() {
 </script>
 
 <template>
-  <section class="body">
-    <section class="container">
-      <section class="container-image">
-        <img src="/auth/logo.png" alt="Логотип">
-      </section>
-      <section class="input-container">
-
-        <section class="input-container_inside">
-          <p class="header">Вход в систему студента</p>
-          <p class="not_login">Ещё не зарегистрированы?
-            <NuxtLink class="redirect" to="/register/student">Регистрация</NuxtLink>
-            |
-            <NuxtLink class="redirect" to="/">Вернуться на главную</NuxtLink>
-          </p>
-          <div class="inputs">
-            <p class="input_helper">E-mail</p>
-            <AccountMoloFormInput v-model="email"/>
-            <p class="input_helper">Пароль</p>
-            <AccountMoloFormInput v-model="password" type="password"/>
-          </div>
-          <div class="remember">
-            <input type="checkbox" id="remember-me"/>
-            <label for="remember-me">Запомнить меня</label>
-          </div>
-          <div class="log-forget">
-            <section class="buttons">
-              <AccountMoloFormSubmit
-                  label="Войти"
-                  :loading="loading"
-                  :message="statusMessage"
-                  class="button-user"
-                  @click="loginUser"
-              />
-              <AccountMoloFormSubmit
-                  label="Гость"
-                  :loading="loading"
-                  :message="statusMessage"
-                  class="button-guest"
-                  @click="loginAsGuest"
-                  />
-            </section>
-
-            <NuxtLink class="forget" to="/in-progress">Восстановление пароля</NuxtLink>
-            <ClickedCreating :message="statusMessage"/>
-          </div>
-        </section>
-      </section>
-    </section>
-  </section>
+  <AuthPatternsMoloLogin>
+    <template #email>
+      <AccountMoloFormInput v-model="email"/>
+    </template>
+    <template #password>
+      <AccountMoloFormInput v-model="password" type="password"/>
+    </template>
+    <template #user>
+      <AccountMoloFormSubmit
+          label="Войти"
+          :loading="loading"
+          :message="statusMessage"
+          class="button-user"
+          @click="loginUser"
+      />
+    </template>
+    <template #guest>
+      <AccountMoloFormSubmit
+          label="Гость"
+          :loading="loading"
+          :message="statusMessage"
+          class="button-guest"
+          @click="loginAsGuest"
+      />
+    </template>
+    <template #status>
+      <ClickedCreating :message="statusMessage"/>
+    </template>
+  </AuthPatternsMoloLogin>
 </template>
-
 <style scoped>
-
-.body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #eef7fd;
-}
-
-.container {
-  display: flex;
-  align-items: center;
-  background-color: #ffffff;
-  width: 50%;
-  height: 50%;
-  border-radius: 20px;
-}
-
-.container-image {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 30px 0 30px;
-  width: 50%;
-  border-right: 1px solid #e3e5e9;
-}
-
-.input-container {
-  display: flex;
-  justify-content: center;
-  width: 45%;
-  align-items: center;
-  height: 100%;
-}
-
-.input-container_inside {
-  width: 80%;
-  height: 80%;
-
-  & .header {
-    color: #082459;
-    font-size: 21px;
-  }
-
-  & .not_login {
-    font-size: 11px;
-  }
-
-  & .redirect {
-    text-decoration: none;
-    transition: 0.2s all ease-in-out;
-    color: #3c00ef;
-
-    &:hover {
-      text-decoration: underline 1px;
-      text-underline-offset: 2px;
-    }
-    &:last-child {
-      color: #ab0000;
-    }
-  }
-}
-
-.inputs {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-
-  & .input_helper {
-    font-size: 12px;
-  }
-}
-
-.remember {
-  font-size: 14px; /* Уменьшите размер шрифта по вашему усмотрению */
-  color: #333; /* Цвет текста (по желанию) */
-  margin-top: 5px;
-  display: flex;
-}
-
-.remember input {
-  margin-right: 5px; /* Отступ между чекбоксом и текстом */
-}
-
-.log-forget {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 10px;
-  gap: 6px;
-
-  & .login {
-    background-color: #4e45e3;
-    border: none;
-    height: 40px;
-    color: #eee;
-    border-radius: 5px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    transition: 0.2s all ease-in-out;
-
-    &:hover {
-      background-color: #4038bb;
-    }
-  }
-
-  & .forget {
-    text-align: center;
-    font-size: 10px;
-    color: #4e45e3;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline 1px;
-      text-underline-offset: 2px;
-    }
-  }
-
-}
 
 .buttons {
   display: flex;
@@ -421,85 +276,6 @@ async function loginAsGuest() {
   }
 }
 
-img {
-  width: 100%;
-}
 
-
-@media (max-width: 560px) {
-  .body {
-    align-items: center;
-  }
-  .container {
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-  }
-  .container-image {
-    width: 90%;
-    height: 40%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .input-container {
-    width: 100%;
-  }
-
-}
-
-@media (min-width: 561px) and (max-width: 765px) {
-  .body {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    justify-content: center;
-  }
-  .container {
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-  }
-  .container-image {
-    width: 80%;
-    height: 40%;
-    display: flex;
-    justify-content: center;
-    border: none;
-  }
-
-  .input-container {
-    width: 100%;
-    height: 50%;
-  }
-}
-
-@media (min-width: 766px) and (max-width: 1280px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 60%;
-    padding: 0;
-  }
-  .container-image {
-    width: 70%;
-    border: none;
-  }
-  .container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .input-container {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    padding: 0;
-    height: 100%;
-    justify-content: center;
-    flex-direction: column;
-  }
-}
 
 </style>

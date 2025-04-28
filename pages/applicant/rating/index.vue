@@ -6,9 +6,9 @@ useHead({
   title: 'УГНТУ | Рейтинг'
 })
 
-const userAverageScore = ref('Не вычислен');
-const userGeneralScore = ref('Не вычислен');
-const userRanking = ref('Не определено'); // Для хранения ранга текущего пользователя
+const userAverageScore = ref('Вычисляем');
+const userGeneralScore = ref('Вычисляем');
+const userRanking = ref('Вычисляем');
 const userStore = useUserStore();
 
 async function getAllUsers() {
@@ -39,7 +39,7 @@ async function getAllUsers() {
   }
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   getAllUsers();
 });
 

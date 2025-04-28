@@ -1,10 +1,15 @@
 <script setup lang="ts">
 defineProps({
-  users: Object
-})
+  users: Array as PropType<any[]> // Убедитесь, что тип - массив
+});
+
 
 const userStore = useUserStore()
 
+function isCurrentUser(userId: string): boolean {
+  return userId === userStore.userId;
+
+}
 
 const router = useRouter();
 onMounted(async () => {
@@ -26,12 +31,16 @@ const goToChat = (userId: string) => {
 </script>
 
 <template>
-  <AdminpanelMoloLoader :is-loading="userStore.loadingUser"/>
+  <AdminpanelMoloLoader :is-loading="userStore.loadingUser" />
   <section v-if="!userStore.loadingUser" class="user-list">
-    <div v-for="user in users" :key="user._id" class="user-item" @click="goToChat(user._id)">
-      <AdminpanelMoloAvatarGenerator :user-id="user._id"/>
+    <div v-if="!users || users.length === 0" class="no">Нет пользователя с таким именем</div>
+    <div v-else v-for="user in users" :key="user._id" class="user-item" @click="goToChat(user._id)">
+      <AdminpanelMoloAvatarGenerator :user-id="user._id" />
       <div class="item">
-        <span>{{ user.firstName }} {{ user.lastName }}</span>
+        <div v-if="isCurrentUser(user._id)">
+          {{ user.firstname = 'Избранное' }}
+        </div>
+        <span v-else>{{ user.firstName }} {{ user.lastName }}</span>
       </div>
     </div>
   </section>
@@ -64,5 +73,7 @@ const goToChat = (userId: string) => {
 
 }
 
-
+.no {
+  padding: 10px 20px;
+}
 </style>

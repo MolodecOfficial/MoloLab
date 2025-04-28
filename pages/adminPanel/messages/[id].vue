@@ -9,11 +9,14 @@ const messageText = ref('');
 const userStore = useUserStore();
 const messageStore = useMessageStore();
 const route = useRoute();
-
+const searchQuery = ref('');
 const userId = computed(() => route.params.id as string);
 const currentUser = computed(() => userStore.currentUser)
 
 const chatUser = computed(() => {
+  if (userId.value === userStore.userId) {
+    return { firstName: 'Избранное', lastName: '' };
+  }
   return userStore.users.find(user => user._id === userId.value) ||
       ({ firstName: 'Загрузка...', lastName: '' } as any);
 });
@@ -58,8 +61,23 @@ const sendMessage = async () => {
   }
 };
 
+const filteredUsers = computed(() => {
+  if (!searchQuery.value) {
+    return userStore.users;
+  }
+
+  return userStore.users.filter((user: any) => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    return fullName.includes(searchQuery.value.toLowerCase());
+  });
+});
+
+
 useHead({
   title: computed(() => {
+    if (userId.value === userStore.userId) {
+      return `УГНТУ | Чат с Вашими секретами`;
+    }
     return `УГНТУ | Чат с ${chatUser.value?.firstName || '...'} ${chatUser.value?.lastName || ''}`;
   }),
 });
@@ -70,7 +88,7 @@ useHead({
   <AccountMoloGuard>
     <AdminpanelPatternsMoloAdmin :header_text="`${chatUser.firstName} ${chatUser.lastName}`">
       <div class="container">
-        <AdminpanelActionsMoloAllChatUsers />
+        <AdminpanelActionsMoloAllChatUsers :users="filteredUsers"/>
         <div class="messages">
           <AdminpanelMoloMessageList :messages="messageStore.messages" />
           <AdminpanelMoloInput
@@ -99,7 +117,7 @@ useHead({
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 10px;
+  gap: 20px;
   position: relative;
 }
 </style>

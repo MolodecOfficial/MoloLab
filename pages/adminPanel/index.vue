@@ -61,8 +61,8 @@ onUnmounted(() => {
       </template>
       <div class="update-info">
         <div class="update-content">
-          <div>
-            <h2>Обновление 0.17</h2>
+          <div class="update">
+            <h2>Обновление 0.2</h2>
             <ul class="text">
               <li>Новая панель администратора</li>
               <li>Переработанная кодовая составляющая</li>
@@ -76,17 +76,17 @@ onUnmounted(() => {
             <NuxtLink class="social-button vk"
                       to="https://vk.com/molodec_official"
             >
-              <img src="/public/adminPanel/vk.png"/>
+              <img src="/public/adminPanel/vk.png" alt="vk"/>
             </NuxtLink>
             <NuxtLink class="social-button telegram"
                       to="https://t.me/molodec_official_tg"
             >
-              <img src="/public/adminPanel/telegram.png"/>
+              <img src="/public/adminPanel/telegram.png" alt="telegram"/>
             </NuxtLink>
             <NuxtLink class="social-button github"
                       to="https://github.com/MolodecOfficial"
             >
-              <img src="/public/adminPanel/github.png"/>
+              <img src="/public/adminPanel/github.png" alt="github"/>
             </NuxtLink>
           </div>
         </div>
@@ -118,7 +118,7 @@ onUnmounted(() => {
           </section>
           <section class="current_version">
             <span>
-              Текущая версия сайта - 0.17
+              Текущая версия сайта - 0.2
             </span>
           </section>
         </section>
@@ -159,13 +159,15 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  gap: 30px;
 }
 
 .update-content {
   background-color: var(--dk-bg-ins-light-color);
   padding: 20px;
   border-radius: 8px;
-  width: 78%;
+
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -174,6 +176,11 @@ onUnmounted(() => {
 
 .update-content h2 {
   margin-top: 0;
+}
+
+.update {
+  display: flex;
+  flex-direction: column;
 }
 
 .more-button {
@@ -194,8 +201,11 @@ onUnmounted(() => {
 }
 
 .support-project {
+  height: max-content;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   flex-direction: column;
   background-color: var(--dk-bg-ins-light-color);
   padding: 20px;
@@ -279,7 +289,7 @@ onUnmounted(() => {
 }
 
 .section-2 {
-  width: 80%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto;

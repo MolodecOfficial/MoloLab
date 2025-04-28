@@ -19,6 +19,7 @@ section {
   justify-content: center;
   & p {
     text-align: center;
+    color: whitesmoke;
   }
 }
 </style>

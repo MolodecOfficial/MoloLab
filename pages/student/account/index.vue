@@ -5,6 +5,7 @@ const lastName = ref('')
 const group = ref('')
 const faculty = ref('')
 const specialty = ref('')
+const status = ref('')
 const route = useRoute()
 
 useHead({
@@ -150,6 +151,7 @@ onMounted(() => {
     group.value = user.group
     faculty.value = user.faculty
     specialty.value = user.specialty
+    status.value = user.status
 
   }
 })
@@ -256,7 +258,7 @@ onMounted(() => {
       <NuxtLink
           v-for="(inter, index) in internet"
           :key="index"
-          :to="inter.route"
+          :to="inter.rou`te"
           class="student-action"
       >
         <section class="span">
@@ -300,6 +302,27 @@ onMounted(() => {
         </svg>
         <span>
             Оформление
+        </span>
+      </section>
+      <section class="vector">
+        <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
+        </svg>
+      </section>
+    </NuxtLink>
+
+    <NuxtLink class="student-userdata" v-if="status === 'Администратор' || status === 'Владелец'" to="/adminPanel">
+      <section class="span">
+        <svg fill="none" height="20" viewBox="0 0 16 20" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path
+              d="M7.9997 11.5C4.5419 11.5 1.63061 13.84 0.763071 17.0229C0.472601 18.0886 1.39517 19 2.49974 19H13.4997C14.6043 19 15.5269 18.0886 15.2364 17.0229C14.3689 13.84 11.4576 11.5 7.9997 11.5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+          <path
+              d="M11.4997 5C11.4997 6.933 9.93272 8.5 7.99972 8.5C6.06672 8.5 4.49976 6.933 4.49976 5C4.49976 3.067 6.06672 1.5 7.99972 1.5C9.93272 1.5 11.4997 3.067 11.4997 5Z"
+              stroke="black" stroke-linecap="round" stroke-width="1.25"/>
+        </svg>
+        <span>
+            Панель администратора
           </span>
       </section>
       <section class="vector">

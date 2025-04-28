@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const props = defineProps({
   modelValue: String,
-  placeholder: String
+  placeholder: String,
+  type: {
+    type: String,
+    default: 'text'
+  },
 });
 </script>
 
@@ -10,6 +14,7 @@ const props = defineProps({
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder"
+      :type="type"
   />
 </template>
 
