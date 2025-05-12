@@ -42,6 +42,14 @@ button {
   transition: background-color 0.3s ease;
 }
 
+.button.primary {
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
+  &:hover {
+    background-color: var(--dk-border-color);
+  }
+}
+
 .button.scores {
   border: 1px solid #be4f00;
   background-color: #5b2900;

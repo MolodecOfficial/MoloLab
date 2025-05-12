@@ -97,7 +97,7 @@ onUnmounted(() => {
           <section class="sections_messages">
             <span>У вас нет новых сообщений</span>
           </section>
-          <AdminpanelActionsMoloAddNotes/>
+          <AdminpanelActionsMoloPostNotes/>
         </section>
         <section class="section-2">
           <section class="extra_buttons">
@@ -108,14 +108,7 @@ onUnmounted(() => {
               <span>Ваши предложения для функционала можете предложить в тгк</span>
             </section>
           </section>
-          <section class="current_date">
-            <span>
-              Текущая дата - {{ day }}.{{ month }}.{{ year }}
-            </span>
-            <span>
-              Текущее время - {{ hour }}:{{ minute }}:{{ seconds }}
-            </span>
-          </section>
+          <AdminpanelMoloCurrentDate/>
           <section class="current_version">
             <span>
               Текущая версия сайта - 0.2
@@ -325,7 +318,9 @@ onUnmounted(() => {
   padding: 20px;
   border-radius: 10px;
 }
-
+.current_date {
+  border: none;
+}
 hr {
   border: 1px solid var(--dk-border-color);
 }

@@ -1,18 +1,29 @@
 <script setup lang="ts">
+import { watch, ref, computed } from 'vue';
+
 const props = defineProps({
-  modelValue: String,
+  modelValue: {
+    type: [String, Array],
+    default: () => []
+  }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-const handleChange = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
-  emit('update:modelValue', target.value);
-};
+// Локальное значение, чтобы использовать v-model
+const internalValue = ref(props.modelValue);
+
+watch(() => props.modelValue, (newVal) => {
+  internalValue.value = newVal;
+});
+
+watch(internalValue, (newVal) => {
+  emit('update:modelValue', newVal);
+});
 </script>
 
 <template>
-  <select @change="handleChange" :value="modelValue">
+  <select v-model="internalValue" :multiple="Array.isArray(modelValue)">
     <slot></slot>
   </select>
 </template>
@@ -27,4 +38,10 @@ select {
   margin-bottom: 20px;
   border: none;
 }
+
+select[multiple]:focus {
+  border: none;
+  outline: none;
+}
+
 </style>

@@ -78,7 +78,7 @@ onMounted(async () => {
     <template #select>
       <AdminpanelMoloSelect v-model="selectedStatus" class="select">
         <option value="" disabled>Выберите статус</option>
-        <option value="Абитуриент">Абитуриент</option>
+        <option value="Студент">Студент</option>
         <option value="Преподаватель">Преподаватель</option>
         <option value="Администратор">Администратор</option>
       </AdminpanelMoloSelect>

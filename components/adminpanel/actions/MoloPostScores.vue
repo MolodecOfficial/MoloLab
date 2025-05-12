@@ -53,7 +53,7 @@ const updateUserScores = async () => {
 
 async function fetchAvailableSubjects() {
   try {
-    const response = await fetch('/api/edit-scores');
+    const response: any = await fetch('/api/scores');
     if (response.ok) {
       const data = await response.json();
       availableSubjects.value = data.allowedSubjects.sort((a, b) => a.localeCompare(b, 'ru'));

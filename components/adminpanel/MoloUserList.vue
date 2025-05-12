@@ -130,11 +130,11 @@ onMounted(async () => {
         <hr>
         <section class="actions">
           <AdminpanelActionsMoloDeleteUser :user="user"/>
-          <AdminpanelActionsMoloGiveScores :user="user"/>
-          <AdminpanelActionsMoloGiveStatus :user="user"/>
-          <AdminpanelActionsMoloGiveAchievement :user="user"/>
-          <AdminpanelActionsMoloGiveLearning :user="user"/>
-          <AdminpanelActionsMoloGiveSpecialty :user="user"/>
+          <AdminpanelActionsMoloPostScores :user="user"/>
+          <AdminpanelActionsMoloPostStatus :user="user"/>
+          <AdminpanelActionsMoloPostAchievement :user="user"/>
+          <AdminpanelActionsMoloPostLearning :user="user"/>
+          <AdminpanelActionsMoloPostSpecialty :user="user"/>
 
 
         </section>
@@ -191,7 +191,7 @@ onMounted(async () => {
 }
 
 .user-span {
-  color: #398aec;
+  color: var(--dk-span-color);
 
   & .user {
     color: white;

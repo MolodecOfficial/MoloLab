@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         }
 
         // Проверяем, что новый статус валиден
-        const validStatuses = ["Абитуриент", "Преподаватель", "Администратор"];
+        const validStatuses = ["Студент", "Преподаватель", "Администратор"];
         if (!validStatuses.includes(newStatus)) {
             throw createError({
                 statusCode: 400,

@@ -50,7 +50,7 @@ const props = defineProps({
   color: white;
   border-radius: 8px;
   padding: 20px;
-  gap: 8px;
+  gap: 10px;
   width: 400px;
   max-height: 80vh;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -66,7 +66,11 @@ const props = defineProps({
   height: 8%;
 }
 
-
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

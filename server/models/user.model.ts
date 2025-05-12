@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import {UserSchema} from "~/types/User";
-import {AnyMap} from "@jridgewell/trace-mapping";
 
 const userSchema = new mongoose.Schema<UserSchema>({
     firstName: {
@@ -48,8 +47,8 @@ const userSchema = new mongoose.Schema<UserSchema>({
     },
     status: {
         type: String,
-        enum: ['Абитуриент', 'Преподаватель', 'Администратор', 'Владелец'],
-        default: 'Абитуриент'
+        enum: ['Студент', 'Преподаватель', 'Администратор', 'Владелец'],
+        default: 'Студент'
     },
     specialty: {
         type: String,

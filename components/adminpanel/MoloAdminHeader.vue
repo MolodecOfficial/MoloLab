@@ -7,7 +7,7 @@ const router = useRouter()
 async function logoutUser() {
   localStorage.removeItem('user')
   userStore.clearUser()
-  await router.push('/login/applicant')
+  await router.push('/login/student')
 }
 
 </script>

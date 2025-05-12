@@ -19,6 +19,7 @@
     "axios": "1.8.2",
     "bcrypt": "^5.1.1",
     "caniuse-lite": "^1.0.30001707",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "formidable": "^3.5.2",

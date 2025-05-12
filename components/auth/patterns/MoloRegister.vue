@@ -203,6 +203,7 @@ function goToRedirect() {
 
   & .input_helper {
     font-size: 12px;
+    color: whitesmoke;
   }
 }
 

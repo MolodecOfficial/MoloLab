@@ -4,7 +4,8 @@ const props = defineProps({
   placeholder: String,
   width: String,
   borderRadius: String,
-  height: String
+  height: String,
+  type: String
 });
 
 const emit = defineEmits(['update:modelValue', 'send']);
@@ -34,6 +35,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
 
 <template>
   <input
+      :type="type"
       @input="handleInput"
       :value="modelValue"
       :placeholder="placeholder"
@@ -57,5 +59,24 @@ input {
     outline-offset: 2px;
   }
 }
+input[type="date"] {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #2c2c2c;
+  border: none;
+  color: white;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
 
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 1px solid #4b4b4b;
+    outline-offset: 2px;
+  }
+}
 </style>

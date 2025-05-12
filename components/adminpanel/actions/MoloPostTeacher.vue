@@ -1,0 +1,130 @@
+<script setup lang="ts">
+import { ref, watch } from "vue";
+
+const showTeacherModal = ref(false);
+const modalTitle = ref("Добавление нового преподавателя");
+const statusMessage = ref("");
+
+const teacherName = ref("");
+const teacherType = ref<string[]>([]); // множественный выбор
+const subjects = ref<string[]>([]); // все возможные предметы
+
+const isSubmitting = ref(false);
+
+// Загружаем предметы
+const fetchLessons = async () => {
+  try {
+    const response = await $fetch('/api/lessons');
+    subjects.value = response.lessons.map((l: any) => l.name);
+  } catch (error) {
+    console.error('Ошибка при получении предметов:', error);
+  }
+};
+
+// Загружаем предметы при открытии модального окна
+watch(showTeacherModal, (visible) => {
+  if (visible) {
+    fetchLessons();
+    teacherName.value = "";
+    teacherType.value = [];
+    statusMessage.value = "";
+  }
+});
+
+const submitTeacher = async () => {
+  if (!teacherName.value.trim()) {
+    statusMessage.value = "Имя преподавателя не может быть пустым";
+    return;
+  }
+
+  if (teacherType.value.length === 0) {
+    statusMessage.value = "Выберите хотя бы один предмет";
+    return;
+  }
+
+  isSubmitting.value = true;
+  try {
+    const response = await $fetch("/api/teacher", {
+      method: "POST",
+      body: {
+        name: teacherName.value.trim(),
+        lessonTypes: teacherType.value,
+      },
+    });
+
+    if (!response.success) {
+      statusMessage.value = response.message || "Ошибка при добавлении";
+      return;
+    }
+
+    statusMessage.value = "Преподаватель успешно добавлен!";
+    teacherName.value = "";
+    teacherType.value = [];
+
+    setTimeout(() => {
+      showTeacherModal.value = false;
+      statusMessage.value = "";
+    }, 1000);
+  } catch (error: any) {
+    statusMessage.value = error?.data?.statusMessage || "Ошибка при добавлении";
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+</script>
+
+<template>
+  <AdminpanelMoloButton type="primary" @click="showTeacherModal = true">
+    Добавить нового преподавателя
+  </AdminpanelMoloButton>
+
+  <AdminpanelMoloModal
+      :statusMessage="statusMessage"
+      :title="modalTitle"
+      :visible="showTeacherModal"
+      @close="showTeacherModal = false"
+  >
+    <template #body>
+      <AdminpanelMoloInput
+          v-model="teacherName"
+          placeholder="Имя преподавателя"
+      />
+        <section class="select">
+          <label class="">Преподаваемые предметы:</label>
+
+          <AdminpanelMoloSelect v-model="teacherType" multiple>
+            <AdminpanelMoloLoader :is-loading="subjects.length === 0" />
+
+            <option v-for="(subject, i) in subjects" :key="i" :value="subject">
+              {{ subject }}
+            </option>
+          </AdminpanelMoloSelect>
+        </section>
+    </template>
+
+    <template #confirm-button>
+      <AdminpanelMoloButton type="confirm" @click="submitTeacher">
+        Подтвердить
+      </AdminpanelMoloButton>
+    </template>
+
+    <template #status>
+      {{ statusMessage }}
+    </template>
+
+    <template #cancel-button>
+      <AdminpanelMoloButton type="cancel" @click="showTeacherModal = false">
+        Отмена
+      </AdminpanelMoloButton>
+    </template>
+  </AdminpanelMoloModal>
+</template>
+
+<style scoped>
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+</style>

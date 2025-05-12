@@ -27,6 +27,8 @@ export const useUserStore = defineStore('user', () => {
     const loadingUser = ref(false); // Флаг, который будет показывать, загружен ли текущий пользователь
     const averageScore = computed(() => userAverageScore.value);
     const generalScore = computed(() => userGeneralScore.value);
+    const schedules = ref<any[]>([]);
+
 
     const messages = ref<any[]>([]);
 
@@ -164,7 +166,7 @@ export const useUserStore = defineStore('user', () => {
             console.warn("Данное достижение уже выдано пользователю")
         }
         try {
-            const response = await $fetch('/api/give-achievement', {
+            const response = await $fetch('/api/achievement', {
                 method: 'POST',
                 body: {userId, achievementId},
             });
@@ -197,7 +199,7 @@ export const useUserStore = defineStore('user', () => {
 
     async function changeStatus(userId: string, newStatus: string) {
         try {
-            const response = await $fetch(`/api/edit-status`, {
+            const response = await $fetch(`/api/status`, {
                 method: 'POST',
                 body: {userId, newStatus}
             });
@@ -223,7 +225,7 @@ export const useUserStore = defineStore('user', () => {
                 throw new Error("Специальность не найдена");
             }
 
-            const response = await $fetch('/api/give-specialty', {
+            const response = await $fetch('/api/specialty', {
                 method: 'POST',
                 body: {
                     userId,
@@ -259,7 +261,7 @@ export const useUserStore = defineStore('user', () => {
         }
 
         try {
-            const response = await $fetch('/api/give-learning', {
+            const response = await $fetch('/api/learning', {
                 method: 'POST',
                 body: {userId, learning, formOfLearning, course}
             });
@@ -289,7 +291,7 @@ export const useUserStore = defineStore('user', () => {
         }
 
         try {
-            const response = await $fetch('/api/edit-scores', {
+            const response = await $fetch('/api/scores', {
                 method: 'POST',
                 body: { userId, subject, score }
             });
@@ -318,38 +320,48 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-    // async function addSchedule(scheduleData: {
-    //     userId: string;
-    //     date: string;
-    //     groups: { [group: string]: any[] }; // Массив объектов с информацией о группе
-    // }) {
-    //     if (!scheduleData.userId || !scheduleData.date || !scheduleData.groups) {
-    //         console.error("Не переданы необходимые данные для расписания");
-    //         throw new Error("Не переданы необходимые данные для расписания");
-    //     }
-    //
-    //     try {
-    //         const response = await $fetch('/api/give-schedule', {
-    //             method: 'POST',
-    //             body: scheduleData,
-    //         });
-    //
-    //         if (response && response.message === 'Расписание успешно добавлено или обновлено') {
-    //             console.log('Расписание успешно добавлено или обновлено');
-    //             const user = users.value.find(user => user._id === scheduleData.userId);
-    //             if (user) {
-    //                 user.schedule = response.schedule;
-    //             }
-    //             return response;
-    //         } else {
-    //             console.error("Ошибка при добавлении расписания:", response);
-    //             throw new Error("Ошибка при добавлении расписания");
-    //         }
-    //     } catch (error) {
-    //         console.error('Ошибка при добавлении расписания:', error);
-    //         throw error;
-    //     }
-    // }
+    async function addSchedule(payload: any) {
+        if (!payload.date || !payload.groups) {
+            console.error("Не переданы необходимые данные для расписания");
+            throw new Error("Не переданы необходимые данные для расписания");
+        }
+
+        // Шлём на сервер
+        console.log('Отправляем payload на сервер:', payload);
+        const response: any = await $fetch('/api/schedule', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: { 'Content-Type': 'application/json' },
+        });
+        console.log('Ответ от сервера:', response);
+
+        if (!response || !response.success) {
+            console.error('Сервер вернул ошибку при добавлении расписания', response);
+            throw new Error('Не удалось сохранить расписание на сервере');
+        }
+
+        // Получаем актуальный документ из БД
+        const saved: any = response.schedule;
+
+        // Сливаем в локальный стор
+        const idx = schedules.value.findIndex(s => s.date === saved.date);
+        if (idx !== -1) {
+            schedules.value[idx] = saved;
+        } else {
+            schedules.value.push(saved);
+        }
+
+        // Принудительный реакт
+        schedules.value = [...schedules.value];
+
+        // Сохраняем в localStorage
+        if (process.client) {
+            localStorage.setItem('schedules', JSON.stringify(schedules.value));
+        }
+
+        // Обновляем расписание в компоненте
+        return saved;
+    }
 
     function addMessage(newMessage: any) {
         messages.value.push(newMessage);
@@ -362,6 +374,8 @@ export const useUserStore = defineStore('user', () => {
             }
         }
     }
+
+
 
     function loadMessages() {
         if (process.client) {
@@ -378,6 +392,12 @@ export const useUserStore = defineStore('user', () => {
 
     onMounted(() => {
         loadMessages()
+        if (process.client) {
+            const savedSchedules = localStorage.getItem('schedules');
+            if (savedSchedules) {
+                schedules.value = JSON.parse(savedSchedules);
+            }
+        }
         console.log('Инициализация userStore...')
         if (currentUser.value) {
             return;
@@ -434,6 +454,7 @@ export const useUserStore = defineStore('user', () => {
         averageScore,
         generalScore,
         messages,
+        schedules,
         setEmail,
         setFirstName,
         setLastName,
@@ -447,7 +468,7 @@ export const useUserStore = defineStore('user', () => {
         addSpecialty,
         addLearningDetails,
         addScore,
-        addMessage
-        // addSchedule
+        addMessage,
+        addSchedule
     };
 });

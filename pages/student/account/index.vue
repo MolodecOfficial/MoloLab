@@ -258,7 +258,7 @@ onMounted(() => {
       <NuxtLink
           v-for="(inter, index) in internet"
           :key="index"
-          :to="inter.rou`te"
+          :to="inter.route"
           class="student-action"
       >
         <section class="span">
