@@ -153,7 +153,11 @@ onMounted(async () => {
         </button>
       </section>
     </section>
-
+    <section class="add">
+      <button class="add-note" @click="openModal">
+        <img alt="" src="/public/adminPanel/add.png">
+      </button>
+    </section>
   </section>
 </template>
 
@@ -311,5 +315,26 @@ hr {
   width: max-content;
   border: 1px solid var(--dk-border-color);
   border-radius: 10px;
+}
+
+.add {
+  display: flex;
+  justify-content: center;
+}
+.add-note {
+  width: fit-content;
+  display: flex;
+  background-color: transparent;
+  border: none;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  & img {
+    width: 70%;
+    display: block;
+  }
+  &:hover {
+    transform: rotate(180deg);
+  }
 }
 </style>

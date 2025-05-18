@@ -104,7 +104,7 @@ onUnmounted(() => {
             <span>Экстра кнопки</span>
             <section class="btns">
               <AdminpanelMoloButton type="delete">Новый пользователь</AdminpanelMoloButton>
-              <AdminpanelMoloButton type="specialty">Новое расписание</AdminpanelMoloButton>
+              <AdminpanelActionsMoloPostSchedule  />
               <span>Ваши предложения для функционала можете предложить в тгк</span>
             </section>
           </section>

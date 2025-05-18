@@ -51,7 +51,6 @@ async function loginUser() {
       statusMessage.value = `Успешный вход! ${data.message}`;
 
       userStore.setUser(data.user);
-
       // Сохраняем данные пользователя в store, включая _id
       if (data.user && data.user._id) {
         userStore.setUser(data.user);

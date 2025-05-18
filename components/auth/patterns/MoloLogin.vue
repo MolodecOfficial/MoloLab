@@ -122,6 +122,8 @@ function goToRedirect() {
   height: 100%;
   z-index: -1;
   animation: fadeIn 5s ease-out forwards;
+  border: 1px solid red;
+
 }
 
 .body {
@@ -131,6 +133,7 @@ function goToRedirect() {
   height: 100vh;
   background-color: var(--dk-bg-color);
   width: 100%;
+
 }
 
 .blob {
@@ -273,25 +276,29 @@ img {
 @media (max-width: 560px) {
   .body {
     align-items: center;
+    height: 100vh;
   }
   .container {
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: max-content;
+
     align-items: center;
   }
   .container-image {
-    width: 90%;
+    width: 80%;
     height: 40%;
     display: flex;
     justify-content: center;
+    border: none;
   }
 
   .input-container {
     width: 100%;
   }
-
-}
+  .blob {
+    display: none
+  }}
 
 @media (min-width: 561px) and (max-width: 765px) {
   .body {
@@ -318,13 +325,16 @@ img {
     width: 100%;
     height: 50%;
   }
+  .blob {
+    display: none
+  }
 }
 
 @media (min-width: 766px) and (max-width: 1280px) {
   .container {
     display: flex;
     flex-direction: column;
-    height: 60%;
+    min-height: 100vh;
     padding: 0;
   }
   .container-image {
@@ -332,6 +342,7 @@ img {
     border: none;
   }
   .container {
+    height: 100%;
     flex-direction: column;
     align-items: center;
   }

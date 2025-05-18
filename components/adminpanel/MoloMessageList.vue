@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/userStore';
 
-const userStore = useUserStore();
+const containerRef = ref<HTMLElement | null>(null);
 
 const props = defineProps<{
   messages: Array<{
@@ -9,51 +8,115 @@ const props = defineProps<{
     text?: string;
     senderId?: string;
     receiverId?: string;
-    timestamp?: Date;
-  }>
+    timestamp?: Date | string;
+  }>,
+  currentUser: {
+    _id: string;
+  },
+  isLoading: boolean
 }>();
 
-const formatDate = (date?: Date) => {
+const formatDate = (date?: Date | string) => {
   if (!date) return '';
-  return new Date(date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const d = new Date(date);
+  return d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
 };
+
+const formatTime = (date?: Date | string) => {
+  if (!date) return '';
+  const d = new Date(date);
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+};
+
+const getDateString = (date?: Date | string) => {
+  if (!date) return '';
+  const d = new Date(date);
+  return d.toDateString();
+};
+
+onUpdated(() => {
+  if (containerRef.value) {
+    containerRef.value.scrollTop = containerRef.value.scrollHeight;
+  }
+});
+
+
+
 </script>
 
 <template>
-  <div class="message-list">
-    <div
-        v-for="message in messages"
-        :key="message?._id"
-        :class="['message', { 'own': message?.senderId === currentUser?._id }]"
-    >
-    <div v-if="message" class="message-content">
-      {{ message.text }}
-      <span class="timestamp">{{ formatDate(message.timestamp) }}</span>
-    </div>
-  </div>
+  <div class="message-list" ref="containerRef">
+    <AdminpanelMoloLoader :is-loading="isLoading"/>
+
+    <template v-for="(message, index) in messages" :key="message?._id || index">
+      <div v-if="index === 0 || getDateString(messages[index - 1]?.timestamp) !== getDateString(message.timestamp)"
+           class="date-separator">
+        {{ formatDate(message.timestamp) }}
+      </div>
+
+      <div :class="['message', { 'own': message?.senderId === currentUser?._id }]">
+        <div v-if="message" class="message-content">
+          <div class="sender-name">{{ message.senderName || 'Неизвестный' }}</div>
+          {{ message.text }}
+          <span class="timestamp">{{ formatTime(message.timestamp) }}</span>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped>
+
+
+.date-separator {
+  text-align: center;
+  margin: 20px 0 10px;
+  font-weight: 600;
+  color: var(--dk-border-color, #999);
+  font-size: 0.9rem;
+}
+
 .message-list {
   height: 600px;
   overflow-y: auto;
   padding: 1rem;
   background-color: var(--dk-bg-color);
   border-radius: 10px;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    width: 10px;
+
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dk-border-color);
+    border-radius: 20px;
+    border: 4px solid transparent;
+  }
+}
+.message {
+  display: flex;
+  text-align: start;
+  margin: 0.5rem 0;
+  padding: 10px 45px 12px 10px;
+  border-radius: 12px;
+  max-width: max-content;
+  background-color: var(--dk-bg-ins-color);
 
 }
 
-.message {
-  margin: 0.5rem 0;
-  padding: 0.8rem;
-  border-radius: 12px;
-  max-width: 70%;
+.sender-name {
+  font-size: 9px;
 }
 
 .message.own {
   margin-left: auto;
-  background: #dcf8c6;
+  display: flex;
+  text-align: start;
+  background-color: var(--dk-bg-ins-light-color);
+
 }
 
 .message-content {
@@ -62,9 +125,9 @@ const formatDate = (date?: Date) => {
 
 .timestamp {
   position: absolute;
-  bottom: -20px;
-  right: 0;
-  font-size: 0.7rem;
+  bottom: -9px;
+  right: -35px;
+  font-size: 0.6rem;
   color: #666;
 }
 </style>

@@ -21,41 +21,21 @@ const chatUser = computed(() => {
       ({ firstName: 'Загрузка...', lastName: '' } as any);
 });
 
-watch(userId, async (newId) => {
-  if (newId) {
-    try {
-      await userStore.getUsers();
-      await messageStore.fetchMessages(newId);
-    } catch (error) {
-      console.error('Ошибка загрузки данных:', error);
-    }
-  }
-}, { immediate: true });
-
 const sendMessage = async () => {
   if (!messageText.value.trim()) return;
   if (!currentUser.value?._id) {
     console.error('Текущий пользователь не авторизован');
     return;
   }
+
   try {
-    const newMessage = {
-      text: messageText.value,
-      senderId: currentUser.value._id, // Используем ID текущего пользователя
-      receiverId: userId.value,
-      timestamp: new Date()
-    };
-
-    // Отправляем на сервер
-    const response = await messageStore.sendMessage(userId.value, newMessage.text);
-
-    // Добавляем в userStore (даже если сервер не ответил)
-    userStore.addMessage({
-      ...newMessage,
-      _id: response?.message?._id || Math.random().toString() // Генерируем временный ID, если нужно
-    });
-
+    const response = await messageStore.sendMessage(userId.value, messageText.value);
     messageText.value = '';
+
+    if (!response.success) {
+      console.error('Ошибка при отправке сообщения:', response.error || 'Неизвестная ошибка');
+    }
+
   } catch (error) {
     console.error('Ошибка при отправке:', error);
   }
@@ -72,6 +52,33 @@ const filteredUsers = computed(() => {
   });
 });
 
+onMounted(async () => {
+  await userStore.initUserStore(); // <-- это обеспечит userId, currentUser и users
+});
+
+watch(userId, async (newId) => {
+  if (!newId) return;
+
+  try {
+    // Загружаем пользователей (если вдруг нет)
+    if (!userStore.users.length) {
+      await userStore.getUsers();
+    }
+
+    if (!userStore.userId) {
+      console.error("userId не определён даже после getUsers()");
+      return;
+    }
+
+
+    await messageStore.fetchMessages(newId);
+
+  } catch (error) {
+    console.error('Ошибка загрузки сообщений:', error);
+  }
+}, { immediate: true });
+
+
 
 useHead({
   title: computed(() => {
@@ -82,6 +89,8 @@ useHead({
   }),
 });
 
+
+
 </script>
 
 <template>
@@ -90,7 +99,11 @@ useHead({
       <div class="container">
         <AdminpanelActionsMoloAllChatUsers :users="filteredUsers"/>
         <div class="messages">
-          <AdminpanelMoloMessageList :messages="messageStore.messages" />
+          <AdminpanelMoloMessageList
+              :messages="messageStore.messages"
+              :current-user="currentUser"
+              :is-loading="messageStore.isLoading"
+          />
           <AdminpanelMoloInput
               v-model="messageText"
               borderRadius="10px"

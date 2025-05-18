@@ -50,7 +50,7 @@ const goToChat = (userId: string) => {
 .user-list {
   border: 1px solid var(--dk-border-color);
   display: flex;
-  text-align: center;
+  text-align: start;
   justify-content: center;
   height: fit-content;
   flex-direction: column;
@@ -61,7 +61,7 @@ const goToChat = (userId: string) => {
 }
 .user-item {
   display: flex;
-  text-align: center;
+  text-align: start;
   align-items: center;
   gap: 10px;
   padding: 15px 20px;

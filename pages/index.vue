@@ -35,7 +35,7 @@ import bg_img from 'public/img.png'
       </section>
     </section>
     <section class="mobile-functional">
-      <NuxtLink to="/login/applicant" class="info-button">
+      <NuxtLink to="/login/student" class="info-button">
         <span>
           Личный Кабинет абитуриента
         </span>

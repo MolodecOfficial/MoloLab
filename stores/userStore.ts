@@ -4,35 +4,89 @@ import {achievementsList} from '~/stores/achievementsStore';
 import Cookies from "js-cookie";
 
 export const useUserStore = defineStore('user', () => {
-    const users = ref<any[]>(process.client ? JSON.parse(localStorage.getItem('users') || '[]') : []);
+    const users = ref<any[]>([]);
     const userId = ref('');
+    const currentUser = ref<any>();
+    const loadingUser = ref(false);
+    const error = ref('');
+    const initialized = ref(false);
+
+    // Данные пользователя
     const userEmail = ref('');
     const userFirstName = ref('');
     const userLastName = ref('');
-    const userStatus = ref('')
-    const userSpecialty = ref('')
-    const userGroup = ref('')
-    const userCode = ref('')
-    const userDirection = ref('')
-    const userLearning = ref('')
-    const userFormOfLearning = ref('')
-    const userFaculty = ref('')
-    const userCourse = ref('')
-    const userAverageScore = ref('')
-    const userGeneralScore = ref('')
+    const userStatus = ref('');
+    const userSpecialty = ref('');
+    const userGroup = ref('');
+    const userCode = ref('');
+    const userDirection = ref('');
+    const userLearning = ref('');
+    const userFormOfLearning = ref('');
+    const userFaculty = ref('');
+    const userCourse = ref('');
     const userScores = ref<any>({});
-    const currentUser = ref<any>(null);
-    const loading = ref(false);
-    const error = ref('');
-    const loadingUser = ref(false); // Флаг, который будет показывать, загружен ли текущий пользователь
-    const averageScore = computed(() => userAverageScore.value);
-    const generalScore = computed(() => userGeneralScore.value);
+    const userAverageScore = ref('');
+    const userGeneralScore = ref('');
+    const achievements = ref<any[]>(achievementsList);
     const schedules = ref<any[]>([]);
-
-
     const messages = ref<any[]>([]);
 
-    const achievements = ref<any[]>(achievementsList); // Список доступных достижений
+    const averageScore = computed(() => userAverageScore.value);
+    const generalScore = computed(() => userGeneralScore.value);
+
+    // ====================
+    // INIT
+    // ====================
+    async function initUserStore() {
+        if (initialized.value) return; // Защита от повторной инициализации
+        loadingUser.value = true;
+
+        try {
+            // 1. Восстановление текущего пользователя из localStorage
+            let storedUser: any = null;
+            if (process.client) {
+                const localUser = localStorage.getItem('user');
+                if (localUser) {
+                    storedUser = JSON.parse(localUser);
+                    setUser(storedUser);
+                    userId.value = storedUser._id || '';
+                }
+                const localUsers = localStorage.getItem('users');
+                if (localUsers) {
+                    users.value = JSON.parse(localUsers);
+                }
+                const savedSchedules = localStorage.getItem('schedules');
+                if (savedSchedules) {
+                    schedules.value = JSON.parse(savedSchedules);
+                }
+            }
+
+            // 2. Получение пользователей
+            const response = await $fetch('/api/users');
+            users.value = response.users;
+
+            if (process.client) {
+                localStorage.setItem('users', JSON.stringify(users.value));
+            }
+
+            // 3. Установка текущего пользователя, если найден по ID
+            if (!storedUser && userId.value) {
+                const fetchedUser = users.value.find(u => u._id === userId.value);
+                if (fetchedUser) {
+                    setUser(fetchedUser);
+                }
+            }
+
+            initialized.value = true;
+
+
+        } catch (err) {
+            error.value = 'Ошибка при инициализации пользователя';
+            console.error(error.value, err);
+        } finally {
+            loadingUser.value = false;
+        }
+    }
 
     function setId(id: string) {
         userId.value = id
@@ -119,28 +173,37 @@ export const useUserStore = defineStore('user', () => {
         try {
             const response = await $fetch('/api/users');
             users.value = response.users;
+
             if (process.client) {
-                try {
-                    localStorage.setItem('users', JSON.stringify(users.value));
-                } catch (error) {
-                    console.error('Ошибка при сохранении данных пользователей в localStorage:', error);
+                localStorage.setItem('users', JSON.stringify(users.value));
+
+                // ВОССТАНАВЛИВАЕМ userId из localStorage, если он пустой
+                if (!userId.value) {
+                    const savedUser = localStorage.getItem('user');
+                    if (savedUser) {
+                        const parsedUser = JSON.parse(savedUser);
+                        if (parsedUser && parsedUser._id) {
+                            userId.value = parsedUser._id;
+                            setUser(parsedUser); // <--- ЭТО ОБЯЗАТЕЛЬНО
+                            console.log("Восстановлен userId из localStorage:", userId.value);
+                        }
+                    }
                 }
             }
-            // Ищем пользователя по userId
+
+            // Теперь ищем текущего пользователя по userId
             const currentUserData = users.value.find((user: any) => user._id === userId.value);
             if (currentUserData) {
                 setUser(currentUserData);
             } else {
-                console.log('Пользователь с таким ID не найден');
+                console.warn('Пользователь с таким ID не найден после getUsers()');
             }
-
         } catch (err) {
             error.value = 'Ошибка при получении пользователей';
             console.error(error.value, err);
         } finally {
             loadingUser.value = false;
         }
-
     };
 
     // Удаление пользователя
@@ -291,7 +354,7 @@ export const useUserStore = defineStore('user', () => {
         }
 
         try {
-            const response = await $fetch('/api/scores', {
+            const response: any = await $fetch('/api/scores', {
                 method: 'POST',
                 body: { userId, subject, score }
             });
@@ -363,35 +426,8 @@ export const useUserStore = defineStore('user', () => {
         return saved;
     }
 
-    function addMessage(newMessage: any) {
-        messages.value.push(newMessage);
-
-        if (typeof window !== 'undefined') {
-            try {
-                localStorage.setItem('messages', JSON.stringify(messages.value));
-            } catch (error) {
-                console.error('Ошибка при сохранении сообщений:', error);
-            }
-        }
-    }
-
-
-
-    function loadMessages() {
-        if (process.client) {
-            try {
-                const savedMessages = localStorage.getItem('messages');
-                if (savedMessages) {
-                    messages.value = JSON.parse(savedMessages);
-                }
-            } catch (error) {
-                console.error('Ошибка при загрузке сообщений:', error);
-            }
-        }
-    }
 
     onMounted(() => {
-        loadMessages()
         if (process.client) {
             const savedSchedules = localStorage.getItem('schedules');
             if (savedSchedules) {
@@ -446,7 +482,6 @@ export const useUserStore = defineStore('user', () => {
         userGeneralScore,
         currentUser,
         users,
-        loading,
         loadingUser,
         error,
         userId,
@@ -455,6 +490,7 @@ export const useUserStore = defineStore('user', () => {
         generalScore,
         messages,
         schedules,
+        initUserStore,
         setEmail,
         setFirstName,
         setLastName,
@@ -468,7 +504,6 @@ export const useUserStore = defineStore('user', () => {
         addSpecialty,
         addLearningDetails,
         addScore,
-        addMessage,
         addSchedule
     };
 });

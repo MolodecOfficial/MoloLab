@@ -1,50 +1,79 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { useUserStore } from '~/stores/userStore';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-export const useMessageStore = defineStore('message', () => {
+export const useMessageStore = defineStore('messageStore', () => {
     const messages = ref<any[]>([]);
-
-    async function fetchMessages(userId: string) {
-        const userStore = useUserStore(); // Вызываем внутри функции
+    const isLoading = ref(false);
+    const fetchMessages = async (partnerId: string) => {
+        const userStore = useUserStore();
+        const today = new Date().toISOString().split('T')[0];
+        isLoading.value = true; // <-- началась загрузка
         try {
-            const response = await $fetch('/api/messages', {
+            await userStore.initUserStore()
+            const res: any = await $fetch('/api/messages', {
                 method: 'GET',
-                params: {
-                    senderId: userStore.userId, // Используем локальную переменную
-                    receiverId: userId,
-                },
+                query: {
+                    // date: today, // убираем ограничение по дате
+                    userId: userStore.userId,
+                    partnerId
+                }
             });
-            if (response.messages) {
-                messages.value = response.messages;
-            }
-        } catch (error) {
-            console.error('Ошибка при получении сообщений:', error);
-        }
-    }
 
-    async function sendMessage(receiverId: string, text: string) {
-        const userStore = useUserStore(); // Вызываем внутри функции
+            if (res.success) {
+                // Преобразуем сообщения, добавляя имя отправителя
+                messages.value = res.messages.map((msg: any) => {
+                    const sender = userStore.users.find(u => u._id === msg.senderId);
+                    return {
+                        ...msg,
+                        senderName: sender ? `${sender.firstName} ${sender.lastName}` : 'Неизвестный'
+                    };
+                });
+            } else {
+                messages.value = [];
+                console.error('Ошибка при получении сообщений:', res.error);
+            }
+        } catch (err) {
+            console.error('Ошибка при получении сообщений:', err);
+            messages.value = [];
+        } finally {
+            isLoading.value = false; // <-- завершили загрузку
+        }
+    };
+
+    const sendMessage = async (receiverId: string, text: string) => {
+        const userStore = useUserStore();
+        const today = new Date().toISOString().split('T')[0];
+
         try {
-            const response = await $fetch('/api/messages', {
+            const res: any = await $fetch('/api/messages', {
                 method: 'POST',
                 body: {
-                    senderId: userStore.currentUser._id,
-                    receiverId,
+                    date: today,
                     text,
-                },
+                    senderId: userStore.userId,
+                    receiverId
+                }
             });
 
-            if (response && response.success) {
-                // ...
-            } else {
-                throw new Error('Ошибка при отправке сообщения');
+            if (res.success && res.message) {
+                const sender = userStore.currentUser;
+                messages.value.push({
+                    ...res.message,
+                    senderName: `${sender.firstName} ${sender.lastName}`
+                });
             }
-        } catch (error) {
-            console.error('Ошибка при отправке сообщения:', error);
-            throw error;
-        }
-    }
 
-    return { messages, fetchMessages, sendMessage };
+            return res;
+        } catch (err) {
+            console.error('Ошибка при отправке сообщения:', err);
+            return { success: false };
+        }
+    };
+
+    return {
+        messages,
+        isLoading,
+        fetchMessages,
+        sendMessage
+    };
 });

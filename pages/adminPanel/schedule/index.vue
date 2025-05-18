@@ -36,6 +36,10 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('schedule-updated', handleScheduleUpdated);
 });
+
+useHead({
+  title: 'УГНТУ | Расписание'
+})
 </script>
 
 <template>
