@@ -16,6 +16,7 @@ const addNote = () => {
     id: Date.now(),
     body: newBody.value
   };
+  statusMessage.value = 'Идёт создание заметки...';
   notes.value.push(newNote);
   saveNotes();
   statusMessage.value = 'Заметка создана!';

@@ -3,20 +3,24 @@ import {computed, onMounted, ref, watch} from 'vue';
 import dayjs from 'dayjs';
 import {useUserStore} from '~/stores/userStore';
 
+const groups = ref<Array<any>>([])
 const emit = defineEmits<{
   (e: 'saved'): void
 }>();
 
-const props = defineProps({
-  groups: {
-    type: Array,
-    default: () => ['БПИ09з', 'БПИз'],
-  },
-});
+const fetchGroups = async () => {
+  try {
+    const response = await $fetch('/api/groups');
+    groups.value = response.groups || [];
+  } catch (error) {
+    console.error("Ошибка при получении списка групп:", error);
+    statusMessage.value = 'Не удалось загрузить список групп.';
+  }
+};
 
 
 const sortedGroups = computed(() =>
-    [...props.groups].sort((a: any, b) => a.localeCompare(b, 'ru'))
+    [...groups.value].sort((a: any, b) => a.name.localeCompare(b.name, 'ru'))
 );
 
 
@@ -25,7 +29,7 @@ const subjects = ref<string[]>([]);
 const teachers = ref<string[]>([]);
 const showScheduleModal = ref(false);
 const selectedDate = ref(dayjs().format('YYYY-MM-DD'));
-const selectedGroup: any = ref(sortedGroups.value[0]);
+const selectedGroup = ref<string | null>(null);
 const selectedSubject: any = ref<string | null>(null);
 const selectedTime: any = ref<string | null>(null);
 const selectedCabinet: any = ref<string | null>(null);
@@ -41,7 +45,7 @@ const scheduleData: any = ref(null);
 
 
 const resetForm = () => {
-  selectedGroup.value = props.groups[0];
+  selectedGroup.value = null
   selectedSubject.value = null;
   selectedTime.value = null;
   selectedCabinet.value = null;
@@ -135,6 +139,8 @@ const addSchedule = async () => {
   };
 
   try {
+    statusMessage.value = 'Идёт создание расписания...';
+
     const savedSchedule = await userStore.addSchedule(payload);  // Сохраняем расписание
     statusMessage.value = 'Расписание успешно добавлено!';
     resetForm();
@@ -174,19 +180,10 @@ watch(selectedCommon, (val) => {
 
 const modalTitle = computed(() => 'Добавление нового расписания');
 
-const fetchSchedule = async () => {
-  try {
-    const response: any = await $fetch('/api/schedules');
-    console.log('Ответ от API:', response);
-    scheduleData.value = response.schedules;
-  } catch (error) {
-    console.error('Ошибка при получении расписания:', error);
-  }
-};
-
 onMounted(() => {
   fetchLessons()
   fetchTeachers()
+  fetchGroups()
 })
 </script>
 
@@ -208,7 +205,7 @@ onMounted(() => {
       <label>Группа:</label>
       <AdminpanelMoloSelect v-model="selectedGroup">
         <option disabled :value="null">Выберите группу</option>
-        <option v-for="(g, i) in sortedGroups" :key="i" :value="g">{{ g }}</option>
+        <option v-for="(group, idx) in sortedGroups" :key="idx" :value="group.name">{{ group.name }}</option>
       </AdminpanelMoloSelect>
 
       <label>Предмет:</label>

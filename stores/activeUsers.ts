@@ -6,7 +6,7 @@ export function addActiveUser(userId: string) {
 
 export function removeInactiveUsers() {
     const now = Date.now();
-    const cutoff = now - 2 * 60 * 1000; // 2 минуты
+    const cutoff = now - 60 * 1000; // 1 минута
 
     for (const [userId, timestamp] of activeUsers) {
         if (timestamp < cutoff) {

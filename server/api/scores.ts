@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
         user.score[subject].push(score);  // Сохраняем оценку как число
 
         // Вычисление среднего балла по каждому предмету
-        const subjectAverages = Object.entries(user.score).map(([subj, scores]) => {
+        const subjectAverages = Object.entries(user.score).map(([subj,scores]): any => {
             if (scores.length === 0) return 0;  // Избегаем деления на ноль
             const numericScores = scores.map(Number);
             const average = numericScores.reduce((sum: any, s: any) => sum + s, 0) / numericScores.length;

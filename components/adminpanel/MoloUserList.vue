@@ -46,9 +46,17 @@ async function getAllUsers() {
 
 onMounted(async () => {
   await getAllUsers();
-
+  await fetchGroups()
 })
 
+const fetchGroups = async () => {
+  try {
+    const response = await $fetch('/api/groups');
+    console.log('Ответ от API', response);
+  } catch (error) {
+    console.error('Ошибка при получении предметов:', error);
+  }
+}
 
 </script>
 
@@ -135,8 +143,7 @@ onMounted(async () => {
           <AdminpanelActionsMoloPostAchievement :user="user"/>
           <AdminpanelActionsMoloPostLearning :user="user"/>
           <AdminpanelActionsMoloPostSpecialty :user="user"/>
-
-
+          <AdminpanelActionsMoloPostGroup :user="user"/>
         </section>
 
       </section>
@@ -153,10 +160,10 @@ onMounted(async () => {
         </button>
       </section>
     </section>
-    <section class="add">
-      <button class="add-note" @click="openModal">
-        <img alt="" src="/public/adminPanel/add.png">
-      </button>
+    <section class="actions">
+      <AdminpanelActionsMoloPostNewSpecialty/>
+      <AdminpanelActionsMoloPostNewUser/>
+      <AdminpanelActionsMoloPostNewGroup @saved="fetchGroups"/>
     </section>
   </section>
 </template>
@@ -317,24 +324,5 @@ hr {
   border-radius: 10px;
 }
 
-.add {
-  display: flex;
-  justify-content: center;
-}
-.add-note {
-  width: fit-content;
-  display: flex;
-  background-color: transparent;
-  border: none;
-  justify-content: center;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  & img {
-    width: 70%;
-    display: block;
-  }
-  &:hover {
-    transform: rotate(180deg);
-  }
-}
+
 </style>

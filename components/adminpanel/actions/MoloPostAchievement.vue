@@ -19,7 +19,7 @@ const statusMessage = ref('')
 
 const openAchievementModal = (user: any) => {
   selectedUserId.value = user._id;
-  selectedUserName.value = `${user.firstName} ${user.lastName}`; // Исправлено
+  selectedUserName.value = `${user.firstName} ${user.lastName}`;
   showAchievementModal.value = true;
 };
 
@@ -30,6 +30,7 @@ async function getAllAchievements() {
 const giveAchievementToUser = async () => {
   if (selectedUserId.value && selectedAchievement.value) {
     try {
+      statusMessage.value = 'Идёт выдача достижения...';
       await userStore.giveAchievement(selectedUserId.value, selectedAchievement.value);
       setTimeout(() => showAchievementModal.value = false, 1500)
       statusMessage.value = 'Достижение успешно выдано!'

@@ -236,10 +236,8 @@ export const useUserStore = defineStore('user', () => {
 
             console.log('Ответ от сервера:', response);
             if (response && response.message === 'Достижение успешно выдано') {
-                console.log(`Достижение ${achievementId} успешно выдано пользователю ${userId}`);
                 return response;
             } else {
-                console.error("Ошибка при выдаче достижения:", response);
                 throw new Error("Ошибка при выдаче достижения");
             }
         } catch (error) {
@@ -273,26 +271,18 @@ export const useUserStore = defineStore('user', () => {
         }
     }
 
-    async function addSpecialty(userId: string, specialtyName: string) {
-        if (!userId || !specialtyName) {
-            console.error("Не переданы userId или specialtyName");
+    async function addSpecialty(userId: string, specialty: any) {
+        if (!userId || !specialty) {
+            console.error("Не переданы userId или specialty");
             throw new Error("Не переданы необходимые данные");
         }
 
         try {
-            // Ищем специальность по названию
-            const selectedSpecialty = specialtyList.find(specialty => specialty.specialty_name === specialtyName);
-
-            if (!selectedSpecialty) {
-                console.error("Специальность не найдена");
-                throw new Error("Специальность не найдена");
-            }
-
             const response = await $fetch('/api/specialty', {
                 method: 'POST',
                 body: {
                     userId,
-                    specialtyId: selectedSpecialty.id // Передаем ID найденной специальности
+                    specialtyId: specialty._id, // можно даже specialtyId -> specialtyId (или _id)
                 },
             });
 
@@ -300,11 +290,10 @@ export const useUserStore = defineStore('user', () => {
                 // Обновляем данные пользователя в store
                 const user = users.value.find(user => user._id === userId);
                 if (user) {
-                    user.specialty = selectedSpecialty.specialty_name;
-                    user.group = selectedSpecialty.group;
-                    user.code = selectedSpecialty.code;
-                    user.direction = selectedSpecialty.direction;
-                    user.faculty = selectedSpecialty.faculty
+                    user.specialty = specialty.name;
+                    user.code = specialty.code;
+                    user.direction = specialty.direction;
+                    user.faculty = specialty.faculty;
                 }
                 return response;
             } else {
@@ -346,6 +335,34 @@ export const useUserStore = defineStore('user', () => {
             throw error;
         }
     }
+
+    const addGroup = async (userId: string, groupId: string) => {
+        if (!userId || !groupId) {
+            console.error("Не переданы данные");
+            throw new Error("Не переданы необходимые данные");
+        }
+        try {
+            const response: any = await $fetch('/api/group', {
+                method: 'POST',
+                body: { userId, groupId },
+            });
+
+            if (response && response.message === 'Данные обучения успешно обновлены') {
+                const user = users.value.find(user => user._id === userId);
+                if (user) {
+                    // В ответе теперь user.group - это уже название группы
+                    user.group = response.user.group;
+                }
+                return response;
+            } else {
+                console.error("Ошибка при обновлении данных обучения:", response);
+                throw new Error("Ошибка при обновлении данных обучения");
+            }
+        } catch (error) {
+            console.error("Ошибка при обновлении данных обучения:", error);
+            throw error;
+        }
+    };
 
     const addScore = async (userId: string, subject: string, score: number) => {
         if (!userId || !subject || typeof score !== 'number' || score < 1 || score > 5) {
@@ -504,6 +521,7 @@ export const useUserStore = defineStore('user', () => {
         addSpecialty,
         addLearningDetails,
         addScore,
-        addSchedule
+        addSchedule,
+        addGroup
     };
 });

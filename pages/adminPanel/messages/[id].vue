@@ -1,8 +1,19 @@
 <script lang="ts" setup>
 import { useMessageStore } from '~/stores/messageStore';
-import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 import { useUserStore } from '~/stores/userStore';
+import { useRoute } from 'vue-router';
+import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
+import Picker from 'emoji-mart'
+import data from '@emoji-mart/data'
+
+
+const showEmojiPicker = ref(false);
+
+const addEmoji = (emoji: any) => {
+  messageText.value += emoji.native
+  showEmojiPicker.value = false
+}
+
 
 const emit = defineEmits(['send']);
 const messageText = ref('');
@@ -10,108 +21,109 @@ const userStore = useUserStore();
 const messageStore = useMessageStore();
 const route = useRoute();
 const searchQuery = ref('');
-const userId = computed(() => route.params.id as string);
-const currentUser = computed(() => userStore.currentUser)
 
-const chatUser = computed(() => {
-  if (userId.value === userStore.userId) {
-    return { firstName: 'Избранное', lastName: '' };
+const userId = computed(() => route.params.id as string);
+const currentUser = computed(() => userStore.currentUser);
+
+let pollingInterval: ReturnType<typeof setInterval> | null = null;
+
+const startPolling = () => {
+  if (pollingInterval) return;
+  pollingInterval = setInterval(async () => {
+    if (userStore.userId && userId.value) {
+      await messageStore.fetchMessages(userId.value);
+    }
+  }, 2000); // плавнее 400 мс
+};
+
+const stopPolling = () => {
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
   }
-  return userStore.users.find(user => user._id === userId.value) ||
-      ({ firstName: 'Загрузка...', lastName: '' } as any);
-});
+};
+
+const scrollToBottom = () => {
+  const el = document.querySelector('.message-list') as HTMLElement;
+  if (el) el.scrollTop = el.scrollHeight;
+};
 
 const sendMessage = async () => {
   if (!messageText.value.trim()) return;
-  if (!currentUser.value?._id) {
-    console.error('Текущий пользователь не авторизован');
-    return;
-  }
+  const response = await messageStore.sendMessage(userId.value, messageText.value);
+  messageText.value = '';
 
-  try {
-    const response = await messageStore.sendMessage(userId.value, messageText.value);
-    messageText.value = '';
-
-    if (!response.success) {
-      console.error('Ошибка при отправке сообщения:', response.error || 'Неизвестная ошибка');
-    }
-
-  } catch (error) {
-    console.error('Ошибка при отправке:', error);
+  if (response.success) {
+    nextTick(scrollToBottom);
   }
 };
 
 const filteredUsers = computed(() => {
-  if (!searchQuery.value) {
-    return userStore.users;
-  }
-
+  if (!searchQuery.value) return userStore.users;
   return userStore.users.filter((user: any) => {
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
     return fullName.includes(searchQuery.value.toLowerCase());
   });
 });
 
-onMounted(async () => {
-  await userStore.initUserStore(); // <-- это обеспечит userId, currentUser и users
+const chatUser = computed(() => {
+  if (userId.value === userStore.userId) {
+    return { firstName: 'Избранное', lastName: '' };
+  }
+  return userStore.users.find(user => user._id === userId.value) || { firstName: '...', lastName: '' };
 });
 
 watch(userId, async (newId) => {
   if (!newId) return;
 
+  stopPolling();
+  messageStore.currentChatId = newId;
+
   try {
-    // Загружаем пользователей (если вдруг нет)
-    if (!userStore.users.length) {
-      await userStore.getUsers();
-    }
-
-    if (!userStore.userId) {
-      console.error("userId не определён даже после getUsers()");
-      return;
-    }
-
-
+    if (!userStore.users.length) await userStore.getUsers();
+    if (!userStore.userId) return;
     await messageStore.fetchMessages(newId);
-
-  } catch (error) {
-    console.error('Ошибка загрузки сообщений:', error);
+    nextTick(scrollToBottom);
+    startPolling();
+  } catch (err) {
+    console.error('Ошибка загрузки сообщений:', err);
   }
 }, { immediate: true });
 
-
+onBeforeUnmount(stopPolling);
 
 useHead({
-  title: computed(() => {
-    if (userId.value === userStore.userId) {
-      return `УГНТУ | Чат с Вашими секретами`;
-    }
-    return `УГНТУ | Чат с ${chatUser.value?.firstName || '...'} ${chatUser.value?.lastName || ''}`;
-  }),
+  title: computed(() =>
+      userId.value === userStore.userId
+          ? 'УГНТУ | Чат с Вашими секретами'
+          : `УГНТУ | Чат с ${chatUser.value?.firstName || '...'} ${chatUser.value?.lastName || ''}`
+  ),
 });
 
-
-
+function onSelectEmoji(emoji) {
+  console.log(emoji)
+  }
 </script>
 
 <template>
   <AccountMoloGuard>
     <AdminpanelPatternsMoloAdmin :header_text="`${chatUser.firstName} ${chatUser.lastName}`">
       <div class="container">
-        <AdminpanelActionsMoloAllChatUsers :users="filteredUsers"/>
+        <AdminpanelActionsMoloAllChatUsers :users="filteredUsers" />
         <div class="messages">
           <AdminpanelMoloMessageList
               :messages="messageStore.messages"
               :current-user="currentUser"
               :is-loading="messageStore.isLoading"
           />
-          <AdminpanelMoloInput
-              v-model="messageText"
-              borderRadius="10px"
-              height="8%"
-              placeholder="Введите сообщение"
-              width="100%"
-              @send="sendMessage"
-          />
+            <AdminpanelMoloInput
+                v-model="messageText"
+                borderRadius="10px"
+                height="10%"
+                placeholder="Введите сообщение"
+                width="100%"
+                @send="sendMessage"
+            />
         </div>
       </div>
     </AdminpanelPatternsMoloAdmin>
@@ -123,7 +135,6 @@ useHead({
   display: flex;
   flex-direction: row;
   gap: 20px;
-  box-sizing: border-box;
 }
 
 .messages {
@@ -133,4 +144,12 @@ useHead({
   gap: 20px;
   position: relative;
 }
+
+.inputs {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
 </style>

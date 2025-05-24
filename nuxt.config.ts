@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 
  css: [
   '~/assets/css/styles.scss',
-  '~/assets/css/font/stylesheet.css'
+  '~/assets/css/font/stylesheet.css',
  ],
 
  nitro: {

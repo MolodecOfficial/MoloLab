@@ -28,6 +28,8 @@ const openLearningModal = (user: any) => {
 const updateLearningDetails = async () => {
   if (selectedUserId.value && selectedLearning.value && selectedForm.value && selectedCourse.value) {
     try {
+      statusMessage.value = 'Идёт добавление информации...';
+
       await userStore.addLearningDetails(
           selectedUserId.value,
           selectedLearning.value,

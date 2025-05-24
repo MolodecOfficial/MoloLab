@@ -12,7 +12,7 @@ const props = defineProps({
       'achievement',
       'learning',
       'scores',
-      'create'
+      'group'
     ].includes(value)
   },
   onClick: {
@@ -51,52 +51,58 @@ button {
 }
 
 .button.scores {
-  border: 1px solid #be4f00;
-  background-color: #5b2900;
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #be4f00;
+    border: 1px solid #ff6a00;
+    background-color: var(--dk-bg-ins-color);
   }
 }
 
 .button.learning {
-  border: 1px solid #00bea8;
-  background-color: #005b50;
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #00bea8;
+    border: 1px solid #00ffe2;
+    background-color: var(--dk-bg-ins-color);
   }
 }
 
 .button.specialty {
-  border: 1px solid #0020be;
-  background-color: #00055b;
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #0020be;
+    border: 1px solid #002bff;
+    background-color: var(--dk-bg-ins-color);
   }
 }
 
 
 .button.achievement {
-  border: 1px solid #0cb000;
-  background-color: #0e4400;
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #0cb000;
+    border: 1px solid #10ff00;
+    background-color: var(--dk-bg-ins-color);
+
   }
 }
 
 .button.status {
-  border: 1px solid #beae00;
-  background-color: #5b5000;
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #beae00;
+    border: 1px solid #ffe800;
+    background-color: var(--dk-bg-ins-color);
   }
 }
 
 .button.delete {
-  border: 1px solid #ab1000;
-  background-color: #3f0000;
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #ab1000;
-
+    border: 1px solid #ff1900;
+    background-color: var(--dk-bg-ins-color);
   }
 }
 
@@ -117,11 +123,12 @@ button {
   }
 }
 
-.button.create {
-  border: 1px solid #5e0894;
-  background-color: #2d143b;
+.button.group {
+  background-color: var(--dk-bg-ins-light-color);
+  border: 1px solid var(--dk-border-color);
   &:hover {
-    background-color: #5e0894;
+    border: 1px solid #9c00ff;
+    background-color: var(--dk-bg-ins-color);
   }
 }
 </style>

@@ -20,7 +20,8 @@ const messageSchema = new mongoose.Schema<MessageSchema>({
                     text: { type: String, required: true },
                     senderId: { type: String, required: true },
                     receiverId: { type: String, required: true },
-                    timestamp: { type: Date, required: true }
+                    timestamp: { type: Date, required: true },
+                    read: { type: Boolean, default: false }
                 }
             ]
         }

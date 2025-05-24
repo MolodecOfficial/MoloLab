@@ -9,6 +9,8 @@ const teacherName = ref("");
 const teacherType = ref<string[]>([]); // множественный выбор
 const subjects = ref<string[]>([]); // все возможные предметы
 
+const emit = defineEmits(["teacher-added"]);
+
 const isSubmitting = ref(false);
 
 // Загружаем предметы
@@ -44,6 +46,8 @@ const submitTeacher = async () => {
 
   isSubmitting.value = true;
   try {
+    statusMessage.value = 'Идёт добавление преподавателя...';
+
     const response = await $fetch("/api/teacher", {
       method: "POST",
       body: {
@@ -58,6 +62,7 @@ const submitTeacher = async () => {
     }
 
     statusMessage.value = "Преподаватель успешно добавлен!";
+    emit("teacher-added");
     teacherName.value = "";
     teacherType.value = [];
 

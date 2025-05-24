@@ -1,42 +1,51 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+import { useUserStore } from '~/stores/userStore';
 
 export const useMessageStore = defineStore('messageStore', () => {
     const messages = ref<any[]>([]);
+    const currentChatId = ref<string | null>(null);
     const isLoading = ref(false);
+    const unreadCounts = reactive<Record<string, number>>({});
+
     const fetchMessages = async (partnerId: string) => {
+        if (currentChatId.value !== partnerId) return; // Защита от лишнего запроса
         const userStore = useUserStore();
-        const today = new Date().toISOString().split('T')[0];
-        isLoading.value = true; // <-- началась загрузка
+        isLoading.value = true;
+
         try {
-            await userStore.initUserStore()
+            await userStore.initUserStore();
             const res: any = await $fetch('/api/messages', {
                 method: 'GET',
                 query: {
-                    // date: today, // убираем ограничение по дате
                     userId: userStore.userId,
-                    partnerId
-                }
+                    partnerId,
+                },
             });
 
             if (res.success) {
-                // Преобразуем сообщения, добавляя имя отправителя
-                messages.value = res.messages.map((msg: any) => {
+                const newMessages = res.messages.map((msg: any) => {
                     const sender = userStore.users.find(u => u._id === msg.senderId);
                     return {
                         ...msg,
-                        senderName: sender ? `${sender.firstName} ${sender.lastName}` : 'Неизвестный'
+                        senderName: sender ? `${sender.firstName} ${sender.lastName}` : 'Неизвестный',
                     };
                 });
+
+                const currentIds = messages.value.map(m => m._id).join(',');
+                const newIds = newMessages.map((m: any) => m._id).join(',');
+                if (currentIds !== newIds) {
+                    messages.value = newMessages;
+                }
+
+                unreadCounts[partnerId] = 0;
             } else {
-                messages.value = [];
                 console.error('Ошибка при получении сообщений:', res.error);
             }
         } catch (err) {
             console.error('Ошибка при получении сообщений:', err);
-            messages.value = [];
         } finally {
-            isLoading.value = false; // <-- завершили загрузку
+            isLoading.value = false;
         }
     };
 
@@ -45,21 +54,21 @@ export const useMessageStore = defineStore('messageStore', () => {
         const today = new Date().toISOString().split('T')[0];
 
         try {
-            const res: any = await $fetch('/api/messages', {
+            const res: any = await $fetch('/api/message', {
                 method: 'POST',
                 body: {
                     date: today,
                     text,
                     senderId: userStore.userId,
-                    receiverId
-                }
+                    receiverId,
+                },
             });
 
             if (res.success && res.message) {
                 const sender = userStore.currentUser;
                 messages.value.push({
                     ...res.message,
-                    senderName: `${sender.firstName} ${sender.lastName}`
+                    senderName: `${sender.firstName} ${sender.lastName}`,
                 });
             }
 
@@ -70,10 +79,17 @@ export const useMessageStore = defineStore('messageStore', () => {
         }
     };
 
+    const incrementUnreadCount = (userId: string) => {
+        unreadCounts[userId] = (unreadCounts[userId] || 0) + 1;
+    };
+
     return {
         messages,
         isLoading,
         fetchMessages,
-        sendMessage
+        sendMessage,
+        unreadCounts,
+        incrementUnreadCount,
+        currentChatId,
     };
 });

@@ -21,6 +21,7 @@
     "caniuse-lite": "^1.0.30001707",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
+    "emoji-mart": "^5.6.0",
     "express": "^4.21.1",
     "formidable": "^3.5.2",
     "js-cookie": "^3.0.5",
@@ -36,9 +37,11 @@
     "vercel": "^37.8.0",
     "vue": "latest",
     "vue-router": "latest",
+    "vue3-emoji-picker": "^1.1.8",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@emoji-mart/data": "^1.2.1",
     "@prisma/client": "^5.20.0",
     "@types/axios": "^0.9.36",
     "@types/bcrypt": "^5.0.2",

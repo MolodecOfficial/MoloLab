@@ -1,17 +1,25 @@
 <script setup lang="ts">
+import { useUserStore } from '~/stores/userStore';
+import { useMessageStore } from '~/stores/messageStore';
+import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+
 defineProps({
-  users: Array as PropType<any[]> // Убедитесь, что тип - массив
+  users: Array as PropType<any[]>,
 });
 
-
-const userStore = useUserStore()
+const userStore = useUserStore();
+const messageStore = useMessageStore();
+const router = useRouter();
 
 function isCurrentUser(userId: string): boolean {
   return userId === userStore.userId;
-
 }
 
-const router = useRouter();
+const goToChat = (userId: string) => {
+  router.push({ path: `/adminPanel/messages/${userId}` });
+};
+
 onMounted(async () => {
   if (process.client) {
     try {
@@ -22,25 +30,30 @@ onMounted(async () => {
   }
 });
 
-
-const goToChat = (userId: string) => {
-  router.push({ path: `/adminPanel/messages/${userId}`});
-};
-
-
 </script>
 
 <template>
   <AdminpanelMoloLoader :is-loading="userStore.loadingUser" />
   <section v-if="!userStore.loadingUser" class="user-list">
     <div v-if="!users || users.length === 0" class="no">Нет пользователя с таким именем</div>
-    <div v-else v-for="user in users" :key="user._id" class="user-item" @click="goToChat(user._id)">
+    <div
+        v-else
+        v-for="user in users"
+        :key="user._id"
+        class="user-item"
+        @click="goToChat(user._id)"
+    >
       <AdminpanelMoloAvatarGenerator :user-id="user._id" />
       <div class="item">
         <div v-if="isCurrentUser(user._id)">
           {{ user.firstname = 'Избранное' }}
         </div>
-        <span v-else>{{ user.firstName }} {{ user.lastName }}</span>
+        <span v-else>
+          {{ user.firstName }} {{ user.lastName }}
+          <span v-if="messageStore.unreadCounts[user._id]" class="badge">
+            {{ messageStore.unreadCounts[user._id] }}
+          </span>
+        </span>
       </div>
     </div>
   </section>
@@ -75,5 +88,14 @@ const goToChat = (userId: string) => {
 
 .no {
   padding: 10px 20px;
+}
+
+.badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin-left: 5px;
+  font-size: 0.8em;
 }
 </style>

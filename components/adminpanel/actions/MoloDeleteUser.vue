@@ -26,6 +26,8 @@ async function deleteUser(userId: any) {
     return;
   }
   try {
+    statusMessage.value = 'Удаляю пользователя...';
+
     await userStore.deleteUser(userId);
     statusMessage.value = 'Пользователь успешно удалён!';
     setTimeout(async () => {
@@ -70,9 +72,9 @@ onMounted(() => {
       @click="() => openDeleteModal(user)">
     Удалить
   </AdminpanelMoloButton>
-  <span v-else class="restricted-action">
-    Удаление запрещено для данного пользователя
-  </span>
+  <AdminpanelMoloButton v-else type="delete">
+    Запрещено
+  </AdminpanelMoloButton>
 
   <AdminpanelMoloModal
       :statusMessage="statusMessage"

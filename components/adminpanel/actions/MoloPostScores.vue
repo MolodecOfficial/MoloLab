@@ -30,6 +30,8 @@ const updateUserScores = async () => {
 
   if (selectedUserId.value && selectedSubject.value && selectedScore.value !== null) {
     try {
+      statusMessage.value = 'Идёт добавление оценки...';
+
       // Добавляем или обновляем оценку
       await userStore.addScore(selectedUserId.value, selectedSubject.value, selectedScore.value);
 

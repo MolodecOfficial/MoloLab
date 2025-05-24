@@ -25,6 +25,8 @@ const openStatusModal = (user: any) => {
 const changeUserStatus = async () => {
   if (selectedUserId.value && selectedStatus.value) {
     try {
+      statusMessage.value = 'Идёт обновление статуса...';
+
       console.log(selectedUserId.value, selectedUserName.value)
       await userStore.changeStatus(selectedUserId.value, selectedStatus.value);
       setTimeout(() => showStatusModal.value = false, 1500)
@@ -66,9 +68,9 @@ onMounted(async () => {
       @click="() => openStatusModal(user)">
     Сменить статус
   </AdminpanelMoloButton>
-  <span v-else class="restricted-action">
-    Смена статуса запрещена для данного пользователя
-  </span>
+  <AdminpanelMoloButton v-else type="status">
+    Запрещено
+  </AdminpanelMoloButton>
   <AdminpanelMoloModal
       :statusMessage="statusMessage"
       :title="changeTitle"

@@ -2,6 +2,7 @@
 import {onMounted, ref} from 'vue';
 
 const count = ref(0);
+const messageStore = useMessageStore();
 
 const fetchCount = async () => {
   try {
@@ -36,6 +37,9 @@ useHead({
   title: 'УГНТУ | Панель администратора'
 })
 
+const totalUnreadMessages = computed(() => {
+  return Object.values(messageStore.unreadCounts).reduce((sum, count) => sum + count, 0);
+});
 
 onMounted(() => {
   fetchCount();
@@ -94,17 +98,20 @@ onUnmounted(() => {
       <hr>
       <section class="sections">
         <section class="section-1">
-          <section class="sections_messages">
-            <span>У вас нет новых сообщений</span>
-          </section>
+          <span v-if="totalUnreadMessages > 0" class="sections_messages">
+            У вас {{ totalUnreadMessages }} новых сообщений
+          </span>
+          <span v-else class="sections_messages">
+            У вас нет новых сообщений
+          </span>
           <AdminpanelActionsMoloPostNotes/>
         </section>
         <section class="section-2">
           <section class="extra_buttons">
             <span>Экстра кнопки</span>
             <section class="btns">
-              <AdminpanelMoloButton type="delete">Новый пользователь</AdminpanelMoloButton>
-              <AdminpanelActionsMoloPostSchedule  />
+              <AdminpanelActionsMoloPostNewUser displayAs="button" />
+              <AdminpanelActionsMoloPostSchedule />
               <span>Ваши предложения для функционала можете предложить в тгк</span>
             </section>
           </section>
@@ -306,6 +313,9 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
+  align-items: start;
+
 }
 
 .current_date,
@@ -323,5 +333,10 @@ onUnmounted(() => {
 }
 hr {
   border: 1px solid var(--dk-border-color);
+}
+
+.unread-messages {
+  color: red;
+  font-weight: bold;
 }
 </style>

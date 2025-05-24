@@ -68,22 +68,22 @@ const userSchema = new mongoose.Schema<UserSchema>({
     direction: {
         type: String,
         required: true,
-        default: 'Не определена'
+        default: 'Не определено'
     },
     learning: {
         type: String,
         required: true,
-        default: 'Не определена'
+        default: 'Не определено'
     },
     form_of_learning: {
         type: String,
         required: true,
-        default: 'Не определена'
+        default: 'Не определено'
     },
     faculty: {
         type: String,
         required: true,
-        default: 'Не определена'
+        default: 'Не определён'
     },
     course: {
         type: Number,

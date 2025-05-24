@@ -9,26 +9,31 @@ const statusMessage = ref('')
 const lessonName = ref("");
 const isSubmitting = ref(false);
 
+const emit = defineEmits(["lesson-added"]);
+
+
 const submitLesson = async () => {
   if (!lessonName.value.trim()) {
     statusMessage.value = "Название предмета не может быть пустым";
     return;
   }
-
   isSubmitting.value = true;
   try {
+    statusMessage.value = 'Идёт создание предмета...';
     const response = await $fetch("/api/lesson", {
       method: "POST",
       body: { name: lessonName.value.trim() },
     });
 
     statusMessage.value = "Предмет успешно добавлен!";
+    emit("lesson-added");
     lessonName.value = "";
 
     setTimeout(() => {
       showLessonModal.value = false;
       statusMessage.value = "";
     }, 1000);
+
 
   } catch (error: any) {
     // Проверяем, пришло ли сообщение от сервера, что предмет уже существует

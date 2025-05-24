@@ -1,13 +1,19 @@
-import { User } from "~/server/models/user.model"; // Импортируем модель User
-import { specialtyList } from "~/stores/specialtyStore"; // Импортируем список специальностей
+import { User } from "~/server/models/user.model";
+import Specialty from "~/server/models/specialty.model"; // Импортируем модель Specialty
 
 export default defineEventHandler(async (event) => {
-    // Получаем данные из тела запроса
     const { userId, specialtyId } = await readBody(event);
 
-    // Находим пользователя по ID
-    const user = await User.findById(userId);
+    // Проверка входных данных
+    if (!userId || !specialtyId) {
+        throw createError({
+            statusCode: 400,
+            message: "userId и specialtyId обязательны",
+        });
+    }
 
+    // Находим пользователя
+    const user = await User.findById(userId);
     if (!user) {
         throw createError({
             statusCode: 404,
@@ -15,11 +21,8 @@ export default defineEventHandler(async (event) => {
         });
     }
 
-    // Находим выбранную специальность по ID
-    const selectedSpecialty = specialtyList.find(
-        (specialty) => specialty.id === specialtyId
-    );
-
+    // Находим специальность по ID через БД
+    const selectedSpecialty = await Specialty.findById(specialtyId);
     if (!selectedSpecialty) {
         throw createError({
             statusCode: 404,
@@ -28,14 +31,15 @@ export default defineEventHandler(async (event) => {
     }
 
     // Обновляем данные пользователя
-    user.specialty = selectedSpecialty.specialty_name;
-    user.group = selectedSpecialty.group;
+    user.specialty = selectedSpecialty.name;
     user.code = selectedSpecialty.code;
     user.direction = selectedSpecialty.direction;
-    user.faculty = selectedSpecialty.faculty
+    user.faculty = selectedSpecialty.faculty;
 
-    // Сохраняем обновленного пользователя в базе данных
     await user.save();
 
-    return { message: "Специальность успешно добавлена", user };
+    return {
+        message: "Специальность успешно добавлена",
+        user,
+    };
 });
