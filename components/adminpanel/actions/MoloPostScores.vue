@@ -1,77 +1,72 @@
 <script setup lang="ts">
-
-import {ref} from "vue";
+import { ref, onMounted, computed } from "vue";
+import type {UserSchema} from "~/types/User";
 
 const props = defineProps({
   user: Object
-})
+});
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 
 const selectedUserId = ref<string | null>(null);
 const selectedUserName = ref('');
-const selectedScore = ref<number | null>(null);
+const selectedScore: any = ref<number | null>(null);
+const selectedSubject: any = ref<string | null>(null);
+const selectedCourse = ref<keyof UserSchema['score'] | null>(null);
 const showScoresModal = ref(false);
-const statusMessage = ref('')
-const selectedSubject = ref<string | null>(null);
-const availableSubjects = ref<any[]>()
-
+const statusMessage = ref('');
+const availableSubjects = ref<string[]>([]);
 
 const openScoresModal = (user: any) => {
   selectedUserId.value = user._id;
   selectedUserName.value = `${user.firstName} ${user.lastName}`;
-  selectedScore.value = user.scores || 0; // Текущие оценки пользователя
+  selectedScore.value = null;
+  selectedSubject.value = null;
+  selectedCourse.value = null;
   showScoresModal.value = true;
 };
 
-
 const updateUserScores = async () => {
-  console.log('Updating user scores', selectedUserId.value, selectedSubject.value, selectedScore.value); // Логирование
+  if (!selectedUserId.value || !selectedSubject.value || !selectedScore.value || !selectedCourse.value) {
+    statusMessage.value = 'Заполните все поля';
+    return;
+  }
 
-  if (selectedUserId.value && selectedSubject.value && selectedScore.value !== null) {
-    try {
-      statusMessage.value = 'Идёт добавление оценки...';
-
-      // Добавляем или обновляем оценку
-      await userStore.addScore(selectedUserId.value, selectedSubject.value, selectedScore.value);
-
-      // Обновляем средний балл и рейтинг пользователя
-      const updatedUser = userStore.users.find((user) => user._id === selectedUserId.value);
-      if (updatedUser) {
-        console.table('Обновленные данные пользователя:', updatedUser); // Логирование обновленных данных пользователя
-        setTimeout(() => showScoresModal.value = false, 1500);
-        await userStore.getUsers();
-        statusMessage.value = 'Оценки пользователя успешно обновлены!';
-        setTimeout(() => statusMessage.value = '', 1500);
-      }
-    } catch (error) {
-      console.error('Ошибка при обновлении оценок:', error);
-      statusMessage.value = 'Не удалось обновить оценки.';
-    }
-  } else {
-    statusMessage.value = 'Пожалуйста, укажите предмет и оценку.';
+  try {
+    statusMessage.value = 'Идёт добавление оценки...';
+    await userStore.addScore(
+        selectedUserId.value,
+        selectedSubject.value,
+        selectedScore.value,
+        selectedCourse.value
+    );
+    statusMessage.value = 'Оценка успешно добавлена!';
+    setTimeout(() => {
+      showScoresModal.value = false;
+      statusMessage.value = '';
+    }, 1500);
+  } catch (error) {
+    statusMessage.value = 'Произошла ошибка со стороны сервера';
   }
 };
 
 async function fetchAvailableSubjects() {
   try {
-    const response: any = await fetch('/api/scores');
-    if (response.ok) {
-      const data = await response.json();
-      availableSubjects.value = data.allowedSubjects.sort((a, b) => a.localeCompare(b, 'ru'));
-    } else {
-      console.error('Не удалось получить список предметов');
-    }
+    const response = await fetch('/api/lessons');
+    const data = await response.json();
+    availableSubjects.value = data.lessons.sort((a, b) =>
+        a.name.localeCompare(b.name, 'ru')
+    );
   } catch (error) {
     console.error('Ошибка при загрузке предметов:', error);
   }
 }
 
-const scoresTitle = computed(() => `Выдача оценок пользователю ${selectedUserName.value}`)
+const scoresTitle = computed(
+    () => `Выдача оценок пользователю ${selectedUserName.value}`
+);
 
-onMounted(async () => {
-  await fetchAvailableSubjects();
-})
+onMounted(fetchAvailableSubjects);
 </script>
 
 <template>
@@ -81,6 +76,7 @@ onMounted(async () => {
   >
     Добавление оценки
   </AdminpanelMoloButton>
+
   <AdminpanelMoloModal
       :statusMessage="statusMessage"
       :title="scoresTitle"
@@ -88,22 +84,30 @@ onMounted(async () => {
       @close="showScoresModal = false"
   >
     <template #select>
+      <label for="course-select">Курс:</label>
+      <AdminpanelMoloSelect v-model="selectedCourse" class="select">
+        <option value="" disabled>Выберите курс</option>
+        <option value="firstCourse">1 курс</option>
+        <option value="secondCourse">2 курс</option>
+        <option value="thirdCourse">3 курс</option>
+        <option value="fourthCourse">4 курс</option>
+        <option value="fifthCourse">5 курс</option>
+      </AdminpanelMoloSelect>
+
       <label for="subject-select">Предмет:</label>
-      <AdminpanelMoloSelect
-          v-model="selectedSubject"
-          class="select"
-      >
+      <AdminpanelMoloSelect v-model="selectedSubject" class="select">
         <option value="" disabled>Выберите предмет</option>
-        <option v-for="subject in availableSubjects" :key="subject" :value="subject">
-          {{ subject }}
+        <option
+            v-for="subject in availableSubjects"
+            :key="subject._id"
+            :value="subject.name"
+        >
+          {{ subject.name }}
         </option>
       </AdminpanelMoloSelect>
 
-      <label for="form-select">Оценка:</label>
-      <AdminpanelMoloSelect
-          v-model.number="selectedScore"
-          class="select"
-      >
+      <label for="score-select">Оценка:</label>
+      <AdminpanelMoloSelect v-model.number="selectedScore" class="select">
         <option value="" disabled>Выберите оценку</option>
         <option :value="5">Отлично</option>
         <option :value="4">Хорошо</option>
@@ -112,6 +116,7 @@ onMounted(async () => {
         <option :value="1">Плохо</option>
       </AdminpanelMoloSelect>
     </template>
+
     <template #confirm-button>
       <AdminpanelMoloButton
           type="confirm"
@@ -122,7 +127,7 @@ onMounted(async () => {
     </template>
 
     <template #status>
-      <span> {{ statusMessage }}</span>
+      <span>{{ statusMessage }}</span>
     </template>
 
     <template #cancel-button>
@@ -133,7 +138,6 @@ onMounted(async () => {
         Отмена
       </AdminpanelMoloButton>
     </template>
-
   </AdminpanelMoloModal>
 </template>
 

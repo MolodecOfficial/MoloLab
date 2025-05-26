@@ -1,6 +1,34 @@
 import mongoose from "mongoose";
 import {UserSchema} from "~/types/User";
 
+const scoreSchema = new mongoose.Schema({
+    firstCourse: {
+        type: Map,
+        of: [Number],
+        default: {},
+    },
+    secondCourse: {
+        type: Map,
+        of: [Number],
+        default: {},
+    },
+    thirdCourse: {
+        type: Map,
+        of: [Number],
+        default: {},
+    },
+    fourthCourse: {
+        type: Map,
+        of: [Number],
+        default: {},
+    },
+    fifthCourse: {
+        type: Map,
+        of: [Number],
+        default: {},
+    }
+}, { _id: false });
+
 const userSchema = new mongoose.Schema<UserSchema>({
     firstName: {
         type: String,
@@ -91,13 +119,26 @@ const userSchema = new mongoose.Schema<UserSchema>({
         default: 0
     },
     score: {
-        'История': { type: [Number], default: [] },
-        'Математика': { type: [Number], default: [] },
-        'Дискретная Математика': { type: [Number], default: [] },
-        'Основы Российской Государственности': { type: [Number], default: [] },
-        'Физика': { type: [Number], default: [] },
-        'Иностранный Язык': { type: [Number], default: [] },
-        'Инженерная Компьютерная Графика': { type: [Number], default: [] },
+        firstCourse: {
+            type: Object,
+            default: {},
+        },
+        secondCourse: {
+            type: Object,
+            default: {},
+        },
+        thirdCourse: {
+            type: Object,
+            default: {},
+        },
+        fourthCourse: {
+            type: Object,
+            default: {},
+        },
+        fifthCourse: {
+            type: Object,
+            default: {},
+        }
     },
     averageScore: {
         type: Number,

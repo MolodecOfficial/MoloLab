@@ -364,38 +364,25 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-    const addScore = async (userId: string, subject: string, score: number) => {
-        if (!userId || !subject || typeof score !== 'number' || score < 1 || score > 5) {
-            console.error("Не передан айди, предмет или оценка");
-            throw new Error("Не переданы необходимые данные");
-        }
-
+    const addScore = async (
+        userId: string,
+        subject: string,
+        score: number,
+        course: 'firstCourse' | 'secondCourse' | 'thirdCourse' | 'fourthCourse' | 'fifthCourse'
+    ) => {
         try {
             const response: any = await $fetch('/api/scores', {
                 method: 'POST',
-                body: { userId, subject, score }
+                body: { userId, subject, score, course }
             });
 
-            if (response && typeof response === 'object' && response.message === 'Оценка успешно добавлена.') {
-                // Обновляем данные пользователя
-                const user = users.value.find(user => user._id === userId);
-                if (user) {
-                    // Добавляем или обновляем оценку для конкретного предмета
-                    if (!user.score) {
-                        user.score = {}; // Если еще нет объекта с оценками
-                    }
-                    if (!user.score[subject]) {
-                        user.score[subject] = []; // Если для этого предмета нет оценок
-                    }
-                    user.score[subject].push(score); // Добавляем оценку в массив
-                }
-                return response;
-            } else {
-                console.error("Ошибка при добавлении оценки:", response);
-                throw new Error("Ошибка при добавлении оценки");
+            if (response.user) {
+                const index = users.value.findIndex(u => u._id === userId);
+                if (index !== -1) users.value.splice(index, 1, response.user);
             }
+            await getUsers(); // Для синхронизации
         } catch (error) {
-            console.error("Ошибка при обновлении данных обучения:", error);
+            console.error('Ошибка:', error);
             throw error;
         }
     };

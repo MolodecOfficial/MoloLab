@@ -11,23 +11,21 @@ export interface UserSchema {
     direction: string;
     faculty: string;
     form_of_learning: string;
-    course: any,
-    learning: string,
-    averageScore: number,
-    generalScore: number,
-    ranking: string,
+    course: number;
+    learning: string;
+    averageScore: number;
+    generalScore: number;
+    ranking: string;
     score: {
-        'История': number[];
-        'Математика': number[];
-        'Дискретная Математика': number[];
-        'Основы Российской Государственности': number[];
-        'Физика': number[];
-        'Иностранный Язык': number[];
-        'Инженерная Компьютерная Графика': number[];
+        firstCourse: { [subjectName: string]: number[] };
+        secondCourse: { [subjectName: string]: number[] };
+        thirdCourse: { [subjectName: string]: number[] };
+        fourthCourse: { [subjectName: string]: number[] };
+        fifthCourse: { [subjectName: string]: number[] };
     };
 }
 
 export interface SignInRequestBody {
-    email: string
-    password: string
+    email: string;
+    password: string;
 }

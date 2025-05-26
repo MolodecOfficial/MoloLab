@@ -228,16 +228,11 @@ hr {
 .schedule-section {
   border: 1px solid var(--dk-border-color);
   background-color: var(--dk-bg-color);
-  display: flex;
   border-radius: 10px;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-direction: column;
-  justify-content: start;
-  gap: 10px;
+  padding: 20px 20px 0 20px;
+  margin-bottom: 15px;
+  position: relative; /* Убираем flex-контейнер */
 }
-
 
 .lessons-wrapper {
   display: flex;
@@ -245,14 +240,7 @@ hr {
   gap: 8px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease, opacity 0.3s ease;
-  opacity: 0;
-}
-
-.lessons-wrapper.show {
-  max-height: 300px;
-  opacity: 1;
-  overflow-y: auto;
+  transition: max-height 0.4s ease-in-out; /* Плавная анимация */
   &::-webkit-scrollbar {
     width: 10px;
 
@@ -267,16 +255,34 @@ hr {
   }
 }
 
+.lessons-wrapper.show {
+  max-height: 500px; /* Увеличиваем максимальную высоту */
+}
+
+.btn {
+  position: absolute;
+  right: 20px;
+  top: -20px; /* Фиксируем позицию относительно секции */
+  transform: translateY(0);
+  margin: 0;
+}
+
+.show-more {
+  background: none;
+  border: none;
+  padding: 0;
+  height: fit-content;
+}
+
+
 .lessons {
   display: flex;
   flex-direction: column;
+  padding: 10px 0 0 0;
 
-  & .lessons-list {
-    padding: 4px 0 0px 20px;
-  }
 }
 
-& .taught-lessons {
+.taught-lessons {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.5s ease, opacity 0.3s ease;

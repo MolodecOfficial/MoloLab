@@ -10,16 +10,50 @@ const props = defineProps({
 
 const expandedUserIds = ref<Record<string, boolean>>({});
 
+async function getAllUsers() {
+  const userStore = useUserStore();
+  try {
+    await userStore.getUsers();
+  } catch (error) {
+    console.error('Ошибка при загрузке пользователей:', error);
+  }
+}
+
+const fetchGroups = async () => {
+  try {
+    const response = await $fetch('/api/groups');
+    console.log('Ответ от API', response);
+  } catch (error) {
+    console.error('Ошибка при получении предметов:', error);
+  }
+}
+
 const toggleExpand = (userId: string) => {
   expandedUserIds.value[userId] = !expandedUserIds.value[userId];
 };
 
+function convertCourseName(courseKey: any) {
+  const map: Record<string, string> = {
+    firstCourse: '1 курс',
+    secondCourse: '2 курс',
+    thirdCourse: '3 курс',
+    fourthCourse: '4 курс',
+    fifthCourse: '5 курс'
+  };
+  return map[courseKey] || courseKey;
+}
+
+function getCourseScores(subjects: Record<string, number[]> | undefined | null) {
+  if (!subjects) return [];
+  return Object.values(subjects)
+      .filter(Array.isArray)
+      .flat();
+}
+
 const calculateAverage = (scores: any) => {
-  if (Array.isArray(scores) && scores.length > 0) {
-    const sum = scores.reduce((acc, score) => acc + Number(score), 0);
-    return (sum / scores.length).toFixed(2);
-  }
-  return 'Нет оценок';
+  if (!Array.isArray(scores) || scores.length === 0) return 'Нет оценок';
+  const sum = scores.reduce((acc, score) => acc + Number(score), 0);
+  return (sum / scores.length).toFixed(2);
 }
 
 function getAverageColor(scores: any) {
@@ -35,29 +69,37 @@ function getAverageColor(scores: any) {
   return '#731601';  // Dark Red
 }
 
-async function getAllUsers() {
-  const userStore = useUserStore();
-  try {
-    await userStore.getUsers();
-  } catch (error) {
-    console.error('Ошибка при загрузке пользователей:', error);
-  }
-}
+const sortedCourses = (user: any) => {
+  const order = ['firstCourse', 'secondCourse', 'thirdCourse', 'fourthCourse', 'fifthCourse'];
+  return order.filter(courseKey => user?.score?.[courseKey]);
+};
+
+const getAllScores = (user: any) => {
+  if (!user || !user.score) return [];
+  const courses = ['firstCourse', 'secondCourse', 'thirdCourse', 'fourthCourse', 'fifthCourse'];
+  return courses.flatMap(courseKey =>
+      Object.values(user.score[courseKey] || {}).flatMap(scores =>
+          Array.isArray(scores) ? scores : []
+      )
+  );
+};
+
+const getTotalScore = (user: any) => {
+  const allScores = getAllScores(user);
+  return allScores.reduce((sum, score) => sum + Number(score), 0);
+};
+
+const getOverallAverage = (user: any) => {
+  const allScores = getAllScores(user);
+  return allScores.length
+      ? (allScores.reduce((sum, score) => sum + Number(score), 0) / allScores.length).toFixed(2)
+      : 0;
+};
 
 onMounted(async () => {
   await getAllUsers();
   await fetchGroups()
 })
-
-const fetchGroups = async () => {
-  try {
-    const response = await $fetch('/api/groups');
-    console.log('Ответ от API', response);
-  } catch (error) {
-    console.error('Ошибка при получении предметов:', error);
-  }
-}
-
 </script>
 
 <template>
@@ -106,27 +148,49 @@ const fetchGroups = async () => {
           <span>Данные о успеваемости</span>
         </section>
         <hr>
-        <div v-for="(scores, subject) in user.score" :key="subject" class="user-scores">
-          <span class="user-span">{{ subject }}</span>
-          <span v-if="Array.isArray(scores)"
-                :data-average="calculateAverage(scores)"
-                :style="{ color: getAverageColor(scores) }"
-                class="user">
-                    {{ calculateAverage(scores) }}
-        </span>
-        </div>
-        <hr>
-        <section>
-        <span>
-          Общий балл: {{ user.generalScore }}
-        </span>
+        <section class="user-scores">
+          <div
+              v-for="courseKey in sortedCourses(user)"
+              :key="courseKey"
+              class="user-scores-block"
+          >
+            <template v-if="user.score[courseKey]">
+              <span class="course">{{ convertCourseName(courseKey) }}</span>
+              <div
+                  v-for="(scores, subject) in user.score[courseKey]"
+                  :key="subject"
+                  class="subject-scores"
+              >
+                <span class="user-span">{{ subject }}</span>
+                <span :style="{ color: getAverageColor(scores) }">
+                  {{ calculateAverage(scores) }}
+                </span>
+              </div>
+              <hr>
+              <div class="course-average">
+                <span>Средний балл:</span>
+                <span :style="{ color: getAverageColor(getCourseScores(user.score[courseKey])) }">
+                  {{ calculateAverage(getCourseScores(user.score[courseKey])) }}
+                </span>
+              </div>
+              <hr>
+            </template>
+            <span v-else>
+              нет оценок
+            </span>
+          </div>
         </section>
-        <section>
-        <span>
-          Средний балл: {{ user.averageScore }}
-        </span>
-        </section>
         <hr>
+        <section class="course-sum">
+          <span>Средний балл по всем курсам: </span>
+          <span :style="{ color: getAverageColor(getAllScores(user)) }">
+            {{ getOverallAverage(user) }}
+          </span>
+        </section>
+        <section class="course-sum">
+          <span>Общий балл по всем курсам: </span>
+          <span>{{ getTotalScore(user) }}</span>
+        </section>
       </section>
       <section :class="{ 'show': expandedUserIds[user._id] }"
                class="actions-info"
@@ -281,20 +345,50 @@ const fetchGroups = async () => {
 
 .user-scores {
   display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 8px ;
+  & .user-scores-block {
+    display: flex;
+    flex-direction: column;
+    min-height: fit-content;
+    gap: 10px;
+  }
+  & .course {
+    border: 1px solid var(--dk-border-color);
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: var(--dk-bg-ins-color);
+  }
+  & .subject-scores {
+    display: flex;
+    justify-content: space-between;
+  }
+  & .course-average {
+    display: flex;
+    justify-content: space-between;
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dk-border-color);
+    border-radius: 20px;
+    border: 4px solid transparent;
+  }
+}
+
+.course-sum {
+  display: flex;
   justify-content: space-between;
-  text-align: start;
-  align-items: start;
-
-  & .user-span {
-    width: 70%;
-  }
-
-  & .user {
-    padding: 2px;
-    text-decoration: underline 1px;
-    text-underline-offset: 4px;
-    text-align: end;
-  }
 }
 
 .actions {
