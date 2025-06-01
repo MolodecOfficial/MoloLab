@@ -296,12 +296,10 @@ hr {
   }
 
   & span {
-    padding: 6px 0 10px 20px;
+    padding: 6px 0 10px 10px;
   }
 
-  & span:last-child {
-    padding: 0 0 10px 20px;
-  }
+
 
   & .num {
     color: var(--dk-span-color);

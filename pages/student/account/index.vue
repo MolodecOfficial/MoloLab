@@ -344,6 +344,9 @@ onMounted(() => {
 
 <style scoped>
 
+
+
+
 .student-header {
   background-color: white;
   width: 80%;

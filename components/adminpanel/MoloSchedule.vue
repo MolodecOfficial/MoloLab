@@ -205,10 +205,6 @@ watch(() => props.scheduleData, () => {
 }
 
 
-
-
-
-
 .group {
   display: flex;
   flex-direction: column;
@@ -274,12 +270,6 @@ watch(() => props.scheduleData, () => {
     color: #ff0000;
   }
 }
-
-.subgroup-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .subgroup-span {
   display: flex;
   flex-direction: column;

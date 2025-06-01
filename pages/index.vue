@@ -1,229 +1,193 @@
 <script setup lang="ts">
 
-import RunningLine from "~/layouts/home/sections/RunningLine.vue";
-import HomeBody from "~/layouts/home/sections/HomeBody.vue";
-import HomeHeader from "~/layouts/home/sections/HomeHeader.vue";
-import News from "~/layouts/news/sections/News.vue";
-import Education from "~/layouts/education/sections/Education.vue";
-
-import Icon from 'public/icon_account_2.png'
-import bg_img from 'public/img.png'
 
 </script>
 
 <template>
+  <!-- Мобильная версия -->
   <section class="mobile-container">
     <section class="mobile-header">
-      <img :src="Icon" alt="" class="icon">
+      <img src="/public/home/MoloLab_no_text.png" alt="" class="icon">
       <span>Версия 0.16 (Сборка 111)</span>
     </section>
-    <section class="mobile-description">
-      <section class="mobile-name">
-        <img :src="bg_img" alt="" class="bg_img">
-        <section class="name-header">
-          <span>Ведущий</span>
-          <span>Нефтегазовый</span>
-          <span>ВУЗ</span>
-          <span>России</span>
-        </section>
-        <section class="right-logo">
-          <a class="main-logo" href="">
-            <img class="logo" src="/public/home/logo.svg" alt="">
-            <img class="logo-circle" src="/public/home/logo-circle.svg" alt="">
-          </a>
-        </section>
+    <section class="mobile-content">
+      <img src="/public/img.png" alt="" class="bg-img">
+      <section class="name-header">
+        <span>Свежий</span>
+        <span>Взгляд на</span>
+        <span>Обучение</span>
       </section>
-    </section>
-    <section class="mobile-functional">
+      <section class="bg-cube">
+        <HomeMoloCube/>
+      </section>
       <NuxtLink to="/login/student" class="info-button">
-        <span>
-          Личный Кабинет абитуриента
-        </span>
+        Личный Кабинет
       </NuxtLink>
+    </section>
+    <section class="page-content">
+      <HomeMoloNews/>
     </section>
   </section>
 
+  <!-- Десктопная версия -->
   <section class="pc-container">
-    <div class="main-container">
-      <div class="video-overlay">
+    <!-- Sticky header -->
+    <header class="header-container">
+      <div class="header-content">
+        <a class="main-logo" href="">
+          <img src="/public/home/MoloLab_no_text.png" alt="Логотип" class="logo">
+        </a>
+        <NuxtLink class="login-link" to="/login/student">
+          Личный кабинет
+        </NuxtLink>
+      </div>
+    </header>
+
+    <!-- Hero section with video background -->
+    <section class="hero-section">
+      <div class="video-background">
         <video autoplay loop muted>
-          <source src="../public/overlay.mp4" type="video/mp4">
+          <source src="../public/over.mp4" type="video/mp4">
           Ваш браузер не поддерживает видео.
         </video>
-        <div class="overlay"></div>
+        <div class="video-overlay"></div>
       </div>
-      <HomeHeader/>
-      <HomeBody/>
-    </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="line-1">Свежий</span>
+          <span class="line-2">Взгляд на</span>
+          <span class="line-3">Обучение</span>
+        </h1>
+        <HomeMoloCube/>
+      </div>
+    </section>
+
+    <!-- Page content -->
+    <main class="page-content">
+      <HomeMoloNews/>
+    </main>
   </section>
-  <div>
-    <RunningLine/>
-  </div>
-  <div>
-    <News/>
-  </div>
-  <div>
-    <Education/>
-  </div>
 </template>
 
 <style scoped>
 
-.mobile-container, .pc-container {
-  width: 100%; /* Используйте % вместо фиксированных размеров */
-  max-width: 100%; /* Гарантирует, что элементы не выйдут за пределы экрана */
+/* Анимация масштабирования */
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
 }
 
-.mobile-container {
+/* Анимации */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Анимации */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Общие стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pc-container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.header-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+
+}
+
+.header-content {
+  margin: 20px auto;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  width: 40%;
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  & .main-logo {
+    box-sizing: border-box;
+    max-width: 60px; /* Максимальная ширина логотипа */
+    & img {
+      width: 100%; /* Изображение занимает всю ширину родителя */
+      height: auto; /* Высота автоматическая для сохранения пропорций */
+    }
+  }
+  & .login-link {
+    color: #eee;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    text-align: end;
+  }
+}
+
+
+
+
+
+.login-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hero-section {
+  position: relative;
   height: 100vh;
   width: 100%;
   overflow: hidden;
 }
 
-.mobile-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 10%;
-  width: 100%;
-  background-color: #092059;
-
-  & img {
-    width: 35%;
-    padding-left: 10px;
-  }
-
-  & span {
-    color: rgba(162, 162, 162, 0.54);
-    padding-right: 10px;
-  }
-}
-
-.mobile-description {
-  display: flex;
-  flex-direction: column;
-  gap: 150px;
-}
-
-.mobile-name {
-  display: flex;
-  flex-direction: column;
-  height: 90%;
-  width: 100%;
-
-  & .bg_img {
-    filter: blur(20%);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: -1;
-  }
-
-  & .name-header {
-    position: relative;
-    background-color: rgba(9, 32, 89, 0.6);
-    width: auto;
-    z-index: 1;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-
-    & span {
-      display: flex; /* Изменено на block для вертикального расположения */
-      font-size: clamp(25px, 8vw, 50px);
-      color: #a4a4a4; /* Цвет текста */
-
-      &:first-child {
-        color: white
-      }
-    }
-  }
-}
-.right-logo {
+.video-background {
   position: absolute;
-  left: 68%;
-  top: 16%;
-  z-index: 1;
-
-  & .main-logo {
-    background-color: #022469;
-    width: clamp(60px, 25vw, 240px);
-    height: clamp(60px, 25vw, 240px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    z-index: 1;
-  }
-
-  & .logo {
-    height: clamp(30px, 14vw, 100px);
-    width: clamp(30px, 14vw, 100px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  & .logo-circle {
-    position: absolute;
-    z-index: 3;
-    height: clamp(30px, 22vw, 160px);
-    width: clamp(30px, 25vw, 160px);
-    animation: spin 15s linear infinite; /* Используем 'linear' для равномерного вращения */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg); /* Начальная позиция */
-  }
-  to {
-    transform: rotate(-360deg); /* Конечная позиция */
-  }
-}
-
-.mobile-functional {
-  display: flex;
-
-  z-index: 1;
-  margin-top: 20px;
-  flex-direction: column;
-  gap: 20px;
-}
-
-
-.info-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  background-color: rgba(9, 32, 89, 0.6);
-  padding: 10px 20px;
-  width: max-content;
-  & span {
-    font-size: 12px;
-    text-align: start;
-    color: white;
-  }
-}
-
-.main-container {
-  position: relative;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
-  overflow: hidden; /* Чтобы избежать прокрутки */
-
+  height: 100%;
 }
 
-@media (max-width: 768px) {
-  .main-container {
-    height: auto;
-  }
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .video-overlay {
@@ -232,76 +196,291 @@ import bg_img from 'public/img.png'
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Убедимся, что видео позади других элементов */
+  background-color: rgba(9, 60, 171, 0.46);
 }
 
-video {
-  height: auto; /* Позволяет видео адаптироваться */
-  max-height: 150%; /* Ограничение по высоте */
-  min-width: 100%; /* Убирает сжатие по ширине */
-  object-fit: cover; /* Сохраняет пропорции */
+.hero-section {
+  position: relative;
+  height: 100vh;
   width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.overlay {
+.hero-content {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 30px;
+  max-width: 1400px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  transform: translateX(-5%);
+}
+
+.hero-title span {
+  display: block;
+  font-size: clamp(40px, 6vw, 120px);
+  line-height: 0.85;
+  font-weight: 900;
+  font-family: "Samsung Sans", sans-serif;
+  letter-spacing: -0.03em;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.hero-title .line-1 {
+  color: #dedede;
+  animation-delay: 0.3s;
+}
+
+.hero-title .line-2 {
+  color: rgb(180, 190, 210);
+  animation-delay: 0.6s;
+}
+
+.hero-title .line-3 {
+  color: rgb(133, 144, 169);
+  animation-delay: 0.9s;
+}
+
+.hero-title span {
+  transition: transform 0.3s ease-out;
+}
+
+.hero-section:hover .line-1 {
+  transform: translateX(-10px);
+}
+
+.hero-section:hover .line-2 {
+  transform: translateX(0);
+}
+
+.hero-section:hover .line-3 {
+  transform: translateX(10px);
+}
+
+.page-content {
+  position: relative;
+  z-index: 5;
+  background-color: white;
+}
+
+
+
+/* Мобильная версия */
+.mobile-container {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  background: linear-gradient(135deg, #0a1e45, #0c2b6e);
+}
+
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+.mobile-header .icon {
+  width: 80px;
+  transition: width 0.3s ease;
+}
+
+.mobile-header span {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+.mobile-content {
+  position: relative;
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  z-index: 1;
+  justify-content: center;
+}
+
+.bg-img {
   position: absolute;
   top: 0;
   left: 0;
-  width: clamp(20vw, 100vw, 100vw);
-  height: clamp(20%, 65vw, 57vw);
-  background-color: rgba(9, 60, 171, 0.46); /* Правый фильтр */
-  z-index: 1; /* Фильтр над видео */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: blur(3px);
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
 }
 
-@media (max-width: 1600px) {
-  video {
-    height: auto; /* Позволяет видео адаптироваться */
-    max-height: 100vh; /* Ограничение по высоте */
-    min-width: 100%; /* Убирает сжатие по ширине */
-    object-fit: cover; /* Сохраняет пропорции */
-  }
+.bg-cube {
+  display: flex;
+  width: 100%;
+}
 
-  .main-container {
-    height: auto; /* Или другое значение, которое вам нужно */
+.name-header {
+  position: relative;
+  z-index: 1;
+  margin-top: 60px;
+  text-align: center;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.name-header span {
+  display: block;
+  font-size: clamp(28px, 8vw, 52px);
+  color: #a4a4a4;
+  line-height: 1.1;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.name-header span:first-child {
+  color: white;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+  to { text-shadow: 0 0 15px rgba(255,255,255,0.9); }
+}
+
+.right-logo {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-circle {
+  width: 100px;
+  height: 100px;
+  animation: spin 12s linear infinite;
+  transition: transform 0.3s ease;
+}
+
+.logo-circle:hover {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.info-button {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  margin-bottom: 40px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 14px;
+  align-self: center;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  width: 80%;
+  max-width: 300px;
+}
+
+.info-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #2a5298, #3a7bd5);
+}
+
+/* Анимации */
+@keyframes float {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(5px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (max-width: 1890px) {
-  .main-container {
-    height: auto; /* Или другое значение, которое вам нужно */
+/* Адаптация под маленькие экраны */
+@media (max-width: 480px) {
+  .mobile-header .icon {
+    width: 60px;
+  }
+
+  .name-header {
+    margin-top: 40px;
+  }
+
+  .name-header span {
+    font-size: clamp(24px, 7vw, 40px);
+  }
+
+  .logo-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .info-button {
+    font-size: 13px;
+    padding: 12px 20px;
   }
 }
 
+/* Медиазапросы */
 @media (max-width: 768px) {
-  video {
-    height: auto; /* Позволяет видео адаптироваться */
-    max-height: 100vh; /* Ограничение по высоте */
-    min-width: 100%; /* Убирает сжатие по ширине */
-    object-fit: cover; /* Сохраняет пропорции */
+  .mobile-container {
+    display: block;
   }
-}
 
-@media (max-width: 560px) {
+  .mobile-header .icon {
+    width: 60px; /* уменьшаем с 120px до 80px */
+  }
   .pc-container {
     display: none;
   }
 }
 
-@media (min-width: 561px) and (max-width: 765px) {
+@media (min-width: 769px) {
+  .mobile-container {
+    display: none;
+  }
+
+
   .pc-container {
-    display: none;
-  }
-}
-
-@media (min-width: 766px) and (max-width: 1280px) {
-  .mobile-container {
-    display: none;
-  }
-}
-
-@media (min-width: 1281px) {
-  .mobile-container {
-    display: none;
+    display: block;
   }
 }
 </style>

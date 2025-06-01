@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {execSync} from "node:child_process";
 
 export default defineNuxtConfig({
  compatibilityDate: '2024-04-03',

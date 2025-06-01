@@ -7,7 +7,7 @@
 <script setup lang="ts">
 
 useSeoMeta({
-  title: 'УГНТУ - Университет будущего!',
+  title: 'MoloLab - Пример подражания!',
   ogImage: '/favicon.ico',
 })
 

@@ -4,6 +4,7 @@ const id = ref('')
 const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
+const direction = ref('')
 const group = ref('')
 const faculty = ref('')
 const specialty = ref('')
@@ -26,6 +27,7 @@ onMounted(() => {
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;
+    direction.value = user.direction;
     group.value = user.group;
     faculty.value = user.faculty;
     specialty.value = user.specialty;
@@ -43,6 +45,7 @@ onMounted(() => {
     ];
     userSpecialtyData.value = [
       { label: "Специальность", value: specialty.value },
+      { label: "Направление", value: direction.value },
       { label: "Факультет", value: faculty.value },
       { label: "Код", value: code.value },
       { label: "Группа", value: group.value },
@@ -64,7 +67,7 @@ onMounted(() => {
   <section class="user-info">
     <section class="user-data">
       <div v-for="(data, idx) in userData"
-           key="idx"
+           :key="idx"
            class="info-row">
         <span class="label">{{ data.label }}</span>
         <span class="value">{{ data.value }}</span>
@@ -72,7 +75,7 @@ onMounted(() => {
     </section>
     <section class="user-data">
       <div v-for="(data, idx) in userSpecialtyData"
-           key="idx"
+           :key="idx"
            class="info-row">
         <span class="label">{{ data.label }}</span>
         <span class="value">{{ data.value }}</span>
@@ -80,7 +83,7 @@ onMounted(() => {
     </section>
     <section class="user-data">
       <div v-for="(data, idx) in userRatingData"
-           key="idx"
+           :key="idx"
            class="info-row">
         <span class="label">{{ data.label }}</span>
         <span class="value">{{ data.value }}</span>
