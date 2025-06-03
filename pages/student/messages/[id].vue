@@ -3,17 +3,8 @@ import { useMessageStore } from '~/stores/messageStore';
 import { useUserStore } from '~/stores/userStore';
 import { useRoute } from 'vue-router';
 import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
-import Picker from 'emoji-mart'
-import data from '@emoji-mart/data'
-
 
 const showEmojiPicker = ref(false);
-
-const addEmoji = (emoji: any) => {
-  messageText.value += emoji.native
-  showEmojiPicker.value = false
-}
-
 
 const emit = defineEmits(['send']);
 const messageText = ref('');
@@ -100,48 +91,49 @@ useHead({
   ),
 });
 
-function onSelectEmoji(emoji) {
-  console.log(emoji)
-  }
+
 </script>
 
 <template>
-  <AccountMoloGuard>
-    <AdminpanelPatternsMoloAdmin :header_text="`${chatUser.firstName} ${chatUser.lastName}`">
+    <AccountMoloMobile :title="chatUser.firstName">
       <div class="container">
-        <AdminpanelActionsMoloAllChatUsers :users="filteredUsers" />
+        <AccountMoloAllChatUsers :users="filteredUsers" />
         <div class="messages">
-          <AdminpanelMoloMessageList
+          <AccountMoloMessageList
               :messages="messageStore.messages"
               :current-user="currentUser"
               :is-loading="messageStore.isLoading"
           />
-            <AdminpanelMoloInput
-                v-model="messageText"
-                borderRadius="10px"
-                height="10%"
-                placeholder="Введите сообщение"
-                width="100%"
-                @send="sendMessage"
-            />
+          <AdminpanelMoloInput
+              v-model="messageText"
+              borderRadius="10px"
+              height="10%"
+              placeholder="Введите сообщение"
+              width="100%"
+              background-color="white"
+              color="black"
+              @send="sendMessage"
+          />
         </div>
       </div>
-    </AdminpanelPatternsMoloAdmin>
-  </AccountMoloGuard>
+    </AccountMoloMobile>
 </template>
 
 <style scoped>
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  width: 100%;
+  padding-bottom: 100px;
+  justify-content: center;
+  align-items: center;
 }
 
 .messages {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   gap: 20px;
   position: relative;
 }

@@ -60,81 +60,88 @@ onUnmounted(() => {
     <AdminpanelPatternsMoloAdmin header_text="Добро пожаловать в панель администратора">
       <template #more-info>
         <span class="online-status">
-          <a class="dot"></a> Текущий онлайн на сайте: {{ count }}
+          <a class="dot"></a>
+          <span>{{ count }}</span>
         </span>
       </template>
-      <div class="update-info">
-        <div class="update-content">
-          <div class="update">
-            <h2>Обновление 0.2</h2>
-            <ul class="text">
-              <li>Новая панель администратора</li>
-              <li>Переработанная кодовая составляющая</li>
-            </ul>
+      <section class="admin">
+        <div class="update-info">
+          <div class="update-content">
+            <div class="update">
+              <h2>Обновление 0.2</h2>
+              <ul class="text">
+                <li>Новая панель администратора</li>
+                <li>Переработанная кодовая составляющая</li>
+              </ul>
+            </div>
+            <button class="more-button">Подробнее</button>
           </div>
-          <button class="more-button">Подробнее</button>
-        </div>
-        <div class="support-project">
-          <h3>Связь с разработчиком</h3>
-          <div class="social-buttons">
-            <NuxtLink class="social-button vk"
-                      to="https://vk.com/molodec_official"
-            >
-              <img src="/public/adminPanel/vk.png" alt="vk"/>
-            </NuxtLink>
-            <NuxtLink class="social-button telegram"
-                      to="https://t.me/molodec_official_tg"
-            >
-              <img src="/public/adminPanel/telegram.png" alt="telegram"/>
-            </NuxtLink>
-            <NuxtLink class="social-button github"
-                      to="https://github.com/MolodecOfficial"
-            >
-              <img src="/public/adminPanel/github.png" alt="github"/>
-            </NuxtLink>
+          <div class="support-project">
+            <h3>Связь с разработчиком</h3>
+            <div class="social-buttons">
+              <NuxtLink class="social-button vk"
+                        to="https://vk.com/molodec_official"
+              >
+                <img src="/public/adminPanel/vk.png" alt="vk"/>
+              </NuxtLink>
+              <NuxtLink class="social-button telegram"
+                        to="https://t.me/molodec_official_tg"
+              >
+                <img src="/public/adminPanel/telegram.png" alt="telegram"/>
+              </NuxtLink>
+              <NuxtLink class="social-button github"
+                        to="https://github.com/MolodecOfficial"
+              >
+                <img src="/public/adminPanel/github.png" alt="github"/>
+              </NuxtLink>
+            </div>
           </div>
         </div>
-      </div>
-      <hr>
-      <section class="sections">
-        <section class="section-1">
-          <span v-if="totalUnreadMessages > 0" class="sections_messages">
-            У вас {{ totalUnreadMessages }} новых сообщений
-          </span>
-          <span v-else class="sections_messages">
-            У вас нет новых сообщений
-          </span>
-          <AdminpanelActionsMoloPostNotes/>
-        </section>
-        <section class="section-2">
-          <section class="extra_buttons">
-            <span>Экстра кнопки</span>
-            <section class="btns">
-              <AdminpanelActionsMoloPostNewUser displayAs="button" />
-              <AdminpanelActionsMoloPostSchedule />
-              <span>Ваши предложения для функционала можете предложить в тгк</span>
-            </section>
-          </section>
-          <AdminpanelMoloCurrentDate/>
-          <section class="current_version">
-            <span>
-              Текущая версия сайта - 0.2
+        <hr>
+        <div class="sections-container">
+          <div class="sections">
+            <div class="section-1">
+            <span v-if="totalUnreadMessages > 0" class="sections_messages">
+              У вас {{ totalUnreadMessages }} новых сообщений
             </span>
-          </section>
-        </section>
+              <span v-else class="sections_messages">
+              У вас нет новых сообщений
+            </span>
+              <AdminpanelActionsMoloPostNotes/>
+            </div>
+            <div class="section-2">
+              <div class="extra_buttons">
+                <span class="section-title">Экстра кнопки</span>
+                <div class="btns">
+                  <AdminpanelActionsMoloPostNewUser displayAs="button" />
+                  <AdminpanelActionsMoloPostSchedule />
+                  <span class="suggestion-text">Ваши предложения для функционала можете предложить в тгк</span>
+                </div>
+              </div>
+              <AdminpanelMoloCurrentDate/>
+              <div class="current_version">
+              <span>
+                Текущая версия сайта - 0.2
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </AdminpanelPatternsMoloAdmin>
   </AccountMoloGuard>
 </template>
 
-
 <style scoped>
-
+.admin {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 .online-status {
   display: flex;
   align-items: center;
-
 }
 
 .dot {
@@ -158,41 +165,45 @@ onUnmounted(() => {
 .update-info {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  gap: 30px;
+  padding: 0 20px;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .update-content {
   background-color: var(--dk-bg-ins-light-color);
   padding: 20px;
   border-radius: 8px;
-
-  width: 100%;
+  flex: 1;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   text-align: start;
+  min-height: 100%;
 }
 
 .update-content h2 {
   margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .update {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .more-button {
   background-color: #600000;
   border: 1px solid red;
   color: white;
-  padding: 12px 18px;
-  width: fit-content;
-  height: fit-content;
+  padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  align-self: flex-end;
+  margin-left: 15px;
 
   &:hover {
     background-color: red;
@@ -201,16 +212,20 @@ onUnmounted(() => {
 }
 
 .support-project {
-  height: max-content;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   flex-direction: column;
+  align-items: center;
   background-color: var(--dk-bg-ins-light-color);
   padding: 20px;
   border-radius: 8px;
-  width: 15%;
+  width: 240px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.support-project h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 .social-buttons {
@@ -233,7 +248,6 @@ onUnmounted(() => {
     width: 80%;
     height: 80%;
   }
-
 }
 
 .social-button.vk {
@@ -266,77 +280,131 @@ onUnmounted(() => {
   }
 }
 
+.sections-container {
+  padding: 0 20px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .sections {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 20px;
-  padding: 20px;
-  width: 40%;
+  width: 100%;
 }
 
 .section-1 {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+  flex: 1;
+  min-width: 0;
 }
 
 .sections_messages {
   background-color: var(--dk-bg-ins-light-color);
-  padding: 20px;
+  padding: 15px 20px;
   border-radius: 10px;
   text-align: center;
+  font-size: 0.95em;
 }
 
 .section-2 {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+  flex: 1;
+  min-width: 0;
 }
 
 .extra_buttons {
   background-color: var(--dk-bg-ins-light-color);
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  & span {
-    font-weight: bold;
-  }
+  gap: 15px;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 1em;
+  text-align: center;
 }
 
 .btns {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  align-items: start;
+  gap: 12px;
 
+}
+
+.suggestion-text {
+  font-size: 0.85em;
+  color: #aaa;
+  text-align: center;
+  margin-top: 5px;
 }
 
 .current_date,
 .current_version {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   justify-content: center;
   background-color: var(--dk-bg-ins-light-color);
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
+  text-align: center;
 }
+
+.current_version {
+  padding: 15px;
+}
+
 .current_date {
   border: none;
 }
+
 hr {
   border: 1px solid var(--dk-border-color);
+  margin: 0 20px;
 }
 
 .unread-messages {
   color: red;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+
+  .online-status {
+    display: flex;
+    font-size: 10px;
+  }
+
+  .update-info {
+    flex-direction: column;
+
+  }
+  .update {
+    flex-direction: column;
+  }
+
+  .more-button {
+    display: none;
+  }
+  .support-project {
+    width: 100%;
+  }
+
+  .sections {
+    flex-direction: column;
+  }
+
+  .section-1,
+  .section-2 {
+    width: 100%;
+  }
 }
 </style>

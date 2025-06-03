@@ -63,7 +63,7 @@ onMounted(() => {
 </script>
 
 <template>
-<AccountMoloMobile>
+<AccountMoloMobile title="Персональные данные">
   <section class="user-info">
     <section class="user-data">
       <div v-for="(data, idx) in userData"
@@ -101,7 +101,6 @@ onMounted(() => {
 
 <style scoped>
 .user-info {
-  margin-top: 5%;
   width: 80%;
   display: flex;
   flex-direction: column;

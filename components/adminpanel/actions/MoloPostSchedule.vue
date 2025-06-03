@@ -188,9 +188,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <AdminpanelMoloButton type="primary" @click="showScheduleModal = true">
-    Добавить новое расписание
-  </AdminpanelMoloButton>
+    <AdminpanelMoloButton type="primary" @click="showScheduleModal = true">
+      Добавить новое расписание
+    </AdminpanelMoloButton>
+
 
   <AdminpanelMoloModal
       :statusMessage="statusMessage"

@@ -46,7 +46,11 @@ const route = useRoute();
               :class="{ active:
               route.path === '/student/account' ||
               route.path === '/student/personal-data' ||
-              route.path === '/student/about'
+              route.path === '/student/about' ||
+              route.path === '/student/achievements' ||
+              route.path === '/student/rating' ||
+              route.path === '/student/design' ||
+              route.path.includes('/student/messages')
     }">
       <svg
           width="18"
@@ -61,7 +65,11 @@ const route = useRoute();
             :stroke="
             route.path === '/student/account' ||
             route.path === '/student/personal-data' ||
-            route.path === '/student/about'
+            route.path === '/student/about' ||
+            route.path === '/student/achievements' ||
+            route.path === '/student/rating' ||
+            route.path === '/student/design' ||
+            route.path.includes('/student/messages')
             ? 'blue' : 'black'"
             stroke-width="1.25"
             stroke-linecap="round"
@@ -78,12 +86,12 @@ const route = useRoute();
   align-items: center;
   justify-content: center; /* Выравнивание содержимого по центру */
   width: fit-content;
-  padding: 12px 25px;
+  padding: 12px 23px;
   border-radius: 40px;
   height: fit-content;
   position: fixed;
-  top: 95%; /* Перемещаем элемент на 50% от высоты родителя */
-  left: 50%; /* Перемещаем элемент на 50% от ширины родителя */
+  top: 95%;
+  left: 50%;
   transform: translate(-50%, -50%); /* Корректируем позицию относительно центра самого элемента */
   gap: 30px;
   background-color: white;
@@ -97,14 +105,17 @@ const route = useRoute();
   text-decoration: none;
   color: black;
 }
+
 .nav-link .nav-icon {
   width: 22px;
   height: 22px;
 }
+
 .nav-link span {
   font-size: 10px;
   margin-top: 3px; /* Добавляем отступ между иконкой и текстом */
 }
+
 .nav-link.active {
   color: blue; /* Цвет текста для активного пункта */
 }

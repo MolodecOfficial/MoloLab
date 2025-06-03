@@ -60,7 +60,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <AccountMoloMobile>
+  <AccountMoloMobile title="Расписание">
     <div class="schedule-container">
       <section class="date-container">
         <section class="date-info">
@@ -149,10 +149,12 @@ onMounted(() => {
   width: 100%;
   margin: 20px 0;
   box-sizing: border-box;
+  overflow-x: hidden;
+  padding-bottom: 50px;
 }
 
 .date-container {
-  padding: 20px 10px;
+  padding: 20px 30px;
   .date-info {
     border-radius: 15px;
     padding: 20px 0;
@@ -189,17 +191,15 @@ onMounted(() => {
       color: var(--dk-span-color);
       font-size: 1rem;
     }
-
   }
-
 }
 
 .group {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-left: 20px;
   & .groupName {
-    margin-left: 10px;
     width: fit-content;
     padding: 5px 10px;
     border: 1px solid transparent;
@@ -216,7 +216,7 @@ onMounted(() => {
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 20px;
+  padding: 20px 40px 40px 0;
   box-sizing: border-box;
 }
 
@@ -273,18 +273,22 @@ onMounted(() => {
   }
 }
 
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 300px;
-}
 
 .no {
   text-align: center;
   background-color: white;
   padding: 10px 20px;
+}
+
+@media (max-width: 560px) {
+  .date-info {
+    box-sizing: border-box;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 </style>

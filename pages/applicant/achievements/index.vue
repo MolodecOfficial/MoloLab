@@ -6,9 +6,6 @@ import {achievementsList} from '~/stores/achievementsStore';  // Список д
 // Получаем доступ к userStore
 const userStore = useUserStore();
 
-// Берем ID текущего пользователя
-const userId = userStore.userId;
-
 // Логика для загрузки достижений пользователя
 const userAchievements = ref<any[]>([]);
 
@@ -26,8 +23,6 @@ onMounted(async () => {
     }));
   }
 });
-
-useThemeStore()
 
 useHead({
   title: 'УГНТУ | Достижения'

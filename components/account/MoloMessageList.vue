@@ -75,10 +75,10 @@ const getDateString = (date?: Date | string) => {
   font-size: 0.9rem;
   & span {
     color: var(--dk-span-color);
-    border: 1px solid var(--dk-border-color);
+    border: 1px solid #ffffff;
     padding: 5px 10px;
     border-radius: 20px;
-    background-color: var(--dk-bg-ins-color);
+    background-color: whitesmoke;
   }
 }
 
@@ -86,7 +86,7 @@ const getDateString = (date?: Date | string) => {
   height: 580px;
   overflow-y: auto;
   padding: 1rem;
-  background-color: var(--dk-bg-color);
+  background-color: white;
   border-radius: 10px;
   scroll-behavior: smooth;
   &::-webkit-scrollbar {
@@ -109,7 +109,7 @@ const getDateString = (date?: Date | string) => {
   padding: 10px 45px 12px 10px;
   border-radius: 12px;
   max-width: max-content;
-  background-color: var(--dk-bg-ins-color);
+ background-color: #c9c9c9;
 }
 
 .sender-name {
@@ -120,7 +120,7 @@ const getDateString = (date?: Date | string) => {
   margin-left: auto;
   display: flex;
   text-align: start;
-  background-color: var(--dk-bg-ins-light-color);
+  background-color: #eaeaea;
 }
 
 .message-content {

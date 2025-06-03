@@ -1,22 +1,9 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useMessageStore } from '~/stores/messageStore';
 import { useUserStore } from '~/stores/userStore';
 import { useRoute } from 'vue-router';
-import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
-import Picker from 'emoji-mart'
-import data from '@emoji-mart/data'
+import { computed, ref, watch, onBeforeUnmount } from 'vue';
 
-
-const showEmojiPicker = ref(false);
-
-const addEmoji = (emoji: any) => {
-  messageText.value += emoji.native
-  showEmojiPicker.value = false
-}
-
-
-const emit = defineEmits(['send']);
-const messageText = ref('');
 const userStore = useUserStore();
 const messageStore = useMessageStore();
 const route = useRoute();
@@ -33,7 +20,7 @@ const startPolling = () => {
     if (userStore.userId && userId.value) {
       await messageStore.fetchMessages(userId.value);
     }
-  }, 2000); // плавнее 400 мс
+  }, 2000);
 };
 
 const stopPolling = () => {
@@ -43,19 +30,9 @@ const stopPolling = () => {
   }
 };
 
-const scrollToBottom = () => {
-  const el = document.querySelector('.message-list') as HTMLElement;
-  if (el) el.scrollTop = el.scrollHeight;
-};
-
-const sendMessage = async () => {
-  if (!messageText.value.trim()) return;
-  const response = await messageStore.sendMessage(userId.value, messageText.value);
-  messageText.value = '';
-
-  if (response.success) {
-    nextTick(scrollToBottom);
-  }
+const sendMessage = async (messageText: string) => {
+  if (!messageText.trim()) return;
+  await messageStore.sendMessage(userId.value, messageText);
 };
 
 const filteredUsers = computed(() => {
@@ -83,8 +60,6 @@ watch(userId, async (newId) => {
     if (!userStore.users.length) await userStore.getUsers();
     if (!userStore.userId) return;
     await messageStore.fetchMessages(newId);
-    nextTick(scrollToBottom);
-    startPolling();
   } catch (err) {
     console.error('Ошибка загрузки сообщений:', err);
   }
@@ -100,57 +75,24 @@ useHead({
   ),
 });
 
-function onSelectEmoji(emoji) {
-  console.log(emoji)
-  }
 </script>
 
 <template>
-  <AccountMoloGuard>
-    <AdminpanelPatternsMoloAdmin :header_text="`${chatUser.firstName} ${chatUser.lastName}`">
-      <div class="container">
-        <AdminpanelActionsMoloAllChatUsers :users="filteredUsers" />
-        <div class="messages">
-          <AdminpanelMoloMessageList
-              :messages="messageStore.messages"
-              :current-user="currentUser"
-              :is-loading="messageStore.isLoading"
-          />
-            <AdminpanelMoloInput
-                v-model="messageText"
-                borderRadius="10px"
-                height="10%"
-                placeholder="Введите сообщение"
-                width="100%"
-                @send="sendMessage"
-            />
-        </div>
-      </div>
-    </AdminpanelPatternsMoloAdmin>
-  </AccountMoloGuard>
+  <AccountMoloMobile title="Мессенджер">
+    <div class="chat-area">
+      <AccountMoloAllChatUsers :users="filteredUsers"/>
+    </div>
+  </AccountMoloMobile>
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 20px;
-}
 
-.messages {
+.chat-area {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 20px;
-  position: relative;
-}
-
-@media (max-width: 765px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

@@ -92,11 +92,9 @@ const modalTitle = 'Создание нового пользователя'
         <img alt="" src="/public/adminPanel/add.png">
       </template>
       <template v-else>
-        <section class="btn">
           <AdminpanelMoloButton type="primary">
             Добавить пользователя
           </AdminpanelMoloButton>
-        </section>
 
       </template>
     </section>
@@ -158,8 +156,5 @@ const modalTitle = 'Создание нового пользователя'
   }
 }
 
-.btn {
-  display: flex;
-  width: max-content;
-}
+
 </style>

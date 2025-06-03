@@ -13,6 +13,12 @@ const showAddScheduleModal = ref(false);
 const showLessons = ref(false);
 const showTeachers = ref(false);
 const expandedTeachers = ref<Record<string, boolean>>({});
+const isMobile = ref(false);
+
+// Проверка на мобильное устройство
+const checkMobile = () => {
+  isMobile.value = window.innerWidth <= 1024;
+};
 
 const toggleTeacherLessons = (teacherId: string) => {
   expandedTeachers.value[teacherId] = !expandedTeachers.value[teacherId];
@@ -84,6 +90,8 @@ onMounted(() => {
   fetchSchedule();
   fetchLessons()
   fetchTeachers()
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
 });
 
 
@@ -91,6 +99,7 @@ useHead({
   title: 'УГНТУ | Расписание'
 })
 </script>
+
 
 <template>
   <AccountMoloGuard>
@@ -267,12 +276,7 @@ hr {
   margin: 0;
 }
 
-.show-more {
-  background: none;
-  border: none;
-  padding: 0;
-  height: fit-content;
-}
+
 
 
 .lessons {
@@ -337,5 +341,101 @@ hr {
 .show-more img.rotated {
   transform: rotate(180deg);
 }
+@media (max-width: 1100px) {
+  .container {
+    flex-direction: column;
+    gap: 20px;
+  }
 
+  .schedule-controls {
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .schedule-controls {
+    flex-wrap: wrap;
+  }
+
+  .schedule-controls > * {
+    flex: 1 1 45%;
+    min-width: 150px;
+  }
+
+  .show-more {
+    padding: 3px;
+    height: 100%;
+    width: fit-content;
+  }
+
+  .show-more img {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .basic-info {
+    padding: 10px;
+  }
+
+  .controls {
+    gap: 10px;
+  }
+
+  .schedule-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .schedule-controls > * {
+    flex: 1 1 100%;
+  }
+
+  .schedule-section {
+    padding: 12px;
+  }
+
+  .section-header span {
+    font-size: 0.95rem;
+  }
+
+  .lessons span, .teacher-header span {
+    font-size: 0.9rem;
+  }
+
+  .taught-lessons .lesson-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .schedule-section {
+    padding: 10px;
+  }
+
+  .section-header span {
+    font-size: 0.9rem;
+    max-width: 80%;
+  }
+
+  .show-more {
+    padding: 2px;
+  }
+
+  .teacher-header span {
+    font-size: 0.85rem;
+    max-width: 75%;
+  }
+
+  .show-more.small img {
+    width: 1px;
+    height: 11px;
+  }
+
+  .subjects-title {
+    font-size: 0.8rem;
+  }
+}
 </style>

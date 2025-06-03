@@ -237,33 +237,37 @@ img {
 @media (max-width: 560px) {
   .body {
     align-items: center;
-    overflow: hidden;
+    height: 100vh;
   }
   .container {
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: max-content;
+
     align-items: center;
   }
   .container-image {
-    width: 90%;
+    width: 80%;
     height: 40%;
     display: flex;
     justify-content: center;
+    border: none;
   }
 
   .input-container {
     width: 100%;
   }
-
-}
+  .blob {
+    display: none
+  }}
 
 @media (min-width: 561px) and (max-width: 765px) {
   .body {
+    display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: auto;
+    justify-content: center;
   }
-
   .container {
     flex-direction: column;
     width: 100%;
@@ -277,9 +281,46 @@ img {
     justify-content: center;
     border: none;
   }
+
   .input-container {
     width: 100%;
-    height: 80%;
+    height: 50%;
+  }
+  .blob {
+    display: none
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+  }
+  .body {
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    justify-content: center;
+  }
+  .container-image {
+    width: 70%;
+    border: none;
+  }
+  .container {
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .input-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 
@@ -288,6 +329,12 @@ img {
     display: flex;
     flex-direction: column;
     height: 70%;
+  }
+  .body {
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    justify-content: center;
   }
   .container-image {
     width: 70%;

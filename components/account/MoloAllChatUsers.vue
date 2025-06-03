@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/userStore';
-import { useMessageStore } from '~/stores/messageStore';
-import { useRouter } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import {useUserStore} from '~/stores/userStore';
+import {useMessageStore} from '~/stores/messageStore';
+import {useRouter} from 'vue-router';
+import {onMounted, ref} from 'vue';
 
 defineProps({
   users: Array as PropType<any[]>,
@@ -18,7 +18,7 @@ function isCurrentUser(userId: string): boolean {
 }
 
 const goToChat = (userId: string) => {
-  router.push({ path: `/adminPanel/messages/${userId}` });
+  router.push({path: `/student/messages/${userId}`});
   isMobileMenuOpen.value = false;
 };
 
@@ -39,7 +39,7 @@ const toggleMobileMenu = () => {
 </script>
 
 <template>
-  <AdminpanelMoloLoader :is-loading="userStore.loadingUser" />
+  <AdminpanelMoloLoader :is-loading="userStore.loadingUser"/>
 
   <!-- Мобильный хедер -->
   <div class="mobile-header" v-if="!userStore.loadingUser">
@@ -59,32 +59,40 @@ const toggleMobileMenu = () => {
       <h2>Пользователи</h2>
       <button class="close-menu" @click="toggleMobileMenu">
         <svg width="24" height="24" viewBox="0 0 24 24">
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/>
+          <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              fill="currentColor"/>
         </svg>
       </button>
     </div>
 
-    <div v-if="!users || users.length === 0" class="no-users">Нет пользователей</div>
-    <div
-        v-else
-        v-for="user in users"
-        :key="user._id"
-        class="user-item"
-        @click="goToChat(user._id)"
-    >
-      <AdminpanelMoloAvatarGenerator :user-id="user._id" />
-      <div class="user-info">
-        <div v-if="isCurrentUser(user._id)" class="user-name">
-          Избранное
-        </div>
-        <div v-else class="user-name">
-          {{ user.firstName }} {{ user.lastName }}
-          <span v-if="messageStore.unreadCounts[user._id]" class="badge">
+    <div class="user-list-container">
+      <div v-if="!users || users.length === 0" class="no-users">Нет пользователей</div>
+      <div
+          v-else
+          v-for="user in users"
+          :key="user._id"
+          class="user-item"
+          @click="goToChat(user._id)"
+      >
+        <div class="user-info">
+          <div v-if="isCurrentUser(user._id)" class="user-name">
+            Избранное
+          </div>
+          <div v-else class="user-name">
+            {{ user.firstName }} {{ user.lastName }}
+            <span v-if="messageStore.unreadCounts[user._id]" class="badge">
             {{ messageStore.unreadCounts[user._id] }}
           </span>
-        </div>
-        <div class="last-message" v-if="user.lastMessage">
-          {{ user.lastMessage.text?.substring(0, 20) }}...
+          </div>
+          <section class="vector">
+            <svg fill="none" height="10" viewBox="0 0 6 10" width="6" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L1 9" stroke="#7B7B7B" stroke-linecap="round" stroke-width="1.25"/>
+            </svg>
+          </section>
+          <div class="last-message" v-if="user.lastMessage">
+            {{ user.lastMessage.text?.substring(0, 20) }}...
+          </div>
         </div>
       </div>
     </div>
@@ -93,40 +101,47 @@ const toggleMobileMenu = () => {
 
 <style scoped>
 .user-list {
-  border: 1px solid var(--dk-border-color);
   display: flex;
   flex-direction: column;
-  background-color: var(--dk-bg-color);
-  border-radius: 10px;
-  width: fit-content;
+  background-color: transparent;
   box-sizing: border-box;
   transition: transform 0.3s ease;
+  width: 90%;
+
+  &:first-child {
+    border: 1px solid red;
+  }
 }
+
 
 .user-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 15px;
+  padding: 10px 15px;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
+  background-color: white;
 
-.user-item:last-child {
-  border-bottom: none;
+  &:hover {
+    background-color: #e7e7e7;
+  }
 }
-
-.user-item:hover {
-  background-color: #232323;
+.user-list-container {
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .user-info {
   flex: 1;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  & span {
+    color: var(--dk-border-color);
+  }
 }
 
 .user-name {
-  font-weight: 500;
   margin-bottom: 4px;
   display: flex;
   align-items: center;
@@ -159,12 +174,13 @@ const toggleMobileMenu = () => {
 }
 
 .mobile-header {
+  margin-top: 20px;
   display: none;
   align-items: center;
   padding: 12px 15px;
   border-radius: 20px;
-  background-color: var(--dk-bg-color);
-  border: 1px solid var(--dk-border-color);
+  background-color: white;
+  width: 80%;
 }
 
 .mobile-header h2 {
@@ -175,9 +191,10 @@ const toggleMobileMenu = () => {
 .menu-toggle {
   background: none;
   border: none;
-  color: white;
+  color: #000000;
   cursor: pointer;
   padding: 5px;
+  height: 100%;
 }
 
 .mobile-header-inside {
@@ -185,13 +202,13 @@ const toggleMobileMenu = () => {
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  border-bottom: 1px solid var(--dk-border-color);
+  width: 100%;
 }
 
 .close-menu {
   background: none;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   padding: 5px;
 }
@@ -202,7 +219,7 @@ const toggleMobileMenu = () => {
     position: fixed;
     top: 0;
     left: 0;
-    width: 85%;
+    width: 50%;
     height: 100vh;
     z-index: 1000;
     border-radius: 0;
@@ -211,12 +228,16 @@ const toggleMobileMenu = () => {
 
   .user-list.mobile-open {
     transform: translateX(0);
-    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    width: 100%;
+    padding: 20px;
+    background-color: #838383;
   }
 
   .mobile-header,
   .mobile-header-inside {
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .no-users {

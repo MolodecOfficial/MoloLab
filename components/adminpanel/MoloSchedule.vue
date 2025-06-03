@@ -310,4 +310,19 @@ hr {
   border: 1px solid var(--dk-border-color);
 }
 
+@media (max-width: 765px) {
+  .date-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  .group {
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
+  }
+}
+
+
 </style>

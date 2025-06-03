@@ -173,8 +173,6 @@ onMounted(() => {
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
-
-
   & span {
     text-align: center;
     font-weight: bolder;

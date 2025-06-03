@@ -122,8 +122,6 @@ function goToRedirect() {
   height: 100%;
   z-index: -1;
   animation: fadeIn 5s ease-out forwards;
-  border: 1px solid red;
-
 }
 
 .body {

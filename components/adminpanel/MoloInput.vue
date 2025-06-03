@@ -5,7 +5,9 @@ const props = defineProps({
   width: String,
   borderRadius: String,
   height: String,
-  type: String
+  type: String,
+  backgroundColor: String,
+  color: String,
 });
 
 const emit = defineEmits(['update:modelValue', 'send']);
@@ -39,7 +41,13 @@ const handleKeyPress = (event: KeyboardEvent) => {
       @input="handleInput"
       :value="modelValue"
       :placeholder="placeholder"
-      :style="{ width: width, borderRadius: borderRadius, height: height }"
+      :style="{
+        width: width,
+        borderRadius: borderRadius,
+        height: height,
+        backgroundColor: backgroundColor,
+        color: color
+        }"
       @keydown="handleKeyPress"
   ><slot></slot>
 

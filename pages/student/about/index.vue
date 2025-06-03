@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <AccountMoloMobile>
+  <AccountMoloMobile title="Описание приложения">
     <section class="about">
       <section class="about-section">
       <span>

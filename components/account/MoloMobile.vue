@@ -1,10 +1,15 @@
 <script setup lang="ts">
-
+const props = defineProps({
+  title: String
+})
 </script>
 
 <template>
   <section class="student-container">
     <section class="student-main-container">
+      <section class="student-header">
+        {{ title }}
+      </section>
       <slot/>
     </section>
     <AccountMoloNavbar/>
@@ -30,5 +35,12 @@
   gap: 10px;
   height: 100%;
   overflow: auto;
+}
+
+.student-header {
+  margin-top: 10px;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 15px;
 }
 </style>
