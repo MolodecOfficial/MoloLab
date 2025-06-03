@@ -46,10 +46,10 @@
     <!-- Hero section with video background -->
     <section class="hero-section">
       <div class="video-background">
-        <video autoplay loop muted>
-          <source src="../public/over.mp4" type="video/mp4">
-          Ваш браузер не поддерживает видео.
-        </video>
+<!--        <video autoplay loop muted>-->
+<!--          <source src="../public/over.mp4" type="video/mp4">-->
+<!--          Ваш браузер не поддерживает видео.-->
+<!--        </video>-->
         <div class="video-overlay"></div>
       </div>
 
@@ -196,7 +196,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(9, 60, 171, 0.46);
+  background-color: rgba(3, 34, 103, 0.8);
 }
 
 .hero-section {
