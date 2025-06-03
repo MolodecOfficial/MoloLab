@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref, computed} from "vue";
-import {scheduleList} from '~/stores/scheduleStore';
 
 useHead({
   title: 'УГНТУ | Расписание'
@@ -49,9 +48,6 @@ const formattedSelectedDate = computed(() => {
       <section class="schedule-header">
         <span>Расписание занятий</span>
       </section>
-
-      <AccountMoloSchedule/>
-
 
     </section>
   </div>
