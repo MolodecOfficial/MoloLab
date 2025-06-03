@@ -74,6 +74,10 @@ function toggleSort(field: 'generalScore' | 'averageScore') {
   }
   getAllScores();
 }
+
+useHead({
+  title: 'MoloLab | Рейтинг'
+})
 </script>
 
 <template>

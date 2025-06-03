@@ -96,8 +96,9 @@ onMounted(() => {
 
 
 useHead({
-  title: 'УГНТУ | Расписание'
+  title: 'MoloLab | Работа с расписанием'
 })
+
 </script>
 
 

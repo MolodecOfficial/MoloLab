@@ -2,8 +2,8 @@
 import catKiss from 'public/in-progress/kiss.gif'
 
 useHead({
-  title: 'УГНТУ | В разработке'
-});
+  title: 'MoloLab | В разработке'
+})
 
 </script>
 

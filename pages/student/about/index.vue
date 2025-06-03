@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-
+useHead({
+  title: 'MoloLab | О приложении'
+})
 </script>
 
 <template>

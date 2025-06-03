@@ -5,8 +5,8 @@ import { useUserStore } from '~/stores/userStore'
 import Cookies from "js-cookie";
 
 useHead({
-  title: 'УГНТУ | Регистрация аккаунта'
-});
+  title: 'MoloLab | Регистрация аккаунта'
+})
 
 const firstName = ref('');
 const lastName = ref('');

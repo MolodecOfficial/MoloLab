@@ -34,7 +34,7 @@ const updateTime = () => {
 };
 
 useHead({
-  title: 'УГНТУ | Панель администратора'
+  title: 'MoloLab | Панель Администратора'
 })
 
 const totalUnreadMessages = computed(() => {

@@ -60,6 +60,11 @@ onMounted(() => {
     ];
   }
 });
+
+useHead({
+  title: 'MoloLab | Персональные данные'
+})
+
 </script>
 
 <template>

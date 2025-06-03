@@ -27,6 +27,10 @@ function selectTheme(themeId: number) {
   selectedTheme.value = themeId;
   // Здесь можно добавить логику применения темы
 }
+
+useHead({
+  title: 'MoloLab | Оформление'
+})
 </script>
 
 <template>

@@ -4,7 +4,7 @@ import {useUserStore} from '~/stores/userStore';
 
 
 useHead({
-  title: 'УГНТУ | Список пользователей'
+  title: 'MoloLab | Список пользователей'
 })
 
 const userStore = useUserStore();

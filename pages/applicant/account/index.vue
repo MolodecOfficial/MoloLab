@@ -6,7 +6,7 @@ import {useThemeStore} from "~/stores/themeStore";
 
 
 useHead({
-  title: 'УГНТУ | Личный кабинет абитуриента'
+  title: 'MoloLab | Личный кабинет'
 })
 
 const userStore = useUserStore();

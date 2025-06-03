@@ -15,8 +15,8 @@ const userStore = useUserStore()
 const status = ref('')
 
 useHead({
-  title: 'УГНТУ | Вход в аккаунт'
-});
+  title: 'MoloLab | Вход в аккаунт'
+})
 
 onMounted(() => {
   const storedUser = localStorage.getItem('user');

@@ -57,6 +57,10 @@ const sortedLessons = (lessons: any[]) => {
 onMounted(() => {
   fetchSchedule();
 });
+
+useHead({
+  title: 'MoloLab | Расписание'
+})
 </script>
 
 <template>

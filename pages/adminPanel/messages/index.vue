@@ -6,7 +6,7 @@ const userStore = useUserStore()
 const searchQuery = ref('');
 
 useHead({
-  title: 'УГНТУ | Мессенджер'
+  title: 'MoloLab | Мессенджер'
 })
 
 const router = useRouter();

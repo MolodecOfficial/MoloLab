@@ -9,9 +9,8 @@ const status = ref('')
 const route = useRoute()
 
 useHead({
-  title: 'УГНТУ | Личный кабинет студента'
+  title: 'MoloLab | Личный кабинет'
 })
-
 const actions = [
   {
     label: "Сообщения",

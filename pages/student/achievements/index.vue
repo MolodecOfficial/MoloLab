@@ -21,7 +21,7 @@ onMounted(async () => {
 });
 
 useHead({
-  title: 'УГНТУ | Достижения'
+  title: 'MoloLab | Достижения'
 })
 </script>
 
