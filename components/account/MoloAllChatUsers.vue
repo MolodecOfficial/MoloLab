@@ -126,6 +126,7 @@ const toggleMobileMenu = () => {
     background-color: #e7e7e7;
   }
 }
+
 .user-list-container {
   border-radius: 10px;
   overflow: hidden;
@@ -136,6 +137,7 @@ const toggleMobileMenu = () => {
   overflow: hidden;
   display: flex;
   justify-content: space-between;
+
   & span {
     color: var(--dk-border-color);
   }
@@ -214,36 +216,37 @@ const toggleMobileMenu = () => {
 }
 
 
-  .user-list {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100vh;
-    z-index: 1000;
-    border-radius: 0;
-    transform: translateX(-100%);
-  }
+.user-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100vh;
+  z-index: 1000;
+  border-radius: 0;
+  transform: translateX(-100%);
+}
 
-  .user-list.mobile-open {
-    transform: translateX(0);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background-color: #838383;
-  }
+.user-list.mobile-open {
+  transform: translateX(0);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+}
 
-  .mobile-header,
-  .mobile-header-inside {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.mobile-header,
+.mobile-header-inside {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .no-users {
-    padding: 30px 20px;
-  }
+.no-users {
+  padding: 30px 20px;
+}
 
 
 @media (max-width: 576px) {

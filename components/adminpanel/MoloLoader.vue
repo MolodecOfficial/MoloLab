@@ -5,45 +5,38 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="isLoading">
-    <div class="fun-loader">
-      <div class="loader">
-        <div class="dot"></div>
-      </div>
-    </div>
+  <div v-if="isLoading" class="loader-container">
+    <div class="spinner"></div>
   </div>
 </template>
 
 <style scoped>
-.fun-loader {
+.loader-container {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.loader {
-
-  width: 300px;
-  height: 10px;
-  background: #333;
-  border-radius: 50px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-
-  & .dot {
-    width: 0;
-    background: linear-gradient(90deg, #ff6a00, #ab0028);
-    height: 100%;
-    box-shadow: 0 0 10px #ff6a00, 0 0 20px #ab0028;
-    animation: bounce 2s forwards;
-  }
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  animation: spin 1s linear infinite;
 }
 
-@keyframes bounce {
+@keyframes spin {
   0% {
-    width: 0;
+    transform: rotate(0deg);
+    border-top-color: #3498db;
+  }
+  50% {
+    border-top-color: #2980b9;
   }
   100% {
-    width: 100%;
+    transform: rotate(360deg);
+    border-top-color: #3498db;
   }
 }
 </style>
