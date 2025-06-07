@@ -213,8 +213,7 @@ const toggleMobileMenu = () => {
   padding: 5px;
 }
 
-/* Мобильная адаптация */
-@media (max-width: 768px) {
+
   .user-list {
     position: fixed;
     top: 0;
@@ -229,6 +228,8 @@ const toggleMobileMenu = () => {
   .user-list.mobile-open {
     transform: translateX(0);
     width: 100%;
+    display: flex;
+    align-items: center;
     padding: 20px;
     background-color: #838383;
   }
@@ -243,7 +244,7 @@ const toggleMobileMenu = () => {
   .no-users {
     padding: 30px 20px;
   }
-}
+
 
 @media (max-width: 576px) {
   .user-list {

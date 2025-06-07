@@ -3,16 +3,6 @@ import { useMessageStore } from '~/stores/messageStore';
 import { useUserStore } from '~/stores/userStore';
 import { useRoute } from 'vue-router';
 import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
-import Picker from 'emoji-mart'
-import data from '@emoji-mart/data'
-
-
-const showEmojiPicker = ref(false);
-
-const addEmoji = (emoji: any) => {
-  messageText.value += emoji.native
-  showEmojiPicker.value = false
-}
 
 
 const emit = defineEmits(['send']);
@@ -54,7 +44,7 @@ const sendMessage = async () => {
   messageText.value = '';
 
   if (response.success) {
-    nextTick(scrollToBottom);
+    await nextTick(scrollToBottom);
   }
 };
 
@@ -83,7 +73,7 @@ watch(userId, async (newId) => {
     if (!userStore.users.length) await userStore.getUsers();
     if (!userStore.userId) return;
     await messageStore.fetchMessages(newId);
-    nextTick(scrollToBottom);
+    await nextTick(scrollToBottom);
     startPolling();
   } catch (err) {
     console.error('Ошибка загрузки сообщений:', err);
@@ -91,6 +81,15 @@ watch(userId, async (newId) => {
 }, { immediate: true });
 
 onBeforeUnmount(stopPolling);
+
+watch(
+    () => messageStore.messages,
+    async () => {
+      await nextTick();
+      scrollToBottom();
+    },
+    { deep: true }
+);
 
 useHead({
   title: computed(() =>
@@ -100,9 +99,7 @@ useHead({
   ),
 });
 
-function onSelectEmoji(emoji) {
-  console.log(emoji)
-}
+
 </script>
 
 <template>
