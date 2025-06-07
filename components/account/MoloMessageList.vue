@@ -1,6 +1,10 @@
 <script setup lang="ts">
 
+import {ref} from "vue";
+
 const containerRef = ref<HTMLElement | null>(null);
+const showTopButton = ref(false);
+const showBottomButton = ref(false);
 
 const props = defineProps<{
   messages: Array<{
@@ -15,6 +19,39 @@ const props = defineProps<{
   },
   isLoading: boolean
 }>();
+
+// Функции для работы со скроллом
+const scrollToTop = () => {
+  if (containerRef.value) {
+    containerRef.value.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+};
+
+const scrollToBottom = () => {
+  if (containerRef.value) {
+    containerRef.value.scrollTo({
+      top: containerRef.value.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+};
+
+const checkScrollPosition = () => {
+  if (!containerRef.value) return;
+
+  const { scrollTop, scrollHeight, clientHeight } = containerRef.value;
+  const threshold = 50; // Порог в пикселях
+
+  // Проверяем, находимся ли мы вверху
+  showTopButton.value = scrollTop > threshold;
+
+  // Проверяем, находимся ли мы внизу
+  showBottomButton.value = scrollTop + clientHeight < scrollHeight - threshold;
+};
+
 
 const formatDate = (date?: Date | string) => {
   if (!date) return '';
@@ -33,6 +70,21 @@ const getDateString = (date?: Date | string) => {
   const d = new Date(date);
   return d.toDateString();
 };
+
+// Обработчики событий
+onMounted(() => {
+  if (containerRef.value) {
+    containerRef.value.addEventListener('scroll', checkScrollPosition);
+    // Проверяем начальную позицию
+    nextTick(checkScrollPosition);
+  }
+});
+
+onUnmounted(() => {
+  if (containerRef.value) {
+    containerRef.value.removeEventListener('scroll', checkScrollPosition);
+  }
+});
 
 </script>
 
@@ -59,6 +111,29 @@ const getDateString = (date?: Date | string) => {
         </div>
       </div>
     </template>
+
+    <button
+        v-if="showTopButton"
+        class="scroll-button scroll-top-button"
+        @click="scrollToTop"
+        aria-label="Прокрутить в начало"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 20V4M12 4L5 11M12 4L19 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- Кнопка для прокрутки в конец -->
+    <button
+        v-if="showBottomButton"
+        class="scroll-button scroll-bottom-button"
+        @click="scrollToBottom"
+        aria-label="Прокрутить в конец"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 4V20M12 20L19 13M12 20L5 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
   </div>
 </template>
 
@@ -138,5 +213,71 @@ const getDateString = (date?: Date | string) => {
 .load {
   position: absolute;
   display: none;
+}
+
+/* Стили для кнопок навигации */
+.scroll-button {
+  color: black;
+  position: fixed;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.scroll-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-button svg {
+  width: 24px;
+  height: 24px;
+  stroke: #666;
+}
+
+.scroll-top-button {
+  bottom: 100px;
+  right: 30px;
+}
+
+.scroll-bottom-button {
+  bottom: 30px;
+  right: 30px;
+}
+
+/* Адаптация под мобильные устройства */
+@media (max-width: 765px) {
+  .message-list {
+    height: 310px;
+  }
+
+  .scroll-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .scroll-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .scroll-top-button {
+    bottom: 130px;
+    right: 20px;
+  }
+
+  .scroll-bottom-button {
+    bottom: 80px;
+    right: 20px;
+  }
 }
 </style>
