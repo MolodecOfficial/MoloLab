@@ -139,4 +139,12 @@ const getDateString = (date?: Date | string) => {
   position: absolute;
   display: none;
 }
+
+@media (max-width: 765px) {
+  .message-list {
+    height: 310px;
+
+  }
+}
+
 </style>
