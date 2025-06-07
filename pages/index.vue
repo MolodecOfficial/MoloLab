@@ -8,7 +8,7 @@
   <section class="mobile-container">
     <section class="mobile-header">
       <img src="/public/home/MoloLab_no_text.png" alt="" class="icon">
-      <span>Версия 0.16 (Сборка 111)</span>
+      <span>Версия 0.2</span>
     </section>
     <section class="mobile-content">
       <img src="/public/img.png" alt="" class="bg-img">
