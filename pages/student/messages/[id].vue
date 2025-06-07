@@ -95,28 +95,28 @@ useHead({
 </script>
 
 <template>
-    <AccountMoloMobile :title="chatUser.firstName">
-      <div class="container">
-        <AccountMoloAllChatUsers :users="filteredUsers" />
-        <div class="messages">
-          <AccountMoloMessageList
-              :messages="messageStore.messages"
-              :current-user="currentUser"
-              :is-loading="messageStore.isLoading"
-          />
-          <AdminpanelMoloInput
-              v-model="messageText"
-              borderRadius="10px"
-              height="10%"
-              placeholder="Введите сообщение"
-              width="100%"
-              background-color="white"
-              color="black"
-              @send="sendMessage"
-          />
-        </div>
+  <AccountMoloMobile :title="chatUser.firstName">
+    <div class="container">
+      <AccountMoloAllChatUsers :users="filteredUsers" />
+      <div class="messages">
+        <AccountMoloMessageList
+            :messages="messageStore.messages"
+            :current-user="currentUser"
+            :is-loading="messageStore.isLoading"
+        />
+        <AdminpanelMoloInput
+            v-model="messageText"
+            borderRadius="10px"
+            height="10%"
+            placeholder="Введите сообщение"
+            width="100%"
+            background-color="white"
+            color="black"
+            @send="sendMessage"
+        />
       </div>
-    </AccountMoloMobile>
+    </div>
+  </AccountMoloMobile>
 </template>
 
 <style scoped>

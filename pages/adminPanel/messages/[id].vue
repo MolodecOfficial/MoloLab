@@ -102,7 +102,7 @@ useHead({
 
 function onSelectEmoji(emoji) {
   console.log(emoji)
-  }
+}
 </script>
 
 <template>
@@ -116,14 +116,14 @@ function onSelectEmoji(emoji) {
               :current-user="currentUser"
               :is-loading="messageStore.isLoading"
           />
-            <AdminpanelMoloInput
-                v-model="messageText"
-                borderRadius="10px"
-                height="10%"
-                placeholder="Введите сообщение"
-                width="100%"
-                @send="sendMessage"
-            />
+          <AdminpanelMoloInput
+              v-model="messageText"
+              borderRadius="10px"
+              height="10%"
+              placeholder="Введите сообщение"
+              width="100%"
+              @send="sendMessage"
+          />
         </div>
       </div>
     </AdminpanelPatternsMoloAdmin>

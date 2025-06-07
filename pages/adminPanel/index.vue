@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
+import { onMounted, ref, computed } from 'vue';
+import { useMessageStore } from '~/stores/messageStore'; // Импортируем хранилище
 
 const count = ref(0);
-const messageStore = useMessageStore();
+const messageStore = useMessageStore(); // Используем хранилище
+const isInitialized = ref(false); // Флаг инициализации
 
 const fetchCount = async () => {
   try {
@@ -13,6 +15,7 @@ const fetchCount = async () => {
     count.value = 0;
   }
 }
+
 let intervalId: any;
 
 const day = ref()
@@ -37,7 +40,47 @@ useHead({
   title: 'MoloLab | Панель Администратора'
 })
 
-const totalUnreadMessages = computed(() => {
+const initMessageStore = async () => {
+  try {
+    // Восстанавливаем состояние из localStorage перед инициализацией
+    const savedState = localStorage.getItem('messageStoreState');
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState);
+        Object.assign(messageStore.unreadCounts, parsed.unreadCounts || {});
+      } catch (e) {
+        console.error('Failed to load message store state', e);
+      }
+    }
+
+    // Инициализируем WebSocket соединение
+    messageStore.initWebSocket();
+
+    // Загружаем актуальные счетчики с сервера
+    await messageStore.fetchUnreadCounts();
+
+    isInitialized.value = true;
+  } catch (error) {
+    console.error('Ошибка инициализации сообщений:', error);
+  }
+}
+
+// Считаем общее количество непрочитанных сообщений
+const totalUnreadMessages: any = computed(() => {
+  if (!isInitialized.value) {
+    // Пока не инициализированы, показываем сохраненное значение
+    const savedState = localStorage.getItem('messageStoreState');
+    if (savedState) {
+      try {
+        const parsed = JSON.parse(savedState);
+        return Object.values(parsed.unreadCounts || {}).reduce((sum: number, count: number) => sum + count, 0);
+      } catch (e) {
+        return 0;
+      }
+    }
+    return 0;
+  }
+
   return Object.values(messageStore.unreadCounts).reduce((sum, count) => sum + count, 0);
 });
 
@@ -46,13 +89,19 @@ onMounted(() => {
   updateTime();
   intervalId = setInterval(updateTime, 10);
   setInterval(fetchCount, 2000);
-  localStorage.getItem('notes')
+
+  // Инициализируем хранилище сообщений
+  initMessageStore();
 })
 
 onUnmounted(() => {
   clearInterval(intervalId);
-});
 
+  // Закрываем WebSocket при размонтировании
+  if (messageStore.socket) {
+    messageStore.socket.close();
+  }
+});
 </script>
 
 <template>
@@ -101,12 +150,13 @@ onUnmounted(() => {
         <div class="sections-container">
           <div class="sections">
             <div class="section-1">
-            <span v-if="totalUnreadMessages > 0" class="sections_messages">
-              У вас {{ totalUnreadMessages }} новых сообщений
-            </span>
+              <!-- Отображаем количество непрочитанных сообщений -->
+              <span v-if="totalUnreadMessages > 0" class="sections_messages unread-messages">
+                У вас {{ totalUnreadMessages }} новых сообщений
+              </span>
               <span v-else class="sections_messages">
-              У вас нет новых сообщений
-            </span>
+                У вас нет новых сообщений
+              </span>
               <AdminpanelActionsMoloPostNotes/>
             </div>
             <div class="section-2">
@@ -131,6 +181,7 @@ onUnmounted(() => {
     </AdminpanelPatternsMoloAdmin>
   </AccountMoloGuard>
 </template>
+
 
 <style scoped>
 .admin {

@@ -10,7 +10,13 @@ export default defineNuxtConfig({
  ],
 
  nitro: {
-  plugins: ['~/server/index.ts']
+  plugins: ['~/server/index.ts'],
+  experimental: {
+   websocket: true
+  },
+  storage: {
+   'ws:clients': { driver: 'memory' }
+  },
  },
 
  runtimeConfig: {

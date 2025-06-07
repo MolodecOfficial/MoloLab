@@ -83,7 +83,7 @@ const getDateString = (date?: Date | string) => {
 }
 
 .message-list {
-  height: 580px;
+  height: 310px;
   overflow-y: auto;
   padding: 1rem;
   background-color: white;
@@ -109,7 +109,7 @@ const getDateString = (date?: Date | string) => {
   padding: 10px 45px 12px 10px;
   border-radius: 12px;
   max-width: max-content;
- background-color: #c9c9c9;
+  background-color: #c9c9c9;
 }
 
 .sender-name {

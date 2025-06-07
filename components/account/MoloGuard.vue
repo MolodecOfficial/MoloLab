@@ -20,7 +20,7 @@ function goBack() {
 </script>
 
 <template>
-  <div v-if="userStatus === 'Администратор' || userStatus === 'Владелец'">
+  <div v-if="userStatus === 'Преподаватель' || userStatus === 'Администратор' || userStatus === 'Владелец'">
     <slot></slot>
   </div>
   <div v-else class="ban">
