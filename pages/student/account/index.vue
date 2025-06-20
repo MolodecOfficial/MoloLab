@@ -207,7 +207,9 @@ onMounted(() => {
             </svg>
           </template>
         </AccountUIMoloButton>
-        <AccountUIMoloButton to="https://do.rusoil.net/login/index.php" span="Система дистанционного обучения" class="nth-action">
+      </section>
+      <section class="action-section">
+        <AccountUIMoloButton to="https://do.rusoil.net/login/index.php" span="Система дистанционного обучения" class="first-action">
           <template #svg>
             <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15.3619 8.5C14.0779 6.9715 12.1523 6 9.9998 6C7.84733 6 5.92177 6.9715 4.6377 8.5M18.9445 5C16.7472 2.545 13.5541 1 10.0001 1C6.44609 1 3.25295 2.545 1.05566 5M12 13C12 14.1046 11.1046 15 10 15C8.8954 15 8 14.1046 8 13C8 11.8954 8.8954 11 10 11C11.1046 11 12 11.8954 12 13Z" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
