@@ -200,10 +200,26 @@ onMounted(() => {
             </svg>
           </template>
         </AccountUIMoloButton>
-        <AccountUIMoloButton to="/student/achievements" span="Достижения" class="last-action">
+        <AccountUIMoloButton to="/student/achievements" span="Достижения" class="nth-action">
           <template #svg>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9.9998 13C6.68613 13 3.99984 10.3137 3.99984 7C3.99984 3.68629 6.68613 1 9.9998 1C13.3135 1 15.9998 3.68629 15.9998 7C15.9998 10.3137 13.3135 13 9.9998 13ZM9.9998 13L13.6417 18.8281C14.0511 19.4834 15.0646 19.151 15.0064 18.3805L14.859 16.4296C14.8141 15.835 15.4552 15.4344 15.9699 15.7354L17.6588 16.7231C18.3257 17.1132 19.0688 16.348 18.6593 15.6928L15.1574 10.0677M9.9998 13L6.35802 18.8281C5.94857 19.4834 4.93513 19.151 4.99332 18.3805L5.14066 16.4296C5.18556 15.835 4.54452 15.4344 4.02981 15.7354L2.34091 16.7231C1.67393 17.1132 0.9309 16.348 1.34035 15.6928L4.84229 10.0677M11.9998 7C11.9998 8.1046 11.1044 9 9.9998 9C8.8953 9 7.99984 8.1046 7.99984 7C7.99984 5.89543 8.8953 5 9.9998 5C11.1044 5 11.9998 5.89543 11.9998 7Z" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+          </template>
+        </AccountUIMoloButton>
+        <AccountUIMoloButton to="https://do.rusoil.net/login/index.php" span="Система дистанционного обучения" class="nth-action">
+          <template #svg>
+            <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.3619 8.5C14.0779 6.9715 12.1523 6 9.9998 6C7.84733 6 5.92177 6.9715 4.6377 8.5M18.9445 5C16.7472 2.545 13.5541 1 10.0001 1C6.44609 1 3.25295 2.545 1.05566 5M12 13C12 14.1046 11.1046 15 10 15C8.8954 15 8 14.1046 8 13C8 11.8954 8.8954 11 10 11C11.1046 11 12 11.8954 12 13Z" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+          </template>
+        </AccountUIMoloButton>
+        <AccountUIMoloButton to="/student/about" span="О приложении" class="last-action">
+          <template #svg>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
+              <path d="M9 10V14C9 14.5523 9.4477 15 10 15C10.5523 15 11 14.5523 11 14V10C11 9.4477 10.5523 9 10 9C9.4477 9 9 9.4477 9 10Z" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
+              <path d="M11 6C11 5.44772 10.5523 5 10 5C9.4477 5 9 5.44772 9 6C9 6.55229 9.4477 7 10 7C10.5523 7 11 6.55229 11 6Z" stroke="black" stroke-width="1.25" stroke-linecap="round"/>
             </svg>
           </template>
         </AccountUIMoloButton>
