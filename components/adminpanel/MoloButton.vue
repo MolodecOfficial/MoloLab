@@ -3,7 +3,7 @@ const props = defineProps({
   type: {
     type: String,
     default: 'primary',
-    validator: value => [
+    validator: (value: string) => [
       'delete',
       'confirm',
       'cancel',
@@ -39,7 +39,13 @@ button {
   border-radius: 5px;
   padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(0px);
+  }
 }
 
 .button.primary {

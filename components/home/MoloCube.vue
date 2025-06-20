@@ -196,4 +196,10 @@ function handleMouseMove(e: any) {
   opacity: 1;
 }
 
+@media (max-width: 1280px) {
+  .interactive-shape {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 </style>

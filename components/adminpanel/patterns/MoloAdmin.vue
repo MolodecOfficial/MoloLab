@@ -44,7 +44,7 @@ const props = defineProps({
   justify-content: center;
 }
 .admin-main-container {
-  width: 75%;
+  width: 60%;
   min-height: max-content;
   padding: 20px;
   border: 1px solid var(--dk-border-color);
@@ -60,6 +60,17 @@ const props = defineProps({
   & span:first-child {
     font-size: 28px;
     padding: 10px 0;
+  }
+}
+
+@media (max-width: 765px) {
+  .admin-main-container {
+    width: 80%;
+  }
+  .welcome-message {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
   }
 }
 

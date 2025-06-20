@@ -282,6 +282,7 @@ useHead({
   text-align: center;
   background-color: white;
   padding: 10px 20px;
+
 }
 
 @media (max-width: 560px) {

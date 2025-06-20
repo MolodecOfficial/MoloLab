@@ -69,7 +69,7 @@ async function logoutUser() {
   border-radius: 30px;
   margin: 20px auto;
   background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   position: relative;
 }

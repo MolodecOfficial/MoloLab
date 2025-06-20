@@ -418,5 +418,12 @@ hr {
   border-radius: 10px;
 }
 
+@media (max-width: 765px) {
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
 </style>

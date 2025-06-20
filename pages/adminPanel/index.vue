@@ -53,13 +53,7 @@ const initMessageStore = async () => {
       }
     }
 
-    // Инициализируем WebSocket соединение
-    messageStore.initWebSocket();
-
-    // Загружаем актуальные счетчики с сервера
-    await messageStore.fetchUnreadCounts();
-
-    isInitialized.value = true;
+    sInitialized.value = true;
   } catch (error) {
     console.error('Ошибка инициализации сообщений:', error);
   }
@@ -97,10 +91,6 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(intervalId);
 
-  // Закрываем WebSocket при размонтировании
-  if (messageStore.socket) {
-    messageStore.socket.close();
-  }
 });
 </script>
 
