@@ -193,7 +193,7 @@ onMounted(() => {
     </AdminpanelMoloButton>
 
 
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="modalTitle"
       :visible="showScheduleModal"
@@ -299,7 +299,7 @@ onMounted(() => {
         Отмена
       </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

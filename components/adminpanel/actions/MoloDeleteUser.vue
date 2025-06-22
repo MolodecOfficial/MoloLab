@@ -76,7 +76,7 @@ onMounted(() => {
     Запрещено
   </AdminpanelMoloButton>
 
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="deleteTitle"
       :visible="showDeleteModal"
@@ -103,7 +103,7 @@ onMounted(() => {
         Отмена
       </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

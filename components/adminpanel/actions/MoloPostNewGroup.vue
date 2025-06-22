@@ -60,7 +60,7 @@ onMounted(() => {
       Новая группа
     </AdminpanelMoloButton>
 
-    <AdminpanelMoloModal
+    <AdminpanelUIMoloModal
         :visible="openModal"
         :title="modalTitle"
         :statusMessage="statusMessage"
@@ -88,6 +88,6 @@ onMounted(() => {
           Отмена
         </AdminpanelMoloButton>
       </template>
-    </AdminpanelMoloModal>
+    </AdminpanelUIMoloModal>
   </section>
 </template>

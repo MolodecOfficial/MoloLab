@@ -59,7 +59,7 @@ const learningTitle = computed(() => `Добавление информации 
   >
     Выбор обучения
   </AdminpanelMoloButton>
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="learningTitle"
       :visible="showLearningModal"
@@ -118,7 +118,7 @@ const learningTitle = computed(() => `Добавление информации 
       </AdminpanelMoloButton>
     </template>
 
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

@@ -71,7 +71,7 @@ onMounted(async () => {
   <AdminpanelMoloButton v-else type="status">
     Запрещено
   </AdminpanelMoloButton>
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="changeTitle"
       :visible="showStatusModal"
@@ -107,7 +107,7 @@ onMounted(async () => {
       </AdminpanelMoloButton>
     </template>
 
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

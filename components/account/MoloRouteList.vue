@@ -39,72 +39,27 @@ onMounted(() => {
 <template>
   <section class="routeList" :class="{ 'dark-theme': darkTheme }">
     <section class="routeList_container">
-      <NuxtLink class="route" to="/applicant/account">
+      <NuxtLink class="route" to="/student/account">
         <img :src="home" alt="">
         <span>Главная</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/applicant/news">
-        <img :src="news" alt="">
-        <span>Новости</span>
-      </NuxtLink>
-      <NuxtLink class="route" to="/applicant/schedule">
+      <NuxtLink class="route" to="/student/schedule">
         <img :src="schedule" alt="">
         <span>Расписание</span>
       </NuxtLink>
-      <div class="link-container">
-        <NuxtLink class="route">
-          <img :src="learning" alt="" class="icon">
-          <span>Обучение</span>
-        </NuxtLink>
-        <div class="popup-links">
-          <NuxtLink class="popup-link" to="/in-progress">Успеваемость</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Онлайн дисциплины</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Мои работы</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Защита ВКР</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Учебный план</NuxtLink>
-          <NuxtLink class="popup-link" to="/in-progress">Результат освоения ООП</NuxtLink>
-        </div>
-      </div>
-      <NuxtLink class="route" to="/in-progress">
+      <NuxtLink class="route" to="/student/messages">
         <img :src="chat" alt="">
         <span>Сообщения</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/in-progress">
-        <img :src="tracking" alt="">
-        <span>Индивидуальный трек</span>
-      </NuxtLink>
-      <NuxtLink class="route" to="/applicant/achievements">
+      <NuxtLink class="route" to="/student/achievements">
         <img :src="achievements" alt="">
         <span>Достижения</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/applicant/readers-form">
+      <NuxtLink class="route" to="/student/personal-data">
         <img :src="read" alt="">
         <span>Читательский формуляр</span>
       </NuxtLink>
-      <div class="link-container">
-        <NuxtLink class="route">
-          <img :src="money" alt="" class="icon">
-          <span>Финансы</span>
-        </NuxtLink>
-        <div class="popup-links">
-          <NuxtLink class="popup-link" to="/in-progress">Стипендия</NuxtLink>
-          <NuxtLink class="popup-link" to="/applicant/finance/payment">Оплата обучения</NuxtLink>
-          <NuxtLink class="popup-link" to="/applicant/finance/dormitory">Общежитие</NuxtLink>
-        </div>
-      </div>
-      <NuxtLink class="route" to="/applicant/flip-list">
-        <img :src="flipList" alt="">
-        <span>Обходной</span>
-      </NuxtLink>
-      <NuxtLink class="route" to="/applicant/electronic-reception">
-        <img :src="onlineNote" alt="">
-        <span>Электронная приёмная</span>
-      </NuxtLink>
-      <NuxtLink class="route" to="/applicant/resources">
-        <img :src="resources" alt="">
-        <span>Ресурсы</span>
-      </NuxtLink>
-      <NuxtLink class="route" to="/applicant/rating">
+      <NuxtLink class="route" to="/student/rating">
         <img :src="rating" alt="">
         <span>Рейтинг</span>
       </NuxtLink>

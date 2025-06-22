@@ -1,28 +1,58 @@
 <script setup lang="ts">
+import {ref, onMounted} from 'vue';
+import {useUserStore} from '~/stores/userStore';
+import {achievementsList} from '~/stores/achievementsStore';
 
-import {onBeforeMount, ref} from "vue";
+const userStore = useUserStore();
 
-const isHydrated = ref(false);
-const themeStore = useThemeStore();
+const userAchievements = ref<any[]>([]);
 
-onBeforeMount(() => {
-  if (process.client) {
-    themeStore.initTheme();
-    isHydrated.value = true;
+const updatedAchievements = ref<any[]>([]);
+
+onMounted(async () => {
+  await userStore.getUsers();
+  if (userStore.userId) {
+    userAchievements.value = userStore.getUserAchievements(userStore.userId);
+    updatedAchievements.value = achievementsList.map((achievement) => ({
+      ...achievement,
+      obtained: userAchievements.value.some(ach => ach.id === achievement.id),
+    }));
   }
 });
 
-useHead({
-  title: 'MoloLab | Достижения'
-})
 </script>
 
 <template>
-  <template v-if="isHydrated">
-    <ThemesAchievementsRusoil v-if="themeStore.currentTheme === 'rusoil'"/>
-    <ThemesAchievementsRusML v-else-if="themeStore.currentTheme === 'rusml'"/>
-
-  </template>
+  <AccountMoloMobile title="Достижения">
+    <div class="achievements-list">
+      <div
+          v-for="achievement in updatedAchievements"
+          :key="achievement.id"
+          class="achievement-item"
+          :class="{ obtained: achievement.obtained }"
+      >
+        <div class="achievement-content">
+          <div class="achievement-text">
+            <span class="achievement-title"> {{ achievement.title }} </span>
+            <p class="achievement-description">{{ achievement.description }}</p>
+          </div>
+          <div class="achievement-image-container">
+            <img
+                :src="achievement.img"
+                :alt="achievement.title"
+                class="achievement-image"
+                :class="{ obtained: achievement.obtained }"
+            />
+            <div v-if="achievement.obtained" class="obtained-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </AccountMoloMobile>
 </template>
 
 <style scoped>

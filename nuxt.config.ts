@@ -1,33 +1,31 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
- compatibilityDate: '2024-04-03',
- devtools: {enabled: true},
+    compatibilityDate: '2024-04-03', devtools: {enabled: true},
 
- css: [
-  '~/assets/css/styles.scss',
-  '~/assets/css/font/stylesheet.css',
- ],
+    css: ['~/assets/css/styles.scss', '~/assets/css/font/stylesheet.css',],
 
- nitro: {
-  plugins: ['~/server/index.ts'],
-  experimental: {
-   websocket: true
-  },
-  storage: {
-   'ws:clients': { driver: 'memory' }
-  },
- },
+    plugins: [
+        '~/plugins/theme.client.ts'
+    ],
 
- runtimeConfig: {
-  mongodb: process.env.MONGODB_URI,
-  jwt: process.env.JWT_SECRET,
- },
+    nitro: {
+        plugins: ['~/server/index.ts'],
+        experimental: {
+            websocket: true
+        },
+        storage: {
+            'ws:clients': { driver: 'memory' }
+        },
+    },
 
- app: {
-  router: {
-   middleware: ['track-activity']
-  }
- },
- modules: ['@pinia/nuxt']
+    runtimeConfig: {
+        mongodb: process.env.MONGODB_URI, jwt: process.env.JWT_SECRET,
+    },
+
+    app: {
+        router: {
+            middleware: ['track-activity']
+        }
+    }, modules: ['@pinia/nuxt']
 })

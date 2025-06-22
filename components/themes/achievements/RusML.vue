@@ -1,20 +1,16 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
-import {useUserStore} from '~/stores/userStore';  // Импортируем store для пользователя
-import {achievementsList} from '~/stores/achievementsStore';  // Список достижений
+import {useUserStore} from '~/stores/userStore';
+import {achievementsList} from '~/stores/achievementsStore';
 
-// Получаем доступ к userStore
 const userStore = useUserStore();
 
-// Логика для загрузки достижений пользователя
 const userAchievements = ref<any[]>([]);
 
-// Применяем динамическое состояние "получено"
 const updatedAchievements = ref<any[]>([]);
 
-// При монтировании компонента получаем достижения пользователя
 onMounted(async () => {
-  await userStore.getUsers();  // Загружаем пользователей
+  await userStore.getUsers();
   if (userStore.userId) {
     userAchievements.value = userStore.getUserAchievements(userStore.userId);
     updatedAchievements.value = achievementsList.map((achievement) => ({
@@ -23,10 +19,6 @@ onMounted(async () => {
     }));
   }
 });
-
-useHead({
-  title: 'УГНТУ | Достижения'
-})
 
 </script>
 

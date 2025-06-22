@@ -98,7 +98,7 @@ const modalTitle = 'Создание нового пользователя'
 
       </template>
     </section>
-    <AdminpanelMoloModal
+    <AdminpanelUIMoloModal
         :visible="openModal"
         :title="modalTitle"
         @close="openModal = true"
@@ -123,7 +123,7 @@ const modalTitle = 'Создание нового пользователя'
           Отмена
         </AdminpanelMoloButton>
       </template>
-    </AdminpanelMoloModal>
+    </AdminpanelUIMoloModal>
   </section>
 </template>
 

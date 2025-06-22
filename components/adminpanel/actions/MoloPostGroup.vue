@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
     Выбор группы
   </AdminpanelMoloButton>
 
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :title="modalTitle"
       :visible="showGroupsModal"
   >
@@ -107,5 +107,5 @@ onBeforeUnmount(() => {
         Отмена
       </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>

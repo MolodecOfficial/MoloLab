@@ -124,7 +124,7 @@ onMounted(() => {
       </button>
     </section>
 
-    <AdminpanelMoloModal
+    <AdminpanelUIMoloModal
         :visible="isOpen"
         :title="currentNoteIndex !== null ? 'Изменение вашей заметки' : 'Ваша новая заметка'"
     >
@@ -157,7 +157,7 @@ onMounted(() => {
           Отмена
         </AdminpanelMoloButton>
       </template>
-    </AdminpanelMoloModal>
+    </AdminpanelUIMoloModal>
   </section>
 </template>
 

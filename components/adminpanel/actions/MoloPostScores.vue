@@ -77,7 +77,7 @@ onMounted(fetchAvailableSubjects);
     Добавление оценки
   </AdminpanelMoloButton>
 
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="scoresTitle"
       :visible="showScoresModal"
@@ -138,7 +138,7 @@ onMounted(fetchAvailableSubjects);
         Отмена
       </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

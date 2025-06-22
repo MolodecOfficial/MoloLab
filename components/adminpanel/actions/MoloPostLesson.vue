@@ -55,7 +55,7 @@ const submitLesson = async () => {
     Добавить новый предмет
   </AdminpanelMoloButton>
 
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="modalTitle"
       :visible="showLessonModal"
@@ -83,7 +83,7 @@ const submitLesson = async () => {
       Отмена
     </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

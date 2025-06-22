@@ -4,11 +4,6 @@ import {useUserStore} from '~/stores/userStore';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
 import {useThemeStore} from "~/stores/themeStore";
 
-
-useHead({
-  title: 'MoloLab | Личный кабинет'
-})
-
 const userStore = useUserStore();
 const themeStore = useThemeStore()
 const userFirstName = ref('');
@@ -32,7 +27,6 @@ onMounted(() => {
     userEmail.value = userStore.userEmail;
     userStatus.value = userStore.userStatus
   }
-
 });
 
 </script>
@@ -45,7 +39,7 @@ onMounted(() => {
       <section class="user-info__main">
         <section class="user-card">
           <span>
-            Личные данные абитуриента
+            Личные данные студента
           </span>
           <section class="user-card__details">
             <p>ФИО: <code>{{ userFirstName }}</code> <code>{{ userLastName }}</code></p>
@@ -163,23 +157,6 @@ onMounted(() => {
   }
 }
 
-
-.dark-theme header,
-.dark-theme .user-card,
-.dark-theme .specialty-info {
-  background-color: #1e1e1e;
-}
-
-.dark-theme .user-card,
-.dark-theme .specialty-info {
-  border: 1px solid #2c2c2c;
-}
-
-.dark-theme .user-info {
-  background-color: #151515;
-
-}
-
 .additional-links-mobile {
   display: none;
 }
@@ -191,30 +168,6 @@ onMounted(() => {
   margin: 0;
   border-radius: 20px;
   border: 1px solid #e0e0e0;
-}
-
-.dark-theme .container {
-  background-color: #1e1e1e;
-}
-
-.dark-theme .user-info,
-.dark-theme .additional-links {
-  border: 1px solid #2c2c2c;
-}
-
-.dark-theme .user-card__details p {
-  color: #4e45e3;
-  font-weight: bold;
-
-}
-
-.dark-theme .user-card__details code {
-  color: white;
-}
-
-.dark-theme .specialty-info__list span,
-.dark-theme .user-card span {
-  color: #c2c2c2;
 }
 
 @media (max-width: 560px) {

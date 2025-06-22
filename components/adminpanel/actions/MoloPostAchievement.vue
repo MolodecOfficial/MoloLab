@@ -63,7 +63,7 @@ onMounted(async () => {
       @click="() => openAchievementModal(user)">
     Выдать достижение
   </AdminpanelMoloButton>
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="achievementTitle"
       :visible="showAchievementModal"
@@ -105,7 +105,7 @@ onMounted(async () => {
         Отмена
       </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

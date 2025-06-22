@@ -34,7 +34,7 @@ const filteredGroups = computed(() => {
   if (selectedGroup.value === 'Все') {
     return scheduleForDate.value.groups;
   }
-  return scheduleForDate.value.groups.filter(group => group.groupName === selectedGroup.value);
+  return scheduleForDate.value.groups.filter((group: any) => group.groupName === selectedGroup.value);
 });
 
 const sortedLessons = (lessons: any[]) => {
@@ -277,14 +277,6 @@ watch(() => props.scheduleData, () => {
   & .lesson-info:first-child {
     font-weight: lighter;
   }
-}
-
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 300px;
 }
 
 .no {

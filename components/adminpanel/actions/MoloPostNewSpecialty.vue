@@ -65,7 +65,7 @@ const submitSpecialty = async () => {
       Новая специальность
     </AdminpanelMoloButton>
 
-    <AdminpanelMoloModal
+    <AdminpanelUIMoloModal
         :visible="openModal"
         :title="modalTitle"
         :statusMessage="statusMessage"
@@ -93,6 +93,6 @@ const submitSpecialty = async () => {
           Отмена
         </AdminpanelMoloButton>
       </template>
-    </AdminpanelMoloModal>
+    </AdminpanelUIMoloModal>
   </section>
 </template>

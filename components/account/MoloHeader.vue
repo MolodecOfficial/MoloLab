@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import logo from "public/favicon.ico";
 import {computed, onMounted, ref} from "vue";
 import {useUserStore} from "~/stores/userStore";
 import {useThemeStore} from "~/stores/themeStore";
@@ -32,7 +31,7 @@ async function logoutUser() {
   try {
     localStorage.removeItem('user')
     userStore.clearUser()
-    await router.push('/login/applicant')
+    await router.push('/login/student')
   } catch (error) {
     console.error('Ошибка при выходе из аккаунта:', error)
   }
@@ -45,15 +44,15 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 
 <template>
   <section class="header_container">
-    <NuxtLink to="/" class="logoSection">
-      <img :src="logo" alt="">
-      <span>УГНТУ</span>
+    <NuxtLink to="/student/account" class="logoSection">
+      <img src="/public/account/choice/RusML.png" alt="">
+      <span>RUSML</span>
     </NuxtLink>
     <section class="hello">
         <span class="greetings">
           {{ greetings }}
         </span>
-      <button @click="themeStore.toggleTheme()">Сменить тему</button>
+      <NuxtLink class="change" to="/student/design">Сменить тему</NuxtLink>
       <button @click="logoutUser">Выйти</button>
     </section>
   </section>
@@ -61,22 +60,6 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
 
 <style scoped>
 
-
-.dark-theme .header_container {
-  background-color: #1e1e1e;
-}
-
-.dark-theme .greetings {
-  color: white;
-}
-
-.dark-theme .hello button {
-  color: #ffffff;
-}
-
-.dark-theme .hello button:hover {
-  color: #bb86fc;
-}
 .header_container {
   display: flex;
   flex-direction: row;
@@ -102,18 +85,6 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
     color: #123e98;
     padding-left: 6px;
   }
-}
-
-.dark-theme .greetings {
-  color: white;
-}
-
-.dark-theme .hello button {
-  color: #ffffff;
-}
-
-.dark-theme .hello button:hover {
-  color: #bb86fc;
 }
 
 .hello {
@@ -144,6 +115,16 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.change {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
 }
 
 @media (max-width: 560px) {
@@ -190,13 +171,6 @@ const greetings = computed(() => `Привет, ${firstName.value} ${lastName.va
       font-size: 30px ;
     }
   }
-}
-
-@media (min-width: 766px) and (max-width: 1280px) {
-
-}
-@media (min-width: 1281px) and (max-width: 1920px) {
-
 }
 
 </style>

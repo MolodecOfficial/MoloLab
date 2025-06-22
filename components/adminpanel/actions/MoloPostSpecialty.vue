@@ -64,7 +64,7 @@ onMounted(() =>{
   >
     Выбор специальности
   </AdminpanelMoloButton>
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
     :statusMessage="statusMessage"
     :title="specialtyTitle"
     :visible="showSpecialtyModal"
@@ -104,7 +104,7 @@ onMounted(() =>{
       </AdminpanelMoloButton>
     </template>
 
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>

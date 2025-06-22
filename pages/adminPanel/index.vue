@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { onMounted, ref, computed } from 'vue';
-import { useMessageStore } from '~/stores/messageStore'; // Импортируем хранилище
+import { useMessageStore } from '~/stores/messageStore';
 
 const count = ref(0);
-const messageStore = useMessageStore(); // Используем хранилище
-const isInitialized = ref(false); // Флаг инициализации
+const messageStore = useMessageStore();
+const isInitialized = ref(false);
 
 const fetchCount = async () => {
   try {
@@ -53,7 +53,7 @@ const initMessageStore = async () => {
       }
     }
 
-    sInitialized.value = true;
+    isInitialized.value = true;
   } catch (error) {
     console.error('Ошибка инициализации сообщений:', error);
   }
@@ -417,7 +417,7 @@ hr {
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1020px) {
 
   .online-status {
     display: flex;

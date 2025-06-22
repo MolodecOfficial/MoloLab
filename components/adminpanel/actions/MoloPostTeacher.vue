@@ -83,7 +83,7 @@ const submitTeacher = async () => {
     Добавить нового преподавателя
   </AdminpanelMoloButton>
 
-  <AdminpanelMoloModal
+  <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="modalTitle"
       :visible="showTeacherModal"
@@ -122,7 +122,7 @@ const submitTeacher = async () => {
         Отмена
       </AdminpanelMoloButton>
     </template>
-  </AdminpanelMoloModal>
+  </AdminpanelUIMoloModal>
 </template>
 
 <style scoped>
