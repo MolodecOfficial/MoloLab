@@ -70,12 +70,12 @@ onMounted(fetchAvailableSubjects);
 </script>
 
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
       type="scores"
       @click="openScoresModal(user)"
   >
     Добавление оценки
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
 
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
@@ -85,17 +85,17 @@ onMounted(fetchAvailableSubjects);
   >
     <template #select>
       <label for="course-select">Курс:</label>
-      <AdminpanelMoloSelect v-model="selectedCourse" class="select">
+      <AdminpanelUIMoloSelect v-model="selectedCourse" class="select">
         <option value="" disabled>Выберите курс</option>
         <option value="firstCourse">1 курс</option>
         <option value="secondCourse">2 курс</option>
         <option value="thirdCourse">3 курс</option>
         <option value="fourthCourse">4 курс</option>
         <option value="fifthCourse">5 курс</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <label for="subject-select">Предмет:</label>
-      <AdminpanelMoloSelect v-model="selectedSubject" class="select">
+      <AdminpanelUIMoloSelect v-model="selectedSubject" class="select">
         <option value="" disabled>Выберите предмет</option>
         <option
             v-for="subject in availableSubjects"
@@ -104,26 +104,26 @@ onMounted(fetchAvailableSubjects);
         >
           {{ subject.name }}
         </option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <label for="score-select">Оценка:</label>
-      <AdminpanelMoloSelect v-model.number="selectedScore" class="select">
+      <AdminpanelUIMoloSelect v-model.number="selectedScore" class="select">
         <option value="" disabled>Выберите оценку</option>
         <option :value="5">Отлично</option>
         <option :value="4">Хорошо</option>
         <option :value="3">Удовлетворительно</option>
         <option :value="2">Неудовлетворительно</option>
         <option :value="1">Плохо</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
     </template>
 
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="confirm"
           @click="updateUserScores"
       >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -131,12 +131,12 @@ onMounted(fetchAvailableSubjects);
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showScoresModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

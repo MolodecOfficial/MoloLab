@@ -440,9 +440,11 @@ export const useUserStore = defineStore('user', () => {
         }
         console.log('Инициализация userStore...')
         if (currentUser.value) {
-            return;
+
+            return
         }
         if (process.client && !currentUser.value) {
+            console.log('Инициализация завершена!');
             const savedUser = localStorage.getItem('user');
             if (savedUser) {
                 const user = JSON.parse(savedUser);

@@ -129,19 +129,19 @@ onMounted(() => {
         :title="currentNoteIndex !== null ? 'Изменение вашей заметки' : 'Ваша новая заметка'"
     >
       <template #body>
-        <AdminpanelMoloInput
+        <AdminpanelUIMoloInput
             v-model="newBody"
             class="input"
             :placeholder="currentNoteIndex !== null ? 'Введите новый текст...' : 'Введите текст заметки...'"
         />
       </template>
       <template #confirm-button>
-        <AdminpanelMoloButton
+        <AdminpanelUIMoloButton
             type="confirm"
             @click="currentNoteIndex !== null ? saveEdit() : addNote()"
         >
           {{ currentNoteIndex !== null ? 'Сохранить' : 'Добавить' }}
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
 
       <template #status>
@@ -150,12 +150,12 @@ onMounted(() => {
         </span>
       </template>
       <template #cancel-button>
-        <AdminpanelMoloButton
+        <AdminpanelUIMoloButton
             type="cancel"
             @click="closeModal"
         >
           Отмена
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
     </AdminpanelUIMoloModal>
   </section>

@@ -74,7 +74,7 @@ function goToRedirect() {
             <span class="hello"> Вход в систему учебной части </span>
             <span>Ещё не зарегистрированы?</span>
             <p class="not_login">
-              <AdminpanelMoloButton type="confirm" @click="goToRedirect">Зарегистрироваться</AdminpanelMoloButton>
+              <AdminpanelUIMoloButton type="confirm" @click="goToRedirect">Зарегистрироваться</AdminpanelUIMoloButton>
               |
               <NuxtLink class="redirect" to="/">Вернуться на главную</NuxtLink>
             </p>

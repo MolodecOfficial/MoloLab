@@ -56,9 +56,9 @@ onMounted(() => {
 
 <template>
   <section class="add">
-    <AdminpanelMoloButton @click="openModal = true">
+    <AdminpanelUIMoloButton @click="openModal = true">
       Новая группа
-    </AdminpanelMoloButton>
+    </AdminpanelUIMoloButton>
 
     <AdminpanelUIMoloModal
         :visible="openModal"
@@ -67,7 +67,7 @@ onMounted(() => {
         @close="openModal = false"
     >
       <template #body>
-        <AdminpanelMoloInput
+        <AdminpanelUIMoloInput
             v-model="groupName"
             placeholder="Название группы"
         />
@@ -78,15 +78,15 @@ onMounted(() => {
       </template>
 
       <template #confirm-button>
-        <AdminpanelMoloButton type="confirm" @click="submitGroup" :disabled="isSubmitting">
+        <AdminpanelUIMoloButton type="confirm" @click="submitGroup" :disabled="isSubmitting">
           Подтвердить
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
 
       <template #cancel-button>
-        <AdminpanelMoloButton type="cancel" @click="openModal = false">
+        <AdminpanelUIMoloButton type="cancel" @click="openModal = false">
           Отмена
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
     </AdminpanelUIMoloModal>
   </section>

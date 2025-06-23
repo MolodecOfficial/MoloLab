@@ -65,16 +65,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
       v-if="user.email !== 'MolodecOfficial'"
       class="delete-button"
       type="delete"
       @click="() => openDeleteModal(user)">
     Удалить
-  </AdminpanelMoloButton>
-  <AdminpanelMoloButton v-else type="delete">
+  </AdminpanelUIMoloButton>
+  <AdminpanelUIMoloButton v-else type="delete">
     Запрещено
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
 
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
@@ -83,12 +83,12 @@ onMounted(() => {
       @close="showDeleteModal = false"
   >
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="confirm"
           @click="deleteUser(selectedUserId)"
       >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -96,12 +96,12 @@ onMounted(() => {
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showDeleteModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

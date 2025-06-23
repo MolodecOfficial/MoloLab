@@ -1,12 +1,9 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useMessageStore } from '~/stores/messageStore';
 import { useUserStore } from '~/stores/userStore';
 import { useRoute } from 'vue-router';
-import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
+import { computed, ref, watch, onBeforeUnmount } from 'vue';
 
-
-const emit = defineEmits(['send']);
-const messageText = ref('');
 const userStore = useUserStore();
 const messageStore = useMessageStore();
 const route = useRoute();
@@ -23,7 +20,7 @@ const startPolling = () => {
     if (userStore.userId && userId.value) {
       await messageStore.fetchMessages(userId.value);
     }
-  }, 2000); // плавнее 400 мс
+  }, 2000);
 };
 
 const stopPolling = () => {
@@ -33,19 +30,9 @@ const stopPolling = () => {
   }
 };
 
-const scrollToBottom = () => {
-  const el = document.querySelector('.message-list') as HTMLElement;
-  if (el) el.scrollTop = el.scrollHeight;
-};
-
-const sendMessage = async () => {
-  if (!messageText.value.trim()) return;
-  const response = await messageStore.sendMessage(userId.value, messageText.value);
-  messageText.value = '';
-
-  if (response.success) {
-    await nextTick(scrollToBottom);
-  }
+const sendMessage = async (messageText: string) => {
+  if (!messageText.trim()) return;
+  await messageStore.sendMessage(userId.value, messageText);
 };
 
 const filteredUsers = computed(() => {
@@ -73,23 +60,12 @@ watch(userId, async (newId) => {
     if (!userStore.users.length) await userStore.getUsers();
     if (!userStore.userId) return;
     await messageStore.fetchMessages(newId);
-    await nextTick(scrollToBottom);
-    startPolling();
   } catch (err) {
     console.error('Ошибка загрузки сообщений:', err);
   }
 }, { immediate: true });
 
 onBeforeUnmount(stopPolling);
-
-watch(
-    () => messageStore.messages,
-    async () => {
-      await nextTick();
-      scrollToBottom();
-    },
-    { deep: true }
-);
 
 useHead({
   title: computed(() =>
@@ -99,55 +75,24 @@ useHead({
   ),
 });
 
-
 </script>
 
 <template>
-  <AccountMoloGuard>
-    <AdminpanelPatternsMoloAdmin :header_text="`${chatUser.firstName} ${chatUser.lastName}`">
-      <div class="container">
-        <AdminpanelFeaturesMoloAllChatUsers :users="filteredUsers" />
-        <div class="messages">
-          <AdminpanelMoloMessageList
-              :messages="messageStore.messages"
-              :current-user="currentUser"
-              :is-loading="messageStore.isLoading"
-          />
-          <AdminpanelUIMoloInput
-              v-model="messageText"
-              borderRadius="10px"
-              height="10%"
-              placeholder="Введите сообщение"
-              width="100%"
-              @send="sendMessage"
-          />
-        </div>
-      </div>
-    </AdminpanelPatternsMoloAdmin>
-  </AccountMoloGuard>
+  <AccountPatternsMoloAccount header="Мессенджер">
+    <div class="chat-area">
+      <AccountMoloAllChatUsersRML :users="filteredUsers"/>
+    </div>
+  </AccountPatternsMoloAccount>
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 20px;
-}
 
-.messages {
+.chat-area {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  gap: 20px;
-  position: relative;
-}
-
-@media (max-width: 765px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
+  width: 80%;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

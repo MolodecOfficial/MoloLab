@@ -51,9 +51,9 @@ const submitLesson = async () => {
 </script>
 
 <template>
-  <AdminpanelMoloButton type="primary" @click="showLessonModal = true">
+  <AdminpanelUIMoloButton type="primary" @click="showLessonModal = true">
     Добавить новый предмет
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
 
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
@@ -62,16 +62,16 @@ const submitLesson = async () => {
       @close="showLessonModal = false"
   >
     <template #body>
-      <AdminpanelMoloInput
+      <AdminpanelUIMoloInput
           v-model="lessonName"
           placeholder="Название предмета"
       />
     </template>
 
     <template #confirm-button>
-      <AdminpanelMoloButton type="confirm" @click="submitLesson">
+      <AdminpanelUIMoloButton type="confirm" @click="submitLesson">
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -79,9 +79,9 @@ const submitLesson = async () => {
     </template>
 
     <template #cancel-button>
-    <AdminpanelMoloButton type="cancel" @click="showLessonModal = false">
+    <AdminpanelUIMoloButton type="cancel" @click="showLessonModal = false">
       Отмена
-    </AdminpanelMoloButton>
+    </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

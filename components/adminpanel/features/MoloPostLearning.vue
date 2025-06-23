@@ -53,12 +53,12 @@ const learningTitle = computed(() => `Добавление информации 
 </script>
 
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
       type="learning"
       @click="openLearningModal(user)"
   >
     Выбор обучения
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="learningTitle"
@@ -67,25 +67,25 @@ const learningTitle = computed(() => `Добавление информации 
   >
     <template #select>
       <label for="learning-select">Обучение:</label>
-      <AdminpanelMoloSelect
+      <AdminpanelUIMoloSelect
           v-model="selectedLearning"
           class="select"
       >
         <option value="Очное">Очное</option>
         <option value="Заочное">Заочное</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <label for="form-select">Форма обучения:</label>
-      <AdminpanelMoloSelect
+      <AdminpanelUIMoloSelect
           v-model="selectedForm"
           class="select"
       >
         <option value="Коммерция">Коммерция</option>
         <option value="Бюджет">Бюджет</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <label for="course-select">Курс:</label>
-      <AdminpanelMoloSelect
+      <AdminpanelUIMoloSelect
           v-model="selectedCourse"
           class="select"
       >
@@ -94,15 +94,15 @@ const learningTitle = computed(() => `Добавление информации 
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
     </template>
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="confirm"
           @click="updateLearningDetails"
       >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -110,12 +110,12 @@ const learningTitle = computed(() => `Добавление информации 
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showLearningModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
   </AdminpanelUIMoloModal>

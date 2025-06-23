@@ -110,15 +110,15 @@ useHead({
           <AdminpanelMoloCurrentDate/>
           <section class="controls">
             <div class="schedule-controls">
-              <AdminpanelActionsMoloPostSchedule @saved="handleScheduleSaved"/>
-              <AdminpanelMoloButton>
+              <AdminpanelFeaturesMoloPostSchedule @saved="handleScheduleSaved"/>
+              <AdminpanelUIMoloButton>
                 Изменить существующее расписание
-              </AdminpanelMoloButton>
+              </AdminpanelUIMoloButton>
             </div>
             <hr>
             <div class="schedule-controls">
-              <AdminpanelActionsMoloPostLesson @lesson-added="fetchLessons"/>
-              <AdminpanelActionsMoloPostTeacher @teacher-added="fetchTeachers"/>
+              <AdminpanelFeaturesMoloPostLesson @lesson-added="fetchLessons"/>
+              <AdminpanelFeaturesMoloPostTeacher @teacher-added="fetchTeachers"/>
             </div>
           </section>
 
@@ -189,7 +189,7 @@ useHead({
 
         </section>
 
-        <AdminpanelMoloModal
+        <AdminpanelUIMoloModal
             :visible="showAddScheduleModal"
             @close="showAddScheduleModal = false"
         />

@@ -65,18 +65,18 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
       type="group"
       @click="() => openGroupsModal(user)">
     Выбор группы
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
 
   <AdminpanelUIMoloModal
       :title="modalTitle"
       :visible="showGroupsModal"
   >
     <template #body>
-      <AdminpanelMoloSelect
+      <AdminpanelUIMoloSelect
           class="select"
           v-model="selectedGroup"
       >
@@ -84,28 +84,28 @@ onBeforeUnmount(() => {
         <option v-for="group in groups" :value="group._id" :key="group._id">
           {{ group.name }}
         </option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
     </template>
 
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
         type="confirm"
         @click="assignGroup"
         >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
       {{ statusMessage }}
     </template>
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showGroupsModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

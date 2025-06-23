@@ -61,9 +61,9 @@ const submitSpecialty = async () => {
 
 <template>
   <section class="add">
-    <AdminpanelMoloButton @click="openModal = true">
+    <AdminpanelUIMoloButton @click="openModal = true">
       Новая специальность
-    </AdminpanelMoloButton>
+    </AdminpanelUIMoloButton>
 
     <AdminpanelUIMoloModal
         :visible="openModal"
@@ -72,16 +72,16 @@ const submitSpecialty = async () => {
         @close="openModal = false"
     >
       <template #body>
-        <AdminpanelMoloInput v-model="specialtyForm.name" placeholder="Название специальности" />
-        <AdminpanelMoloInput v-model="specialtyForm.direction" placeholder="Направление" />
-        <AdminpanelMoloInput v-model="specialtyForm.code" placeholder="Код специальности" />
-        <AdminpanelMoloInput v-model="specialtyForm.faculty" placeholder="Факультет" />
+        <AdminpanelUIMoloInput v-model="specialtyForm.name" placeholder="Название специальности" />
+        <AdminpanelUIMoloInput v-model="specialtyForm.direction" placeholder="Направление" />
+        <AdminpanelUIMoloInput v-model="specialtyForm.code" placeholder="Код специальности" />
+        <AdminpanelUIMoloInput v-model="specialtyForm.faculty" placeholder="Факультет" />
       </template>
 
       <template #confirm-button>
-        <AdminpanelMoloButton type="confirm" @click="submitSpecialty" :disabled="isSubmitting">
+        <AdminpanelUIMoloButton type="confirm" @click="submitSpecialty" :disabled="isSubmitting">
           Подтвердить
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
 
       <template #status>
@@ -89,9 +89,9 @@ const submitSpecialty = async () => {
       </template>
 
       <template #cancel-button>
-        <AdminpanelMoloButton type="cancel" @click="openModal = false">
+        <AdminpanelUIMoloButton type="cancel" @click="openModal = false">
           Отмена
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
     </AdminpanelUIMoloModal>
   </section>

@@ -14,76 +14,35 @@ const otherThemes = computed(() => {
 </script>
 
 <template>
-  <AccountMoloHeader/>
-  <div class="container">
-    <AccountMoloRouteList/>
-    <section class="achievements-container">
-      <section class="achievements-header">
-        <span>Ваше оформление!</span>
-      </section>
+  <AccountPatternsMoloAccount header="Оформление">
+    <div class="current-design">
+      <span>Текущий стиль оформления - {{ themeStore.selectedThemeName }}</span>
+      <img
+          :src="themeStore.selectedThemePic"
+          :alt="themeStore.selectedThemeName"
+          class="current-theme-img"
+      />
+    </div>
 
-      <div class="current-design">
-        <span>Текущий стиль оформления - {{ themeStore.selectedThemeName }}</span>
+    <section class="choices">
+      <button
+          v-for="theme in otherThemes"
+          :key="theme.id"
+          @click="selectTheme(theme.id)"
+          class="theme-button"
+      >
+        Сменить тему на {{ theme.name }}
         <img
-            :src="themeStore.selectedThemePic"
-            :alt="themeStore.selectedThemeName"
-            class="current-theme-img"
+            :src="theme.img"
+            :alt="theme.name"
+            class="theme-button-img"
         />
-      </div>
-
-      <section class="choices">
-        <button
-            v-for="theme in otherThemes"
-            :key="theme.id"
-            @click="selectTheme(theme.id)"
-            class="theme-button"
-        >
-          Сменить тему на {{ theme.name }}
-          <img
-              :src="theme.img"
-              :alt="theme.name"
-              class="theme-button-img"
-          />
-        </button>
-      </section>
+      </button>
     </section>
-  </div>
+  </AccountPatternsMoloAccount>
 </template>
 
 <style scoped>
-.container {
-  overflow: hidden;
-  display: flex;
-  background-color: white;
-  min-height: fit-content;
-}
-
-.achievements-container {
-  width: 100%;
-  background-color: rgba(237, 244, 255, 0.82);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 30px;
-  min-height: 93vh;
-  border-top-left-radius: 20px;
-  border: 1px solid #e0e0e0;
-  padding-bottom: 30px;
-}
-
-.achievements-header {
-  background-color: #ffffff;
-  width: 90%;
-  height: 12vh;
-  margin-top: 74px;
-  display: flex;
-  justify-content: center;
-  border-radius: 20px;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-}
 
 .achievements-header span {
   font-size: 30px;

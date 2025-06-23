@@ -23,129 +23,32 @@ onMounted(async () => {
 </script>
 
 <template>
-  <AccountMoloHeader/>
-  <div class="container">
-    <AccountMoloRouteList />
-    <section class="achievements-container">
-      <section class="achievements-header">
-        <span>Ваши достижения!</span>
-      </section>
-      <div class="achievements-list">
-        <div
-            v-for="achievement in updatedAchievements"
-            :key="achievement.id"
-            class="achievement-item"
+  <AccountPatternsMoloAccount header="Ваши достижения">
+    <div class="achievements-list">
+      <div
+          v-for="achievement in updatedAchievements"
+          :key="achievement.id"
+          class="achievement-item"
+          :class="{ obtained: achievement.obtained }"
+      >
+        <img
+            :src="achievement.img"
+            :alt="achievement.title"
+            class="achievement-image"
             :class="{ obtained: achievement.obtained }"
-        >
-          <img
-              :src="achievement.img"
-              :alt="achievement.title"
-              class="achievement-image"
-              :class="{ obtained: achievement.obtained }"
-          />
-          <div class="achievement-text">
-            <h3>{{ achievement.title }}</h3>
-            <p>{{ achievement.description }}</p>
-          </div>
-
+        />
+        <div class="achievement-text">
+          <h3>{{ achievement.title }}</h3>
+          <p>{{ achievement.description }}</p>
         </div>
+
       </div>
-    </section>
-  </div>
+    </div>
+  </AccountPatternsMoloAccount>
+
 </template>
 
 <style scoped>
-.container {
-  overflow: hidden;
-  display: flex;
-  height: 100%;
-}
-
-.dark-theme .container {
-  background-color: #1e1e1e;
-}
-
-@keyframes load {
-  0% {
-    color: #2c2c2c;
-  }
-  50% {
-    color: #9c9c9c;
-  }
-  100% {
-    color: #2c2c2c;
-  }
-}
-
-
-.dark-theme .achievements-container {
-  background-color: #151515;
-  border: 1px solid #2c2c2c;
-}
-
-.dark-theme .achievements-header {
-  background-color: #1e1e1e;
-  border: 1px solid #2c2c2c;
-
-  & span {
-    color: white;
-  }
-}
-
-.dark-theme .achievement-item {
-  background-color: #1e1e1e;
-
-  & h3 {
-    color: white;
-  }
-
-  & p {
-    color: white;
-  }
-}
-
-.dark-theme .achievement-item.obtained {
-  border-left: 5px solid #28a745; /* Зеленая полоска для полученных достижений */
-
-  & h3, p {
-    color: #1a1a1a;
-  }
-}
-
-.achievements-container {
-  width: 100%;
-  background-color: rgba(237, 244, 255, 0.82);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 30px;
-  min-height: 93vh;
-  border-top-left-radius: 20px;
-  border: 1px solid #e0e0e0;
-}
-
-.achievements-header {
-  background-color: #ffffff;
-  width: 90%;
-  height: 12vh;
-  margin-top: 74px;
-  display: flex;
-  justify-content: center;
-  border-radius: 20px;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
-
-  & span {
-    font-size: 30px;
-    color: #3b3b7f;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
 
 .achievements-list {
   width: 90%;
@@ -255,6 +158,8 @@ p {
   }
 
   .achievements-list {
+    width: min-content;
+    height: min-content;
     display: flex;
     justify-content: center;
     align-items: center;

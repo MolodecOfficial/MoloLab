@@ -188,9 +188,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <AdminpanelMoloButton type="primary" @click="showScheduleModal = true">
+    <AdminpanelUIMoloButton type="primary" @click="showScheduleModal = true">
       Добавить новое расписание
-    </AdminpanelMoloButton>
+    </AdminpanelUIMoloButton>
 
 
   <AdminpanelUIMoloModal
@@ -201,66 +201,66 @@ onMounted(() => {
   >
     <template #select>
       <label>Дата:</label>
-      <AdminpanelMoloInput v-model="selectedDate" type="date"/>
+      <AdminpanelUIMoloInput v-model="selectedDate" type="date"/>
 
       <label>Группа:</label>
-      <AdminpanelMoloSelect v-model="selectedGroup">
+      <AdminpanelUIMoloSelect v-model="selectedGroup">
         <option disabled :value="null">Выберите группу</option>
         <option v-for="(group, idx) in sortedGroups" :key="idx" :value="group.name">{{ group.name }}</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <label>Предмет:</label>
-      <AdminpanelMoloSelect v-model="selectedSubject">
+      <AdminpanelUIMoloSelect v-model="selectedSubject">
         <option disabled :value="null">Выберите предмет</option>
         <option v-for="(subject, i) in subjects" :key="i" :value="subject">
           {{ subject }}
         </option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
 
       <label>Есть ли деление на подгруппы?</label>
-      <AdminpanelMoloSelect v-model="selectedCommon">
+      <AdminpanelUIMoloSelect v-model="selectedCommon">
         <option disabled :value="null">Выберите...</option>
         <option value="true">Нет, общее занятие</option>
         <option value="false">Да, деление на подгруппы</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <!-- Только для общего занятия -->
       <section class="choice" v-if="selectedCommon === 'true'">
         <label>Кабинет:</label>
-        <AdminpanelMoloInput v-model="selectedCabinet" placeholder="Номер кабинета"/>
+        <AdminpanelUIMoloInput v-model="selectedCabinet" placeholder="Номер кабинета"/>
 
         <label>Преподаватель:</label>
-        <AdminpanelMoloSelect v-model="selectedTeacher">
+        <AdminpanelUIMoloSelect v-model="selectedTeacher">
           <option disabled :value="null">Выберите преподавателя</option>
           <option v-for="(teacher, i) in teachers" :key="i" :value="teacher">{{ teacher }}</option>
-        </AdminpanelMoloSelect>
+        </AdminpanelUIMoloSelect>
 
       </section>
 
       <!-- Только если есть подгруппы -->
       <section class="choice" v-else-if="selectedCommon === 'false'">
         <label>Кабинет 1 подгруппы:</label>
-        <AdminpanelMoloInput v-model="selectedSubgroup1" placeholder="Номер кабинета"/>
+        <AdminpanelUIMoloInput v-model="selectedSubgroup1" placeholder="Номер кабинета"/>
 
         <label>Преподаватель 1 подгруппы:</label>
-        <AdminpanelMoloSelect v-model="selectedSubgroup1Teacher">
+        <AdminpanelUIMoloSelect v-model="selectedSubgroup1Teacher">
           <option disabled :value="null">Выберите преподавателя</option>
           <option v-for="(teacher, i) in teachers" :key="i" :value="teacher">{{ teacher }}</option>
-        </AdminpanelMoloSelect>
+        </AdminpanelUIMoloSelect>
 
         <label>Кабинет 2 подгруппы:</label>
-        <AdminpanelMoloInput v-model="selectedSubgroup2" placeholder="Номер кабинета"/>
+        <AdminpanelUIMoloInput v-model="selectedSubgroup2" placeholder="Номер кабинета"/>
 
         <label>Преподаватель 2 подгруппы:</label>
-        <AdminpanelMoloSelect v-model="selectedSubgroup2Teacher">
+        <AdminpanelUIMoloSelect v-model="selectedSubgroup2Teacher">
           <option disabled :value="null">Выберите преподавателя</option>
           <option v-for="(teacher, i) in teachers" :key="i" :value="teacher">{{ teacher }}</option>
-        </AdminpanelMoloSelect>
+        </AdminpanelUIMoloSelect>
       </section>
 
       <label>Тип предмета:</label>
-      <AdminpanelMoloSelect v-model="selectedTypeOfLesson">
+      <AdminpanelUIMoloSelect v-model="selectedTypeOfLesson">
         <option disabled :value="null">Выберите тип</option>
         <option value="Лекция">Лекция</option>
         <option value="Практика">Практика</option>
@@ -268,10 +268,10 @@ onMounted(() => {
         <option value="Самостоятельная работа">Самостоятельная работа</option>
         <option value="Консультация">Консультация</option>
         <option value="Экзамен">Экзамен</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
 
       <label>Время:</label>
-      <AdminpanelMoloSelect v-model="selectedTime">
+      <AdminpanelUIMoloSelect v-model="selectedTime">
         <option disabled :value="null">Выберите время</option>
         <option value="8:30-10:50">8:30-10:50</option>
         <option value="11:00-12:30">11:00-12:30</option>
@@ -281,13 +281,13 @@ onMounted(() => {
         <option value="17:00-18:20">17:00-18:20</option>
         <option value="18:30-19:50">18:30-19:50</option>
         <option value="20:00-21:20">20:00-21:20</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
     </template>
 
     <template #confirm-button>
-      <AdminpanelMoloButton type="confirm" @click="addSchedule">
+      <AdminpanelUIMoloButton type="confirm" @click="addSchedule">
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -295,9 +295,9 @@ onMounted(() => {
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton type="cancel" @click="showScheduleModal = false">
+      <AdminpanelUIMoloButton type="cancel" @click="showScheduleModal = false">
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

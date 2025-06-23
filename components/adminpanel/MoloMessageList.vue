@@ -95,7 +95,7 @@ watch(() => props.messages, () => {
 <template>
   <div class="message-list" ref="containerRef">
     <section class="load">
-      <AdminpanelMoloLoader :is-loading="isLoading"/>
+      <AdminpanelUIMoloLoader :is-loading="isLoading"/>
     </section>
 
     <template v-for="(message, index) in messages" :key="message?._id || index">

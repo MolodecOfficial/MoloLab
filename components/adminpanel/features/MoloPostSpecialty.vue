@@ -58,12 +58,12 @@ onMounted(() =>{
 })
 </script>
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
     type="specialty"
     @click="openSpecialtyModal(user)"
   >
     Выбор специальности
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
   <AdminpanelUIMoloModal
     :statusMessage="statusMessage"
     :title="specialtyTitle"
@@ -71,7 +71,7 @@ onMounted(() =>{
     @close="showSpecialtyModal = false"
     >
     <template #select>
-      <AdminpanelMoloSelect v-model="selectedSpecialty">
+      <AdminpanelUIMoloSelect v-model="selectedSpecialty">
         <option value="" disabled>Выберите специальность</option>
         <option
             v-for="specialty in specialties"
@@ -80,15 +80,15 @@ onMounted(() =>{
         >
           {{ specialty.name }}
         </option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
     </template>
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="confirm"
           @click="assignSpecialty"
       >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -96,12 +96,12 @@ onMounted(() =>{
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showSpecialtyModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
   </AdminpanelUIMoloModal>

@@ -42,14 +42,17 @@ const toggleMobileMenu = () => {
   <AdminpanelUIMoloLoader :is-loading="userStore.loadingUser"/>
 
   <!-- Мобильный хедер -->
-  <div class="mobile-header" v-if="!userStore.loadingUser">
-    <button class="menu-toggle" @click="toggleMobileMenu">
-      <svg width="24" height="24" viewBox="0 0 24 24">
-        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor"/>
-      </svg>
-    </button>
-    <h2>Пользователи</h2>
+  <div class="mobile-container">
+    <div class="mobile-header" v-if="!userStore.loadingUser">
+      <button class="menu-toggle" @click="toggleMobileMenu">
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor"/>
+        </svg>
+      </button>
+      <h2>Пользователи</h2>
+    </div>
   </div>
+
 
   <section
       :class="['user-list', { 'mobile-open': isMobileMenuOpen }]"
@@ -121,6 +124,7 @@ const toggleMobileMenu = () => {
   padding: 10px 15px;
   cursor: pointer;
   background-color: white;
+  width: 100%;
 
   &:hover {
     background-color: #e7e7e7;
@@ -175,14 +179,20 @@ const toggleMobileMenu = () => {
   color: #888;
 }
 
+.mobile-container {
+  display: flex;
+}
+
 .mobile-header {
-  margin-top: 20px;
-  display: none;
+  display: flex;
   align-items: center;
   padding: 12px 15px;
   border-radius: 20px;
-  background-color: white;
-  width: 90%;
+  background-color: #ffffff;
+  width: 100%;
+  color: #3b3b7f;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
 .mobile-header h2 {

@@ -61,16 +61,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
       v-if="user.email !== 'MolodecOfficial'"
       class="delete-button"
       type="status"
       @click="() => openStatusModal(user)">
     Сменить статус
-  </AdminpanelMoloButton>
-  <AdminpanelMoloButton v-else type="status">
+  </AdminpanelUIMoloButton>
+  <AdminpanelUIMoloButton v-else type="status">
     Запрещено
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="changeTitle"
@@ -78,20 +78,20 @@ onMounted(async () => {
       @close="showStatusModal = false"
   >
     <template #select>
-      <AdminpanelMoloSelect v-model="selectedStatus" class="select">
+      <AdminpanelUIMoloSelect v-model="selectedStatus" class="select">
         <option value="" disabled>Выберите статус</option>
         <option value="Студент">Студент</option>
         <option value="Преподаватель">Преподаватель</option>
         <option value="Администратор">Администратор</option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
     </template>
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="confirm"
           @click="changeUserStatus"
       >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -99,12 +99,12 @@ onMounted(async () => {
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showStatusModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
   </AdminpanelUIMoloModal>

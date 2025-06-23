@@ -71,7 +71,7 @@ function goToRedirect() {
         <section class="input-container_inside">
           <p class="header">Регистрация Вашего аккаунта</p>
           <p class="not_login">Уже имеете аккаунт?
-            <AdminpanelMoloButton type="specialty" @click="goToRedirect">Войти</AdminpanelMoloButton>
+            <AdminpanelUIMoloButton type="specialty" @click="goToRedirect">Войти</AdminpanelUIMoloButton>
           </p>
           <div class="inputs">
             <p class="input_helper">Имя</p>

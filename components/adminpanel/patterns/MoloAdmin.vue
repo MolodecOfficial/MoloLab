@@ -10,7 +10,7 @@ const props = defineProps({
 
 <template>
   <div class="admin-panel">
-    <AdminpanelMoloAdminHeader/>
+    <AdminpanelPatternsMoloAdminHeader/>
     <section class="route-main">
       <section class="admin-main-container">
         <div class="welcome-message">

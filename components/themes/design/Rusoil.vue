@@ -17,6 +17,10 @@ function selectTheme(themeId: number) {
     themeStore.setTheme(selected.code);
   }
 }
+
+const otherThemes = computed(() => {
+  return themeStore.availableThemes.filter(t => t.code !== themeStore.currentTheme);
+});
 </script>
 
 <template>
@@ -25,11 +29,20 @@ function selectTheme(themeId: number) {
       <div class="design-header">
         <h1>Выбери свой стиль</h1>
         <p>Персонализируй внешний вид приложения</p>
+        <section class="current-theme">
+          <span>Текущий стиль оформления - {{ themeStore.selectedThemeName }}</span>
+          <img
+              :src="themeStore.selectedThemePic"
+              :alt="themeStore.selectedThemeName"
+              class="current-theme-img"
+          />
+        </section>
+
       </div>
 
       <div class="theme-flex">
         <div
-            v-for="theme in themeStore.availableThemes"
+            v-for="theme in otherThemes"
             :key="theme.id"
             class="theme-card"
             :class="{ selected: themeStore.selectedTheme === theme.id }"
@@ -69,7 +82,14 @@ function selectTheme(themeId: number) {
 
 .design-header {
   text-align: center;
+  & span {
+    color: #787e80;
+
+  }
 }
+
+
+
 
 .design-header h1 {
   font-size: 1.8rem;
@@ -80,6 +100,22 @@ function selectTheme(themeId: number) {
 .design-header p {
   font-size: 1rem;
   color: #7b8a8b;
+}
+
+.current-theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(123, 123, 123, 0.19);
+  border-radius: 10px;
+}
+
+.current-theme-img {
+  width: 40px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 5px;
+  padding: 8px;
 }
 
 .theme-flex {

@@ -103,7 +103,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <AdminpanelMoloLoader :is-loading="loading"/>
+  <AdminpanelUIMoloLoader :is-loading="loading"/>
 
   <section v-if="!loading" class="user-section_v-else">
     <div v-if="!users || users.length === 0" class="no">Нет пользователя с таким именем</div>
@@ -201,13 +201,13 @@ onMounted(async () => {
         </section>
         <hr>
         <section class="actions">
-          <AdminpanelActionsMoloDeleteUser :user="user"/>
-          <AdminpanelActionsMoloPostScores :user="user"/>
-          <AdminpanelActionsMoloPostStatus :user="user"/>
-          <AdminpanelActionsMoloPostAchievement :user="user"/>
-          <AdminpanelActionsMoloPostLearning :user="user"/>
-          <AdminpanelActionsMoloPostSpecialty :user="user"/>
-          <AdminpanelActionsMoloPostGroup :user="user"/>
+          <AdminpanelFeaturesMoloDeleteUser :user="user"/>
+          <AdminpanelFeaturesMoloPostScores :user="user"/>
+          <AdminpanelFeaturesMoloPostStatus :user="user"/>
+          <AdminpanelFeaturesMoloPostAchievement :user="user"/>
+          <AdminpanelFeaturesMoloPostLearning :user="user"/>
+          <AdminpanelFeaturesMoloPostSpecialty :user="user"/>
+          <AdminpanelFeaturesMoloPostGroup :user="user"/>
         </section>
 
       </section>
@@ -225,9 +225,9 @@ onMounted(async () => {
       </section>
     </section>
     <section class="actions">
-      <AdminpanelActionsMoloPostNewSpecialty/>
-      <AdminpanelActionsMoloPostNewUser/>
-      <AdminpanelActionsMoloPostNewGroup @saved="fetchGroups"/>
+      <AdminpanelFeaturesMoloPostNewSpecialty/>
+      <AdminpanelFeaturesMoloPostNewUser/>
+      <AdminpanelFeaturesMoloPostNewGroup @saved="fetchGroups"/>
     </section>
   </section>
 </template>

@@ -79,9 +79,9 @@ const submitTeacher = async () => {
 </script>
 
 <template>
-  <AdminpanelMoloButton type="primary" @click="showTeacherModal = true">
+  <AdminpanelUIMoloButton type="primary" @click="showTeacherModal = true">
     Добавить нового преподавателя
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
 
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
@@ -90,27 +90,27 @@ const submitTeacher = async () => {
       @close="showTeacherModal = false"
   >
     <template #body>
-      <AdminpanelMoloInput
+      <AdminpanelUIMoloInput
           v-model="teacherName"
           placeholder="Имя преподавателя"
       />
         <section class="select">
           <label class="">Преподаваемые предметы:</label>
 
-          <AdminpanelMoloSelect v-model="teacherType" multiple>
-            <AdminpanelMoloLoader :is-loading="subjects.length === 0" />
+          <AdminpanelUIMoloSelect v-model="teacherType" multiple>
+            <AdminpanelUIMoloLoader :is-loading="subjects.length === 0" />
 
             <option v-for="(subject, i) in subjects" :key="i" :value="subject">
               {{ subject }}
             </option>
-          </AdminpanelMoloSelect>
+          </AdminpanelUIMoloSelect>
         </section>
     </template>
 
     <template #confirm-button>
-      <AdminpanelMoloButton type="confirm" @click="submitTeacher">
+      <AdminpanelUIMoloButton type="confirm" @click="submitTeacher">
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -118,9 +118,9 @@ const submitTeacher = async () => {
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton type="cancel" @click="showTeacherModal = false">
+      <AdminpanelUIMoloButton type="cancel" @click="showTeacherModal = false">
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

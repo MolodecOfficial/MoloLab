@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useMessageStore } from '~/stores/messageStore';
-import { useUserStore } from '~/stores/userStore';
-import { useRoute } from 'vue-router';
-import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue';
+import {useMessageStore} from '~/stores/messageStore';
+import {useUserStore} from '~/stores/userStore';
+import {useRoute} from 'vue-router';
+import {computed, nextTick, onBeforeMount, onBeforeUnmount, ref, watch} from 'vue';
 
 
 const emit = defineEmits(['send']);
@@ -11,7 +11,7 @@ const userStore = useUserStore();
 const messageStore = useMessageStore();
 const route = useRoute();
 const searchQuery = ref('');
-
+const isHydrated = ref(false);
 const userId = computed(() => route.params.id as string);
 const currentUser = computed(() => userStore.currentUser);
 
@@ -58,9 +58,9 @@ const filteredUsers = computed(() => {
 
 const chatUser = computed(() => {
   if (userId.value === userStore.userId) {
-    return { firstName: 'Избранное', lastName: '' };
+    return {firstName: 'Избранное', lastName: ''};
   }
-  return userStore.users.find(user => user._id === userId.value) || { firstName: '...', lastName: '' };
+  return userStore.users.find(user => user._id === userId.value) || {firstName: '...', lastName: ''};
 });
 
 watch(userId, async (newId) => {
@@ -78,7 +78,7 @@ watch(userId, async (newId) => {
   } catch (err) {
     console.error('Ошибка загрузки сообщений:', err);
   }
-}, { immediate: true });
+}, {immediate: true});
 
 onBeforeUnmount(stopPolling);
 
@@ -88,7 +88,7 @@ watch(
       await nextTick();
       scrollToBottom();
     },
-    { deep: true }
+    {deep: true}
 );
 
 useHead({
@@ -99,32 +99,74 @@ useHead({
   ),
 });
 
+const themeStore = useThemeStore();
+
+onBeforeMount(() => {
+  if (process.client) {
+    themeStore.initTheme();
+    isHydrated.value = true;
+  }
+});
 
 </script>
 
 <template>
-  <AccountMoloMobile :title="chatUser.firstName">
-    <div class="container">
-      <AccountMoloAllChatUsers :users="filteredUsers" />
-      <div class="messages">
-        <AccountMoloMessageList
-            :messages="messageStore.messages"
-            :current-user="currentUser"
-            :is-loading="messageStore.isLoading"
-        />
-        <AdminpanelMoloInput
-            v-model="messageText"
-            borderRadius="10px"
-            height="10%"
-            placeholder="Введите сообщение"
-            width="100%"
-            background-color="white"
-            color="black"
-            @send="sendMessage"
-        />
+  <section v-if="isHydrated">
+    <AccountMoloMobile :title="chatUser.firstName + ' ' + chatUser.lastName" v-if="themeStore.currentTheme === 'rusoil'">
+      <div class="container">
+        <section v-if="isHydrated">
+          <AccountMoloAllChatUsers
+              v-if="themeStore.currentTheme === 'rusoil'"
+              :users="filteredUsers"
+          />
+        </section>
+        <div class="messages">
+          <AccountMoloMessageList
+              :messages="messageStore.messages"
+              :current-user="currentUser"
+              :is-loading="messageStore.isLoading"
+          />
+          <AdminpanelUIMoloInput
+              v-model="messageText"
+              borderRadius="10px"
+              height="10%"
+              placeholder="Введите сообщение"
+              width="100%"
+              background-color="white"
+              color="black"
+              @send="sendMessage"
+          />
+        </div>
       </div>
-    </div>
-  </AccountMoloMobile>
+    </AccountMoloMobile>
+    <AccountPatternsMoloAccount :header="chatUser.firstName + ' ' + chatUser.lastName" v-else-if="themeStore.currentTheme === 'rusml'">
+      <div class="container">
+        <section v-if="isHydrated">
+          <AccountMoloAllChatUsersRML
+              v-if="themeStore.currentTheme === 'rusml'"
+              :users="filteredUsers"
+          />
+        </section>
+        <div class="messages">
+          <AccountMoloMessageList
+              :messages="messageStore.messages"
+              :current-user="currentUser"
+              :is-loading="messageStore.isLoading"
+          />
+          <AdminpanelUIMoloInput
+              v-model="messageText"
+              borderRadius="10px"
+              height="10%"
+              placeholder="Введите сообщение"
+              width="100%"
+              background-color="white"
+              color="black"
+              @send="sendMessage"
+          />
+        </div>
+      </div>
+    </AccountPatternsMoloAccount>
+  </section>
 </template>
 
 <style scoped>
@@ -133,6 +175,7 @@ useHead({
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  box-sizing: border-box;
   padding-bottom: 100px;
   justify-content: center;
   align-items: center;

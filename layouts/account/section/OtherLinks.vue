@@ -28,7 +28,7 @@ const props = defineProps({
           <img :src="android" alt="">
           Версия ЛК на Android версия: 2.0.1
         </NuxtLink>
-        <NuxtLink class="other_link" to="/applicant/finance/dormitory">
+        <NuxtLink class="other_link" to="/in-progress">
           <img :src="dormitory" alt="">
           Общежитие
         </NuxtLink>
@@ -36,11 +36,11 @@ const props = defineProps({
           <img :src="payments" alt="">
           Выплаты
         </NuxtLink>
-        <NuxtLink class="other_link" to="/applicant/finance/payment">
+        <NuxtLink class="other_link" to="/in-progress">
           <img :src="receipts" alt="">
           Квитанции на оплату
         </NuxtLink>
-        <NuxtLink class="other_link" to="/applicant/rating">
+        <NuxtLink class="other_link" to="/student/rating">
           <img :src="rating" alt="">
           Рейтинг
         </NuxtLink>
@@ -60,7 +60,7 @@ const props = defineProps({
           <img :src="sdo" alt="">
           СДО Дистанционное образование
         </NuxtLink>
-        <NuxtLink class="other_link" to="/applicant/schedule">
+        <NuxtLink class="other_link" to="/student/schedule">
           <img :src="timetable" alt="">
           Расписание занятий
         </NuxtLink>

@@ -40,13 +40,13 @@ const filteredUsers = computed(() => {
     <AdminpanelPatternsMoloAdmin header_text="Мессенджер">
       <template #more-info>
         <div>
-          <AdminpanelMoloInput
+          <AdminpanelUIMoloInput
               v-model="searchQuery"
               width="100%"
               placeholder="Введите имя пользователя"/>
         </div>
       </template>
-      <AdminpanelActionsMoloAllChatUsers :users="filteredUsers"/>
+      <AdminpanelFeaturesMoloAllChatUsers :users="filteredUsers"/>
     </AdminpanelPatternsMoloAdmin>
   </AccountMoloGuard>
 </template>

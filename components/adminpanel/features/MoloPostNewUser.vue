@@ -92,9 +92,9 @@ const modalTitle = 'Создание нового пользователя'
         <img alt="" src="/public/adminPanel/add.png">
       </template>
       <template v-else>
-          <AdminpanelMoloButton type="primary">
+          <AdminpanelUIMoloButton type="primary">
             Добавить пользователя
-          </AdminpanelMoloButton>
+          </AdminpanelUIMoloButton>
 
       </template>
     </section>
@@ -104,24 +104,24 @@ const modalTitle = 'Создание нового пользователя'
         @close="openModal = true"
     >
       <template #body>
-        <AdminpanelMoloInput v-model="firstName" placeholder="Имя пользователя"/>
-        <AdminpanelMoloInput v-model="lastName" placeholder="Фамилия пользователя"/>
-        <AdminpanelMoloInput v-model="email" placeholder="Почта пользователя"/>
-        <AdminpanelMoloInput v-model="password" type="password" placeholder="Пароль пользователя"/>
-        <AdminpanelMoloInput v-model="confirmPassword" type="password" placeholder="Повтор пароля"/>
+        <AdminpanelUIMoloInput v-model="firstName" placeholder="Имя пользователя"/>
+        <AdminpanelUIMoloInput v-model="lastName" placeholder="Фамилия пользователя"/>
+        <AdminpanelUIMoloInput v-model="email" placeholder="Почта пользователя"/>
+        <AdminpanelUIMoloInput v-model="password" type="password" placeholder="Пароль пользователя"/>
+        <AdminpanelUIMoloInput v-model="confirmPassword" type="password" placeholder="Повтор пароля"/>
       </template>
       <template #confirm-button>
-       <AdminpanelMoloButton type="confirm" @click="registerUser">
+       <AdminpanelUIMoloButton type="confirm" @click="registerUser">
          Подтвердить
-       </AdminpanelMoloButton>
+       </AdminpanelUIMoloButton>
       </template>
       <template #status>
         {{ statusMessage }}
       </template>
       <template #cancel-button>
-        <AdminpanelMoloButton type="cancel" @click="openModal = false">
+        <AdminpanelUIMoloButton type="cancel" @click="openModal = false">
           Отмена
-        </AdminpanelMoloButton>
+        </AdminpanelUIMoloButton>
       </template>
     </AdminpanelUIMoloModal>
   </section>

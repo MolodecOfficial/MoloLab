@@ -57,12 +57,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <AdminpanelMoloButton
+  <AdminpanelUIMoloButton
       class="delete-button"
       type="achievement"
       @click="() => openAchievementModal(user)">
     Выдать достижение
-  </AdminpanelMoloButton>
+  </AdminpanelUIMoloButton>
   <AdminpanelUIMoloModal
       :statusMessage="statusMessage"
       :title="achievementTitle"
@@ -70,7 +70,7 @@ onMounted(async () => {
       @close="showAchievementModal = false"
   >
     <template #select>
-      <AdminpanelMoloSelect
+      <AdminpanelUIMoloSelect
           v-model="selectedAchievement"
           class="select"
           v-if="achievements.length > 0"
@@ -79,18 +79,18 @@ onMounted(async () => {
         <option v-for="achievement in achievements" :value="achievement.id" :key="achievement.id">
           {{ achievement.title }}
         </option>
-      </AdminpanelMoloSelect>
+      </AdminpanelUIMoloSelect>
       <p v-else>Нет доступных достижений.</p>
     </template>
 
     <template #confirm-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="confirm"
           @click="giveAchievementToUser"
           :disabled="!selectedUserId || !selectedAchievement"
       >
         Подтвердить
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
 
     <template #status>
@@ -98,12 +98,12 @@ onMounted(async () => {
     </template>
 
     <template #cancel-button>
-      <AdminpanelMoloButton
+      <AdminpanelUIMoloButton
           type="cancel"
           @click="showAchievementModal = false"
       >
         Отмена
-      </AdminpanelMoloButton>
+      </AdminpanelUIMoloButton>
     </template>
   </AdminpanelUIMoloModal>
 </template>

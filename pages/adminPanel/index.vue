@@ -147,14 +147,14 @@ onUnmounted(() => {
               <span v-else class="sections_messages">
                 У вас нет новых сообщений
               </span>
-              <AdminpanelActionsMoloPostNotes/>
+              <AdminpanelFeaturesMoloPostNotes/>
             </div>
             <div class="section-2">
               <div class="extra_buttons">
                 <span class="section-title">Экстра кнопки</span>
                 <div class="btns">
-                  <AdminpanelActionsMoloPostNewUser displayAs="button" />
-                  <AdminpanelActionsMoloPostSchedule />
+                  <AdminpanelFeaturesMoloPostNewUser displayAs="button" />
+                  <AdminpanelFeaturesMoloPostSchedule />
                   <span class="suggestion-text">Ваши предложения для функционала можете предложить в тгк</span>
                 </div>
               </div>

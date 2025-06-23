@@ -1,30 +1,35 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { ref, computed, onMounted } from "vue";
 import dayjs from "dayjs";
-import type { PropType } from 'vue';
+import "dayjs/locale/ru";
+
+dayjs.locale("ru");
 
 const selectedDate = ref(dayjs().format('YYYY-MM-DD'));
 const selectedGroup = ref('Все');
-
-const props = defineProps({
-  scheduleData: {
-    type: Array as PropType<any[]>,
-    default: () => [],
-  },
-});
-
-const emit = defineEmits(['refresh']);
+const scheduleData: any = ref([]);
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 
 const formatDate = (dateStr: string) => {
   const formatted = dayjs(dateStr).format('dddd, D MMMM');
   return capitalize(formatted);
 };
 
+const fetchSchedule = async () => {
+  try {
+    const response = await $fetch('/api/schedules');
+    console.log('Ответ от API:', response);
+    scheduleData.value = response.schedules;
+  } catch (error) {
+    console.error('Ошибка при получении расписания:', error);
+  }
+};
+
 const scheduleForDate = computed(() => {
-  if (!props.scheduleData || props.scheduleData.length === 0) return null;
-  return props.scheduleData.find(
+  if (!scheduleData.value || scheduleData.value.length === 0) return null;
+  return scheduleData.value.find(
       (schedule: any) => dayjs(schedule.date).format('YYYY-MM-DD') === selectedDate.value
   );
 });
@@ -47,40 +52,31 @@ const sortedLessons = (lessons: any[]) => {
   });
 };
 
-const handleRefresh = () => {
-  emit('refresh');
-};
+
 
 onMounted(() => {
-  window.addEventListener('schedule-updated', handleRefresh);
+  fetchSchedule();
 });
-
-onUnmounted(() => {
-  window.removeEventListener('schedule-updated', handleRefresh);
-});
-
-watch(() => props.scheduleData, () => {
-  console.log('Расписание обновилось');
-}, { deep: true });
 </script>
 
 <template>
-  <div class="schedule-container">
-    <section class="date-info">
-      <input type="date" v-model="selectedDate" />
-      <span class="date">{{ formatDate(selectedDate) }}</span>
+  <AccountPatternsMoloAccount header="Расписание занятий">
+    <section class="date-container">
+      <section class="date-info">
+        <input type="date" v-model="selectedDate" />
+        <span class="date">{{ formatDate(selectedDate) }}</span>
 
-      <select v-model="selectedGroup">
-        <option>Все</option>
-        <option v-for="group in scheduleForDate?.groups || []" :key="group._id">
-          {{ group.groupName }}
-        </option>
-      </select>
+        <select v-model="selectedGroup">
+          <option>Все</option>
+          <option v-for="group in scheduleForDate?.groups || []" :key="group._id">
+            {{ group.groupName }}
+          </option>
+        </select>
+      </section>
     </section>
-
     <div v-if="filteredGroups.length > 0" class="schedule">
       <div v-for="group in filteredGroups" :key="group._id" class="group">
-        <h3>{{ group.groupName }}</h3>
+        <span class="groupName">{{ group.groupName }}</span>
         <section class="lessons">
           <section v-for="(lesson, index) in sortedLessons(group.lessons)" :key="lesson.time" class="lesson">
             <span class="lesson-name"> {{ index + 1 }}) {{ lesson.subject }}</span>
@@ -135,52 +131,27 @@ watch(() => props.scheduleData, () => {
         </section>
       </div>
     </div>
-
-    <div v-else class="no">
-      <AdminpanelUIMoloLoader :is-loading="filteredGroups.length === 0"/>
-    </div>
-  </div>
+  </AccountPatternsMoloAccount>
 </template>
 
+
 <style scoped>
-
-.schedule-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.schedule {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  background-color: var(--dk-bg-color);
-  border: 1px solid var(--dk-border-color);
-  border-radius: 10px;
-}
-
-
 .date-info {
-  padding: 20px 0;
-  width: 90%;
   display: flex;
-  justify-content: space-evenly;
-  justify-items: center;
-  gap: 16px;
+  gap: 10px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid #c2c2c2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   & input[type="date"] {
     display: flex;
-    padding: 8px 12px;
     border-radius: 6px;
-    border: 1px solid var(--dk-border-color);
-    background-color: var(--dk-bg-dark-color);
+    border: 1px solid #c2c2c2;
+    background-color: rgb(238, 244, 253);
     color: var(--dk-span-color);
     font-size: 1rem;
-    color-scheme: dark;
+    color-scheme: white;
   }
   & .date {
     width: max-content;
@@ -188,35 +159,38 @@ watch(() => props.scheduleData, () => {
     font-weight: bold;
     font-size: 1.1rem;
     color: var(--dk-span-color);
-    background-color: var(--dk-bg-dark-color);
+    background-color: white;
     border-radius: 8px;
     padding: 8px 50px;
-    border: 1px solid var(--dk-border-color);
+    border: 1px solid transparent;
   }
   select {
     padding: 6px 10px;
     border-radius: 6px;
-    border: 1px solid var(--dk-border-color);
-    background-color: var(--dk-bg-dark-color);
+    border: 1px solid #c2c2c2;
+    background-color: rgb(238, 244, 253);
     color: var(--dk-span-color);
     font-size: 1rem;
   }
-
 }
+
 
 
 .group {
   display: flex;
   flex-direction: column;
-  width: 80%;
-
-  & h3 {
+  align-items: center;
+  width: 100%;
+  padding-left: 20px;
+  gap: 20px;
+  & .groupName {
     width: fit-content;
     padding: 5px 10px;
-    border: 1px solid var(--dk-border-color);
     border-radius: 10px;
-    background-color: var(--dk-bg-ins-light-color);
+    background-color: white;
     text-align: start;
+    border: 1px solid #c2c2c2;
+    color: var(--dk-span-color);
   }
 }
 
@@ -227,20 +201,18 @@ watch(() => props.scheduleData, () => {
   align-items: center;
   gap: 20px;
   width: 100%;
-  &:last-child {
-    padding: 20px;
-  }
+  box-sizing: border-box;
 }
 
 .lesson {
-  border: 1px solid var(--dk-border-color);
+  border: 1px solid #c2c2c2;
   border-radius: 15px;
-  padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  background-color: var(--dk-bg-ins-light-color);
-  width: 80%;
+  background-color: white;
+  width: 90%;
   gap: 2px;
+  padding: 10px 20px;
 
   & .lesson-name {
     font-size: 20px
@@ -270,6 +242,12 @@ watch(() => props.scheduleData, () => {
     color: #ff0000;
   }
 }
+
+.full {
+  display: flex;
+  flex-direction: column;
+}
+
 .subgroup-span {
   display: flex;
   flex-direction: column;
@@ -279,42 +257,55 @@ watch(() => props.scheduleData, () => {
   }
 }
 
-.no {
-  display: flex;
-  height: 100px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  & span {
-    padding: 10px;
-    border-radius: 10px;
-    background-color: var(--dk-bg-color);
-    border: 1px solid var(--dk-border-color);
-  }
-}
-
-.full {
-  display: flex;
-  flex-direction: column;
-}
-
-hr {
-  border: 1px solid var(--dk-border-color);
-}
-
-@media (max-width: 765px) {
-  .date-info {
+@media (max-width: 560px) {
+  .date-container {
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    justify-content: center;
     align-items: center;
   }
-  .group {
+  .date-info {
+    box-sizing: border-box;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    padding-right: 20px;
   }
+  .lessons {
+    align-items: start;
+  }
+  .lesson {
+    border: 1px solid #c2c2c2;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 80%;
+    gap: 2px;
+    padding: 10px 20px;
+    }
+}
+
+
+@media (max-width: 560px) {
+  .schedule-header span {
+    font-size: clamp(12px, 4vw, 22px);
+
+  }
+
+  .date {
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 561px) and (max-width: 765px) {
+
+}
+
+@media (min-width: 766px) and (max-width: 1280px) {
 }
 
 
 </style>
+

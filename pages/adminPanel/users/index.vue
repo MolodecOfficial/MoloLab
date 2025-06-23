@@ -47,7 +47,7 @@ onMounted(async () => {
     <AdminpanelPatternsMoloAdmin header_text="Список пользователей">
       <template #more-info>
         <div class="test">
-          <AdminpanelMoloInput
+          <AdminpanelUIMoloInput
               v-model="searchQuery"
               width="100%"
               placeholder="Введите имя пользователя"/>
