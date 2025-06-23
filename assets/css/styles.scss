@@ -2,7 +2,11 @@ body {
     font-family: 'Euclid Square', sans-serif;
     margin: 0;
     padding: 0;
+
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
 }
+
 :root {
     --dk-bg-dark-color: #0c0c0c;
     --dk-bg-color: #151515;
@@ -10,4 +14,9 @@ body {
     --dk-bg-ins-light-color: #2c2c2c;
     --dk-border-color: rgb(75, 75, 75);
     --dk-span-color: #0188e1;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
 }
