@@ -61,9 +61,9 @@ const otherThemes = computed(() => {
           </section>
         </div>
       </div>
-      <section class="in-progress">
-        <span>В разработке</span>
-      </section>
+<!--      <section class="in-progress">-->
+<!--        <span>В разработке</span>-->
+<!--      </section>-->
     </div>
   </AccountMoloMobile>
 </template>

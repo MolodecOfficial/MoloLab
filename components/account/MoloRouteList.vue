@@ -63,7 +63,7 @@ onMounted(() => {
         <img :src="rating" alt="">
         <span>Рейтинг</span>
       </NuxtLink>
-      <NuxtLink class="route" to="/adminPanel" v-if="userStatus === 'Администратор' || userStatus === 'Владелец'">
+      <NuxtLink class="route" to="/adminPanel" v-if="userStatus === 'Администратор' || userStatus === 'Владелец' || userStatus === 'Преподаватель'">
         <img :src="admin" alt="">
         <span>Панель администратора</span>
       </NuxtLink>
