@@ -48,7 +48,7 @@ const submitTeacher = async () => {
   try {
     statusMessage.value = 'Идёт добавление преподавателя...';
 
-    const response = await $fetch("/api/teacher", {
+    const response: any = await $fetch("/api/teacher", {
       method: "POST",
       body: {
         name: teacherName.value.trim(),
