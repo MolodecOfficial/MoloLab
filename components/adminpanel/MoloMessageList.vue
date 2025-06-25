@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
+import {nextTick, onMounted, onUnmounted, ref, watch} from 'vue';
 
 const containerRef = ref<HTMLElement | null>(null);
 const showTopButton = ref(false);
 const showBottomButton = ref(false);
+const showLoader = ref(true); // Новое состояние для управления видимостью лоадера
 
 const props = defineProps<{
   messages: Array<{
@@ -19,6 +20,13 @@ const props = defineProps<{
   },
   isLoading: boolean
 }>();
+
+// Следим за изменениями messages и isLoading
+watch(() => [props.messages, props.isLoading], () => {
+  // Показываем лоадер только если сообщений нет И идет загрузка
+  showLoader.value = props.messages.length === 0 && props.isLoading;
+}, {immediate: true});
+
 
 // Функции для работы со скроллом
 const scrollToTop = () => {
@@ -42,7 +50,7 @@ const scrollToBottom = () => {
 const checkScrollPosition = () => {
   if (!containerRef.value) return;
 
-  const { scrollTop, scrollHeight, clientHeight } = containerRef.value;
+  const {scrollTop, scrollHeight, clientHeight} = containerRef.value;
   const threshold = 50; // Порог в пикселях
 
   // Проверяем, находимся ли мы вверху
@@ -56,13 +64,13 @@ const checkScrollPosition = () => {
 const formatDate = (date?: Date | string) => {
   if (!date) return '';
   const d = new Date(date);
-  return d.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+  return d.toLocaleDateString(undefined, {day: 'numeric', month: 'long', year: 'numeric'});
 };
 
 const formatTime = (date?: Date | string) => {
   if (!date) return '';
   const d = new Date(date);
-  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 };
 
 const getDateString = (date?: Date | string) => {
@@ -89,32 +97,34 @@ onUnmounted(() => {
 // Следим за изменением сообщений
 watch(() => props.messages, () => {
   nextTick(checkScrollPosition);
-}, { deep: true });
+}, {deep: true});
 </script>
 
 <template>
   <div class="message-list" ref="containerRef">
-    <section class="load">
-      <AdminpanelUIMoloLoader :is-loading="isLoading"/>
-    </section>
+    <div v-if="showLoader" class="loader-overlay">
+      <AdminpanelUIMoloLoader :is-loading="true"/>
+    </div>
 
-    <template v-for="(message, index) in messages" :key="message?._id || index">
-      <div v-if="index === 0 || getDateString(messages[index - 1]?.timestamp) !== getDateString(message.timestamp)"
-           class="date-separator">
+    <template v-else>
+
+      <template v-for="(message, index) in messages" :key="message?._id || index">
+        <div v-if="index === 0 || getDateString(messages[index - 1]?.timestamp) !== getDateString(message.timestamp)"
+             class="date-separator">
         <span>
           {{ formatDate(message.timestamp) }}
         </span>
-      </div>
-
-      <div :class="['message', { 'own': message?.senderId === currentUser?._id }]">
-        <div v-if="message" class="message-content">
-          <div class="sender-name">{{ message.senderName || 'Неизвестный' }}</div>
-          {{ message.text }}
-          <span class="timestamp">{{ formatTime(message.timestamp) }}</span>
         </div>
-      </div>
-    </template>
 
+        <div :class="['message', { 'own': message?.senderId === currentUser?._id }]">
+          <div v-if="message" class="message-content">
+            <div class="sender-name">{{ message.senderName || 'Неизвестный' }}</div>
+            {{ message.text }}
+            <span class="timestamp">{{ formatTime(message.timestamp) }}</span>
+          </div>
+        </div>
+      </template>
+    </template>
     <!-- Кнопка для прокрутки в начало -->
     <button
         v-if="showTopButton"

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-
-import {ref} from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 
 const containerRef = ref<HTMLElement | null>(null);
 const showTopButton = ref(false);
 const showBottomButton = ref(false);
+const showLoader = ref(true); // Новое состояние для управления видимостью лоадера
 
 const props = defineProps<{
   messages: Array<{
@@ -13,14 +13,21 @@ const props = defineProps<{
     senderId?: string;
     receiverId?: string;
     timestamp?: Date | string;
-  }>,
+    senderName?: string;
+  }>;
   currentUser: {
     _id: string;
-  },
-  isLoading: boolean
+  };
+  isLoading: boolean;
 }>();
 
-// Функции для работы со скроллом
+// Следим за изменениями messages и isLoading
+watch(() => [props.messages, props.isLoading], () => {
+  // Показываем лоадер только если сообщений нет И идет загрузка
+  showLoader.value = props.messages.length === 0 && props.isLoading;
+}, { immediate: true });
+
+// Функции для работы со скроллом (остаются без изменений)
 const scrollToTop = () => {
   if (containerRef.value) {
     containerRef.value.scrollTo({
@@ -43,15 +50,11 @@ const checkScrollPosition = () => {
   if (!containerRef.value) return;
 
   const { scrollTop, scrollHeight, clientHeight } = containerRef.value;
-  const threshold = 50; // Порог в пикселях
+  const threshold = 50;
 
-  // Проверяем, находимся ли мы вверху
   showTopButton.value = scrollTop > threshold;
-
-  // Проверяем, находимся ли мы внизу
   showBottomButton.value = scrollTop + clientHeight < scrollHeight - threshold;
 };
-
 
 const formatDate = (date?: Date | string) => {
   if (!date) return '';
@@ -71,11 +74,9 @@ const getDateString = (date?: Date | string) => {
   return d.toDateString();
 };
 
-// Обработчики событий
 onMounted(() => {
   if (containerRef.value) {
     containerRef.value.addEventListener('scroll', checkScrollPosition);
-    // Проверяем начальную позицию
     nextTick(checkScrollPosition);
   }
 });
@@ -85,35 +86,34 @@ onUnmounted(() => {
     containerRef.value.removeEventListener('scroll', checkScrollPosition);
   }
 });
-
 </script>
 
 <template>
   <div class="message-list" ref="containerRef">
-    <section class="load">
-      <AdminpanelUIMoloLoader :is-loading="isLoading"/>
-    </section>
+    <!-- Лоадер теперь управляется через showLoader -->
+    <div v-if="showLoader" class="loader-overlay">
+      <AdminpanelUIMoloLoader :is-loading="true"/>
+    </div>
 
-    <template v-for="(message, index) in messages" :key="message?._id || index">
-      <div v-if="index === 0 || getDateString(messages[index - 1]?.timestamp) !== getDateString(message.timestamp)"
-           class="date-separator">
-        <span>
-          {{ formatDate(message.timestamp) }}
-        </span>
-
-      </div>
-
-      <div :class="['message', { 'own': message?.senderId === currentUser?._id }]">
-        <div v-if="message" class="message-content">
-          <div class="sender-name">{{ message.senderName || 'Неизвестный' }}</div>
-          {{ message.text }}
-          <span class="timestamp">{{ formatTime(message.timestamp) }}</span>
+    <template v-else>
+      <template v-for="(message, index) in messages" :key="message?._id || index">
+        <div v-if="index === 0 || getDateString(messages[index - 1]?.timestamp) !== getDateString(message.timestamp)"
+             class="date-separator">
+          <span>{{ formatDate(message.timestamp) }}</span>
         </div>
-      </div>
+
+        <div :class="['message', { 'own': message?.senderId === currentUser?._id }]">
+          <div v-if="message" class="message-content">
+            <div class="sender-name">{{ message.senderName || 'Неизвестный' }}</div>
+            {{ message.text }}
+            <span class="timestamp">{{ formatTime(message.timestamp) }}</span>
+          </div>
+        </div>
+      </template>
     </template>
 
     <button
-        v-if="showTopButton"
+        v-if="showTopButton && !showLoader"
         class="scroll-button scroll-top-button"
         @click="scrollToTop"
         aria-label="Прокрутить в начало"
@@ -123,9 +123,8 @@ onUnmounted(() => {
       </svg>
     </button>
 
-    <!-- Кнопка для прокрутки в конец -->
     <button
-        v-if="showBottomButton"
+        v-if="showBottomButton && !showLoader"
         class="scroll-button scroll-bottom-button"
         @click="scrollToBottom"
         aria-label="Прокрутить в конец"
@@ -138,8 +137,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-
-
 .date-separator {
   display: flex;
   justify-content: center;
@@ -164,9 +161,9 @@ onUnmounted(() => {
   background-color: white;
   border-radius: 10px;
   scroll-behavior: smooth;
+  position: relative; /* Добавлено для позиционирования лоадера */
   &::-webkit-scrollbar {
     width: 10px;
-
   }
   &::-webkit-scrollbar-track {
     background: transparent;
@@ -177,6 +174,11 @@ onUnmounted(() => {
     border: 4px solid transparent;
   }
 }
+
+.sender-name {
+  font-size: 9px;
+}
+
 .message {
   display: flex;
   text-align: start;
@@ -184,18 +186,14 @@ onUnmounted(() => {
   padding: 10px 45px 12px 10px;
   border-radius: 12px;
   max-width: max-content;
-  background-color: #c9c9c9;
-}
-
-.sender-name {
-  font-size: 9px;
+  background-color: #eaeaea;
 }
 
 .message.own {
   margin-left: auto;
   display: flex;
   text-align: start;
-  background-color: #eaeaea;
+  background-color: #dcf8c6;
 }
 
 .message-content {
@@ -210,9 +208,18 @@ onUnmounted(() => {
   color: #666;
 }
 
-.load {
+/* Новые стили для лоадера */
+.loader-overlay {
   position: absolute;
-  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 10;
 }
 
 /* Стили для кнопок навигации */
