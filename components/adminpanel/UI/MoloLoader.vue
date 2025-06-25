@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  isLoading: boolean;
+  isLoading?: boolean;
 }>();
 </script>
 
@@ -20,23 +20,15 @@ defineProps<{
 .spinner {
   width: 30px;
   height: 30px;
-  border: 4px solid rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
   border-radius: 50%;
-  border-top: 4px solid #3498db;
-  animation: spin 1s linear infinite;
+  border-top: 3px solid #0099ff;
+  border-bottom: 3px solid #ff1800;
+  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-    border-top-color: #3498db;
-  }
-  50% {
-    border-top-color: #2980b9;
-  }
-  100% {
-    transform: rotate(360deg);
-    border-top-color: #3498db;
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>

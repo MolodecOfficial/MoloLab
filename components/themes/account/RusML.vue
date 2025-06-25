@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
-import {useUserStore} from '~/stores/userStore';
 import OtherLinks from "~/layouts/account/section/OtherLinks.vue";
-import {useThemeStore} from "~/stores/themeStore";
 
 const userStore = useUserStore();
 const themeStore = useThemeStore()

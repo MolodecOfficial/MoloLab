@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {useUserStore} from "~/stores/userStore";
 
 // Состояния
 const userAverageScore = ref('0.0');

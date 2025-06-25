@@ -137,7 +137,7 @@ onMounted(() => {
       </div>
 
       <div v-else class="no">
-        Обновляем расписание...
+        <AdminpanelUIMoloLoader :is-loading="true" class="loader"/>
       </div>
     </div>
   </AccountMoloMobile>
@@ -274,12 +274,15 @@ onMounted(() => {
   }
 }
 
-
 .no {
-  text-align: center;
-  background-color: white;
-  padding: 10px 20px;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .loader {
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+  }
 }
 
 @media (max-width: 560px) {

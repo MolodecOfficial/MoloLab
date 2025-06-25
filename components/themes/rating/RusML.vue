@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useUserStore } from '~/stores/userStore';
 
 useHead({
   title: 'УГНТУ | Рейтинг'

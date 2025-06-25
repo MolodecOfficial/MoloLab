@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {useMessageStore} from '~/stores/messageStore';
-import {useUserStore} from '~/stores/userStore';
 import {useRoute} from 'vue-router';
 import {computed, nextTick, onBeforeMount, onBeforeUnmount, ref, watch} from 'vue';
 

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref, reactive } from 'vue';
-import { useUserStore } from '~/stores/userStore';
 
 export const useMessageStore = defineStore('messageStore', () => {
     const messages = ref<any[]>([]);

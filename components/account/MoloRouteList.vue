@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import news from 'public/account/routeList/news.png'
 import home from 'public/account/routeList/home.png'
 import schedule from 'public/account/routeList/schedule.png'
 import achievements from 'public/account/routeList/achievements.png'
 import read from 'public/account/routeList/read.png'
-import learning from 'public/account/routeList/learning.png'
 import chat from 'public/account/routeList/chat.png'
-import tracking from 'public/account/routeList/tracking.png'
-import money from 'public/account/routeList/money.png'
-import flipList from 'public/account/routeList/flip-list.png'
-import onlineNote from 'public/account/routeList/online-note.png'
-import resources from 'public/account/routeList/resources.png'
+
 import rating from 'public/account/routeList/star-list.png'
 import admin from 'public/account/routeList/admin.png'
 import {onMounted} from "vue";

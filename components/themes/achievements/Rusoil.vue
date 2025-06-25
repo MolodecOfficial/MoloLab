@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue';
-import {useUserStore} from '~/stores/userStore';
 import {achievementsList} from '~/stores/achievementsStore';
 
 const userStore = useUserStore();

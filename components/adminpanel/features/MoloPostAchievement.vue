@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import {onMounted, ref} from "vue";
-import {useUserStore} from "~/stores/userStore";
 
 const props = defineProps({
   user: Object,

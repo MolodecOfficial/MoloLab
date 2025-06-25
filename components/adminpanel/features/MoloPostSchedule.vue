@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue';
 import dayjs from 'dayjs';
-import {useUserStore} from '~/stores/userStore';
 
 const groups = ref<Array<any>>([])
 const emit = defineEmits<{
