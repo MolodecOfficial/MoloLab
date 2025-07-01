@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { achievementsList } from '~/stores/achievementsStore';
-import { useUserStore } from '~/stores/userStore';
 
 const userStore = useUserStore();
 const userAchievements = ref<any[]>([]);
 const updatedAchievements = ref<any[]>([]);
 
+const loading = ref(false);
+
 onMounted(async () => {
+  loading.value = true;
   await userStore.getUsers();
   if (userStore.userId) {
     userAchievements.value = userStore.getUserAchievements(userStore.userId);
@@ -15,16 +17,18 @@ onMounted(async () => {
       ...achievement,
       obtained: userAchievements.value.some(ach => ach.id === achievement.id),
     }));
+    loading.value = false;
   }
 });
 </script>
 
 <template>
   <AccountPatternsMoloLab>
+    <AdminpanelUIMoloLoader :is-loading="loading" class="loader"/>
     <div class="achievements-container">
-      <!-- Заголовок -->
       <div class="achievements-header">
         <h2>Ваши достижения</h2>
+
         <div class="stats">
           <span class="obtained">{{ userAchievements.length }}</span>
           <span class="divider">/</span>
@@ -70,6 +74,12 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 .achievements-container {
   padding: 20px;
   max-width: 800px;

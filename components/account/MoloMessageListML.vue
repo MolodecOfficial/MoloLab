@@ -87,7 +87,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <AccountPatternsMoloLab>
     <div class="messenger-wrapper">
       <div class="messenger-container">
         <div class="users-sidebar">
@@ -199,7 +198,6 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-  </AccountPatternsMoloLab>
 </template>
 
 <style scoped>
@@ -207,6 +205,7 @@ onUnmounted(() => {
   width: 100%;
   padding-top: 20px;
   height: calc(100vh - 80px);
+
 }
 
 .messenger-container {
@@ -335,9 +334,19 @@ onUnmounted(() => {
 .messages-container {
   flex: 1;
   padding: 20px;
-
   overflow-y: auto;
   scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dk-border-color);
+    border-radius: 20px;
+    border: 4px solid transparent;
+  }
 }
 
 .message-wrapper {

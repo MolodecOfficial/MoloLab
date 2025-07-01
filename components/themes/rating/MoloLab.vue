@@ -14,18 +14,20 @@ const sortField = ref<'generalScore' | 'averageScore'>('generalScore');
 const sortDirection = ref<'asc' | 'desc'>('desc');
 const searchQuery = ref('');
 
+const loading = ref(false);
+
 // Загрузка данных
 async function getAllScores() {
+  loading.value = true;
   try {
     await userStore.getUsers();
-
     // Сортировка
     userStore.users.sort((a, b) => {
       const valA = parseFloat(a[sortField.value]) || 0;
       const valB = parseFloat(b[sortField.value]) || 0;
       return sortDirection.value === 'desc' ? valB - valA : valA - valB;
     });
-
+    loading.value = false;
     // Определение текущего пользователя
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -33,11 +35,11 @@ async function getAllScores() {
       const rankIndex = userStore.users.findIndex(
           user => user.email === currentUser.value.email
       );
-
       if (rankIndex !== -1) {
         userRanking.value = String(rankIndex + 1);
         userGeneralScore.value = currentUser.value.generalScore || '0';
         userAverageScore.value = currentUser.value.averageScore || '0';
+
       }
     }
   } catch (error) {
@@ -77,7 +79,10 @@ function toggleSort(field: 'generalScore' | 'averageScore') {
 
 <template>
   <AccountPatternsMoloLab>
+    <AdminpanelUIMoloLoader :is-loading="loading" class="loader"/>
+
     <div class="rating-container">
+
       <!-- Заголовок и статистика текущего пользователя -->
       <div class="rating-header">
         <h2>Рейтинг студентов</h2>
@@ -197,6 +202,14 @@ function toggleSort(field: 'generalScore' | 'averageScore') {
 </template>
 
 <style scoped>
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+
 .rating-container {
   padding: 20px;
   max-width: 1000px;

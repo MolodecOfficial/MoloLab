@@ -86,8 +86,10 @@ useHead({
   </AccountPatternsMoloLab>
 </template>
 
-<style scoped>
+<style>
 .messenger-container {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 15px;
   display: flex;
   height: calc(100vh - 120px);
   max-width: 1200px;

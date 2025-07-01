@@ -88,7 +88,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="messenger-container">
+    <div class="messenger-container_main">
       <!-- Боковая панель с пользователями -->
       <div class="users-sidebar">
         <div class="mobile-header" v-if="!userStore.loadingUser">
@@ -100,7 +100,7 @@ onUnmounted(() => {
           <h2>Чаты</h2>
         </div>
 
-        <section :class="['user-list', { 'mobile-open': isMobileMenuOpen }]">
+        <section :class="['user-list', { 'mobiel-open': isMobileMenuOpen }]">
           <div class="mobile-header-inside">
             <h2>Чаты</h2>
             <button class="close-menu" @click="toggleMobileMenu">
@@ -151,9 +151,10 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.messenger-container {
+.messenger-container_main {
   display: flex;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   overflow: hidden;
   background: rgba(32, 32, 35, 0.7);
@@ -174,11 +175,23 @@ onUnmounted(() => {
   background: rgba(32, 32, 35, 0.7);
   backdrop-filter: blur(12px);
   transition: all 0.3s ease;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dk-border-color);
+    border-radius: 20px;
+    border: 4px solid transparent;
+  }
 
 }
 
 .user-list-container {
   padding: 8px;
+
 }
 
 .user-item {
@@ -313,12 +326,14 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .user-list {
     position: fixed;
-    top: 0;
+    top: 120px;
     left: 0;
     width: 100%;
     height: 100vh;
     z-index: 1000;
     transform: translateX(-100%);
+
+
   }
 
   .user-list.mobile-open {
@@ -332,8 +347,8 @@ onUnmounted(() => {
 }
 
 @media (max-width: 480px) {
-  .messenger-container {
-    padding-top: 60px;
+  .messenger-container_main {
+    margin-top: 60px;
   }
 
   .date-divider span {
