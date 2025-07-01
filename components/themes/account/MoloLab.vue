@@ -113,7 +113,8 @@ const links = [
   { to: '/student/rating', text: 'Рейтинг', color: '#ed64a6', icon: ChartIcon },
   { to: '/student/messages', text: 'Сообщения', color: '#f6e787', icon: MessageIcon },
   { to: '/student/schedule', text: 'Расписание', color: '#f6ad55', icon: CalendarIcon },
-  { to: '/student/design', text: 'Дизайн', color: '#68d391', icon: DesignIcon }
+  { to: '/student/design', text: 'Дизайн', color: '#68d391', icon: DesignIcon },
+  { to: '/adminPanel', text: 'Панель Администратора', color: '#ffffff', icon: UserIcon }
 ]
 
 async function logoutUser() {
