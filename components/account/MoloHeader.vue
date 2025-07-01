@@ -1,12 +1,7 @@
 <script setup lang="ts">
-
 import {computed, onMounted, ref} from "vue";
-import {useThemeStore} from "~/stores/themeStore";
-
-
 
 const userStore = useUserStore();
-const themeStore = useThemeStore()
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('')

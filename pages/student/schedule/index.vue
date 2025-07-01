@@ -21,5 +21,6 @@ useHead({
   <template v-if="isHydrated">
     <ThemesScheduleRusoil v-if="themeStore.currentTheme === 'rusoil'"/>
     <ThemesScheduleRusML v-else-if="themeStore.currentTheme === 'rusml'"/>
+    <ThemesScheduleMoloLab v-else-if="themeStore.currentTheme === 'mololab'"/>
   </template>
 </template>

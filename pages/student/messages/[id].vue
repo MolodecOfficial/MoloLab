@@ -165,6 +165,23 @@ onBeforeMount(() => {
         </div>
       </div>
     </AccountPatternsMoloAccount>
+    <AccountPatternsMoloLab v-else-if="themeStore.currentTheme === 'mololab'">
+      <div class="container">
+        <div class="messages">
+          <AccountMoloMessageListML/>
+          <AdminpanelUIMoloInput
+              v-model="messageText"
+              height="10%"
+              placeholder="Введите сообщение"
+              width="70%"
+              background-color="white"
+              color="black"
+              @send="sendMessage"
+          />
+        </div>
+
+      </div>
+    </AccountPatternsMoloLab>
   </section>
 </template>
 
@@ -172,26 +189,30 @@ onBeforeMount(() => {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   width: 100%;
+  gap: 20px;
   box-sizing: border-box;
-  padding-bottom: 100px;
   justify-content: center;
   align-items: center;
 }
 
 .messages {
+  justify-content: start;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 70%;
   gap: 20px;
-  position: relative;
 }
 
 @media (max-width: 765px) {
   .container {
     display: flex;
     flex-direction: column;
+  }
+  .messages {
+    display: flex;
+    width: 80%
   }
 }
 

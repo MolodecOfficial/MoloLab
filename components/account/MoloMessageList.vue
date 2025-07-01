@@ -4,7 +4,7 @@ import { ref, onMounted, onUnmounted, nextTick } from "vue";
 const containerRef = ref<HTMLElement | null>(null);
 const showTopButton = ref(false);
 const showBottomButton = ref(false);
-const showLoader = ref(true); // Новое состояние для управления видимостью лоадера
+const showLoader = ref(true)
 
 const props = defineProps<{
   messages: Array<{
@@ -21,13 +21,10 @@ const props = defineProps<{
   isLoading: boolean;
 }>();
 
-// Следим за изменениями messages и isLoading
 watch(() => [props.messages, props.isLoading], () => {
-  // Показываем лоадер только если сообщений нет И идет загрузка
   showLoader.value = props.messages.length === 0 && props.isLoading;
 }, { immediate: true });
 
-// Функции для работы со скроллом (остаются без изменений)
 const scrollToTop = () => {
   if (containerRef.value) {
     containerRef.value.scrollTo({
@@ -157,6 +154,7 @@ onUnmounted(() => {
 .message-list {
   height: 310px;
   overflow-y: auto;
+  width: 100%;
   padding: 1rem;
   background-color: white;
   border-radius: 10px;
@@ -222,7 +220,6 @@ onUnmounted(() => {
   z-index: 10;
 }
 
-/* Стили для кнопок навигации */
 .scroll-button {
   color: black;
   position: fixed;
@@ -261,7 +258,6 @@ onUnmounted(() => {
   right: 30px;
 }
 
-/* Адаптация под мобильные устройства */
 @media (max-width: 765px) {
   .message-list {
     height: 310px;

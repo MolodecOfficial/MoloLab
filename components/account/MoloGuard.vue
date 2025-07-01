@@ -34,6 +34,7 @@ function goBack() {
 </template>
 
 <style scoped>
+
 .ban {
   display: flex;
   justify-content: center;

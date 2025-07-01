@@ -23,24 +23,6 @@ const route = useRoute();
       </svg>
       <span>Расписание</span>
     </NuxtLink>
-    <NuxtLink to="/in-progress" class="nav-link" :class="{ active: route.path === '/student/grade' }">
-      <svg
-          width="18"
-          height="22"
-          viewBox="0 0 16 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="nav-icon"
-      >
-        <path
-            d="M15 15V1H3C1.89543 1 1 1.89543 1 3V17M15 15V19H3C1.89543 19 1 18.1046 1 17M15 15H3M1 17C1 15.8954 1.89543 15 3 15M3 15H12.4545M5 11H8"
-            :stroke="route.path === '/student/grade' ? 'blue' : 'black'"
-            stroke-width="1.25"
-            stroke-linecap="round"
-        />
-      </svg>
-      <span>Успеваемость</span>
-    </NuxtLink>
     <NuxtLink to="/student/account"
               class="nav-link"
               :class="{ active:
@@ -84,7 +66,7 @@ const route = useRoute();
 .student-nav {
   display: flex;
   align-items: center;
-  justify-content: center; /* Выравнивание содержимого по центру */
+  justify-content: center;
   width: fit-content;
   padding: 12px 23px;
   border-radius: 40px;
@@ -92,7 +74,7 @@ const route = useRoute();
   position: fixed;
   top: 95%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Корректируем позицию относительно центра самого элемента */
+  transform: translate(-50%, -50%);
   gap: 30px;
   background-color: white;
 }
@@ -100,7 +82,7 @@ const route = useRoute();
 .nav-link {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Выравниваем содержимое ссылки по центру */
+  align-items: center;
   text-align: center;
   text-decoration: none;
   color: black;
@@ -113,10 +95,10 @@ const route = useRoute();
 
 .nav-link span {
   font-size: 10px;
-  margin-top: 3px; /* Добавляем отступ между иконкой и текстом */
+  margin-top: 3px;
 }
 
 .nav-link.active {
-  color: blue; /* Цвет текста для активного пункта */
+  color: blue;
 }
 </style>

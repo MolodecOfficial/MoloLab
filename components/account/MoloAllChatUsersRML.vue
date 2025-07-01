@@ -39,7 +39,6 @@ const toggleMobileMenu = () => {
 
 <template>
   <AdminpanelUIMoloLoader :is-loading="userStore.loadingUser"/>
-
   <!-- Мобильный хедер -->
   <div class="mobile-container">
     <div class="mobile-header" v-if="!userStore.loadingUser">

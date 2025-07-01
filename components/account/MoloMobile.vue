@@ -27,7 +27,6 @@ const props = defineProps({
 }
 
 .student-main-container {
-
   width: 625px;
   display: flex;
   flex-direction: column;

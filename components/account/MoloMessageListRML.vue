@@ -20,7 +20,6 @@ const props = defineProps<{
   isLoading: boolean
 }>();
 
-// Функции для работы со скроллом
 const scrollToTop = () => {
   if (containerRef.value) {
     containerRef.value.scrollTo({
@@ -43,13 +42,10 @@ const checkScrollPosition = () => {
   if (!containerRef.value) return;
 
   const { scrollTop, scrollHeight, clientHeight } = containerRef.value;
-  const threshold = 50; // Порог в пикселях
-
-  // Проверяем, находимся ли мы вверху
+  const threshold = 50;
   showTopButton.value = scrollTop > threshold;
 
-  // Проверяем, находимся ли мы внизу
-  showBottomButton.value = scrollTop + clientHeight < scrollHeight - threshold;
+ъ  showBottomButton.value = scrollTop + clientHeight < scrollHeight - threshold;
 };
 
 
@@ -71,11 +67,9 @@ const getDateString = (date?: Date | string) => {
   return d.toDateString();
 };
 
-// Обработчики событий
 onMounted(() => {
   if (containerRef.value) {
     containerRef.value.addEventListener('scroll', checkScrollPosition);
-    // Проверяем начальную позицию
     nextTick(checkScrollPosition);
   }
 });
@@ -123,7 +117,6 @@ onUnmounted(() => {
       </svg>
     </button>
 
-    <!-- Кнопка для прокрутки в конец -->
     <button
         v-if="showBottomButton"
         class="scroll-button scroll-bottom-button"

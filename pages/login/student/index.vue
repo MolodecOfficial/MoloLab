@@ -164,6 +164,7 @@ async function loginAsGuest() {
         group: 'Гостевая группа',
         code: '00.00.00',
         direction: 'Гостевое направление',
+        learning: 'Гостение обучение',
         course: 1,
         faculty: 'Гостевой факультет',
         form_of_learning: 'Гостевая форма',

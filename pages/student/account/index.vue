@@ -22,6 +22,7 @@ onBeforeMount(() => {
   <template v-if="isHydrated">
     <ThemesAccountRusoil v-if="themeStore.currentTheme === 'rusoil'"/>
     <ThemesAccountRusML v-else-if="themeStore.currentTheme === 'rusml'"/>
+    <ThemesAccountMoloLab v-else-if="themeStore.currentTheme === 'mololab'"/>
   </template>
 </template>
 

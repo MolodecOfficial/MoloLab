@@ -30,29 +30,7 @@ useHead({
   <template v-if="isHydrated">
     <ThemesDesignRusoil v-if="themeStore.currentTheme === 'rusoil'"/>
     <ThemesDesignRusML v-else-if="themeStore.currentTheme === 'rusml'"/>
-    <div v-else class="else">
-      <section class="no-molo">
-        <span>
-        Не дождётесь!
-      </span>
-        <section class="choices">
-          <button
-              v-for="theme in otherThemes"
-              :key="theme.id"
-              @click="selectTheme(theme.id)"
-              class="theme-button"
-          >
-            Сменить тему на {{ theme.name }}
-            <img
-                :src="theme.img"
-                :alt="theme.name"
-                class="theme-button-img"
-            />
-          </button>
-        </section>
-      </section>
-
-    </div>
+    <ThemesDesignMoloLab v-else-if="themeStore.currentTheme === 'mololab'"/>
   </template>
 </template>
 

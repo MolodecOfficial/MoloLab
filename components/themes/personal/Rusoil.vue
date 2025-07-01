@@ -15,6 +15,7 @@ const course = ref('')
 const averageScore = ref('')
 const generalScore = ref('')
 
+
 const userData: any = ref([]);
 const userSpecialtyData: any = ref([]);
 const userRatingData: any = ref([]);

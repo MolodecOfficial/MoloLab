@@ -61,26 +61,27 @@ onMounted(() => {
 <style scoped>
 .professionInfo {
   display: grid;
-  justify-items: center; /* Центрирует элементы по горизонтали */
-  align-items: center; /* Центрирует элементы по вертикали */
+  justify-items: center;
+  align-items: center;
   text-align: center;
-  grid-template-columns: repeat(3, 1fr); /* Три столбца */
-  grid-template-rows: repeat(5, 1fr); /* Пять строк */
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0;
   grid-row-gap: 2px;
   width: 100%;
   height: 100%;
 
   justify-content: center;
+
   & span {
     font-size: 18px;
     color: #052542;
   }
+
   & code {
     color: #5a87e7;
   }
 }
-
 
 
 .dark-theme span {
@@ -96,23 +97,28 @@ onMounted(() => {
   .professionInfo {
     padding: 0 0;
     grid-row-gap: 0;
+
     & code {
       font-size: 10px;
     }
+
     & span {
       font-size: 11px;
     }
   }
 }
+
 @media (max-width: 1620px) {
   .professionInfo {
 
     grid-row-gap: 15px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(1, 1fr);
+
     & code {
       font-size: 12px;
     }
+
     & span {
       font-size: 12px;
     }
@@ -125,9 +131,11 @@ onMounted(() => {
     grid-column-gap: 20px;
     padding: 20px;
     text-align: center;
+
     & span {
       font-size: 10px;
     }
+
     & code {
       font-size: 10px;
 
@@ -141,9 +149,11 @@ onMounted(() => {
     grid-column-gap: 20px;
     padding: 20px;
     text-align: center;
+
     & span {
       font-size: 14px;
     }
+
     & code {
       font-size: 14px;
 
@@ -157,9 +167,11 @@ onMounted(() => {
     grid-column-gap: 20px;
     padding: 10px;
     text-align: center;
+
     & span {
       font-size: 11px;
     }
+
     & code {
       font-size: 12px;
 

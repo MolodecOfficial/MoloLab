@@ -181,7 +181,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-left: 20px;
+  padding: 20px 0;
   gap: 20px;
   & .groupName {
     width: fit-content;

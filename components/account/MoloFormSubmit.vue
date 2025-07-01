@@ -35,11 +35,11 @@ const formProps = defineProps({
 }
 
 .button-guest .register_btn {
-  background-color: #a60202; /* Цвет фона для кнопки гостя */
+  background-color: #a60202;
 }
 
 .button-guest .register_btn:hover {
-  background-color: #570000; /* Цвет фона при наведении для кнопки гостя */
+  background-color: #570000;
 }
 
 
