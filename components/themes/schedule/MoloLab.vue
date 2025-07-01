@@ -51,6 +51,11 @@ const sortedLessons = (lessons: any[]) => {
   });
 };
 
+const isDividedIntoSubgroups = (lesson: any) => {
+  return lesson.conditionOfLesson?.common === 'Не указан';
+};
+
+
 onMounted(() => {
   fetchSchedule();
 });
@@ -113,25 +118,56 @@ onMounted(() => {
               :key="lesson.time + lesson.subject"
               class="lesson-card"
               :class="{
-              'lecture-card': lesson.typeOfLesson === 'Лекция',
-              'practice-card': lesson.typeOfLesson === 'Практика',
-              'lab-card': lesson.typeOfLesson === 'Лабораторная работа',
-              'independent-card': lesson.typeOfLesson === 'Самостоятельная работа',
-              'consultation-card': lesson.typeOfLesson === 'Консультация',
-              'exam-card': lesson.typeOfLesson === 'Экзамен'
-            }"
+                  'lecture-card': lesson.typeOfLesson === 'Лекция',
+                  'practice-card': lesson.typeOfLesson === 'Практика',
+                  'lab-card': lesson.typeOfLesson === 'Лабораторная работа',
+                  'independent-card': lesson.typeOfLesson === 'Самостоятельная работа',
+                  'consultation-card': lesson.typeOfLesson === 'Консультация',
+                  'exam-card': lesson.typeOfLesson === 'Экзамен'
+                }"
           >
             <div class="lesson-time">
               {{ lesson.time }}
             </div>
             <div class="lesson-details">
               <div class="lesson-subject">{{ lesson.subject }}</div>
-              <div class="lesson-meta">
+
+              <!-- Общий случай (не разделено на подгруппы) -->
+              <div v-if="!isDividedIntoSubgroups(lesson)" class="lesson-meta">
                 <span class="lesson-type">{{ lesson.typeOfLesson }}</span>
                 <span class="lesson-divider">•</span>
                 <span class="lesson-room">{{ lesson.cabinet }}</span>
                 <span class="lesson-divider">•</span>
                 <span class="lesson-teacher">{{ lesson.teacher }}</span>
+              </div>
+
+              <!-- Случай с подгруппами -->
+              <div v-else class="subgroups-container">
+                <div class="subgroup">
+                  <div class="subgroup-label">1 подгруппа</div>
+                  <div class="subgroup-meta">
+                    <span class="lesson-teacher">{{ lesson.conditionOfLesson.subgroup1?.teacher || '—' }}</span>
+                    <span class="lesson-divider">•</span>
+                    <span class="lesson-room">{{ lesson.conditionOfLesson.subgroup1?.cabinet || '—' }}</span>
+                  </div>
+                </div>
+
+                <div class="subgroup-divider"></div>
+
+                <div class="lesson-type-full">
+                  {{ lesson.typeOfLesson }}
+                </div>
+
+                <div class="subgroup-divider"></div>
+
+                <div class="subgroup">
+                  <div class="subgroup-label">2 подгруппа</div>
+                  <div class="subgroup-meta">
+                    <span class="lesson-teacher">{{ lesson.conditionOfLesson.subgroup2?.teacher || '—' }}</span>
+                    <span class="lesson-divider">•</span>
+                    <span class="lesson-room">{{ lesson.conditionOfLesson.subgroup2?.cabinet || '—' }}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -372,6 +408,45 @@ onMounted(() => {
   color: rgba(255, 255, 255, 0.3);
 }
 
+.subgroups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.subgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subgroup-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.subgroup-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.subgroup-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 4px 0;
+}
+
+.lesson-type-full {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 0;
+}
+
 .empty-schedule {
   display: flex;
   flex-direction: column;
@@ -432,7 +507,7 @@ onMounted(() => {
     padding: 16px;
   }
 
-  .lesson-meta {
+  .lesson-meta, .subgroup-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
