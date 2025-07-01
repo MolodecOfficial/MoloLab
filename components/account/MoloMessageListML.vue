@@ -204,7 +204,7 @@ onUnmounted(() => {
 .messenger-wrapper {
   width: 100%;
   padding-top: 20px;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 140px);
 
 }
 
@@ -507,7 +507,7 @@ onUnmounted(() => {
 
   .users-sidebar {
     width: 100%;
-    max-height: 300px;
+    max-height: max-content;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -563,7 +563,8 @@ onUnmounted(() => {
 @media (max-width: 480px) {
   .messenger-wrapper {
     padding-top: 60px;
-    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
   }
 
   .date-divider span {

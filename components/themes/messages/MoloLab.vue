@@ -123,7 +123,7 @@ useHead({
     width: 100%;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    max-height: 300px;
+    height: 500px;
   }
 
 }

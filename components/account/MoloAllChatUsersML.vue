@@ -100,14 +100,10 @@ onUnmounted(() => {
           <h2>Чаты</h2>
         </div>
 
-        <section :class="['user-list', { 'mobiel-open': isMobileMenuOpen }]">
+        <section :class="['user-list', { 'mobile-open': isMobileMenuOpen }]">
           <div class="mobile-header-inside">
-            <h2>Чаты</h2>
-            <button class="close-menu" @click="toggleMobileMenu">
-              <svg width="24" height="24" viewBox="0 0 24 24">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/>
-              </svg>
-            </button>
+            <h2>Выберите пользователя</h2>
+
           </div>
 
           <div class="user-list-container">
@@ -305,7 +301,7 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1024px) {
-  .messenger-container {
+  .messenger-container_main {
     flex-direction: column;
     height: auto;
     min-height: calc(100vh - 120px);
@@ -326,11 +322,11 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .user-list {
     position: fixed;
-    top: 120px;
     left: 0;
     width: 100%;
     height: 100vh;
     z-index: 1000;
+    color: whitesmoke;
     transform: translateX(-100%);
 
 
@@ -338,6 +334,7 @@ onUnmounted(() => {
 
   .user-list.mobile-open {
     transform: translateX(0);
+    height: 100vh;
   }
 
   .mobile-header,
