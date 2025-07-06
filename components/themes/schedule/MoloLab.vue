@@ -146,9 +146,10 @@ onMounted(() => {
                 <div class="subgroup">
                   <div class="subgroup-label">1 подгруппа</div>
                   <div class="subgroup-meta">
-                    <span class="lesson-teacher">{{ lesson.conditionOfLesson.subgroup1?.teacher || '—' }}</span>
-                    <span class="lesson-divider">•</span>
                     <span class="lesson-room">{{ lesson.conditionOfLesson.subgroup1?.cabinet || '—' }}</span>
+                    <span class="lesson-divider">•</span>
+                    <span class="lesson-teacher">{{ lesson.conditionOfLesson.subgroup1?.teacher || '—' }}</span>
+
                   </div>
                 </div>
 
@@ -163,9 +164,9 @@ onMounted(() => {
                 <div class="subgroup">
                   <div class="subgroup-label">2 подгруппа</div>
                   <div class="subgroup-meta">
-                    <span class="lesson-teacher">{{ lesson.conditionOfLesson.subgroup2?.teacher || '—' }}</span>
-                    <span class="lesson-divider">•</span>
                     <span class="lesson-room">{{ lesson.conditionOfLesson.subgroup2?.cabinet || '—' }}</span>
+                    <span class="lesson-divider">•</span>
+                    <span class="lesson-teacher">{{ lesson.conditionOfLesson.subgroup2?.teacher || '—' }}</span>
                   </div>
                 </div>
               </div>
